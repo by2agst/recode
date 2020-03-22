@@ -1,13 +1,13 @@
 <template>
   <q-drawer
-    v-model="leftDrawerOpen"
+    v-model="localLeftDrawerOpen"
     show-if-above
     bordered
     content-class="bg-2"
 
-    :mini="!leftDrawerOpen || miniState"
+    :mini="!localLeftDrawerOpen || miniState"
     @click.capture="drawerClick"
-
+    @hide="hideSideBar"
     >
     <q-list dark class="text-grey">
       <q-item-label header class="text-white">
@@ -25,14 +25,6 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Dashboard</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item clickable to="/login">
-        <q-item-section avatar>
-          <q-icon name="fas fa-sign-in-alt" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Sign In</q-item-label>
         </q-item-section>
       </q-item>
       <q-item-label header class="regular">Default</q-item-label>
@@ -92,12 +84,12 @@
       </q-item>
     </q-list>
 
-    <div class="q-mini-drawer-hide absolute" style="top: 10px; right: 17px">
+    <div class="q-mini-drawer-hide absolute" style="top: 7px; right: 17px">
       <q-btn
         dense
         round
         unelevated
-        color="transparent"
+        color="clear"
         icon="chevron_left"
         @click="miniState = true"
       />
@@ -109,24 +101,37 @@
 export default {
   name: 'UserSidebarLeft',
 
+  props: {
+    leftDrawerOpen: {
+      type: Boolean,
+      default () {
+        return true
+      }
+    }
+  },
   data () {
     return {
-      leftDrawerOpen: false,
-      miniState: false
+      miniState: false,
+      localLeftDrawerOpen: true
     }
+  },
+  watch: {
+    leftDrawerOpen: function (newVal) {
+      this.localLeftDrawerOpen = newVal
+    }
+  },
+  mounted: function () {
+    this.localLeftDrawerOpen = this.leftDrawerOpen
   },
   methods: {
     drawerClick (e) {
-      // if in "mini" state and user
-      // click on drawer, we switch it to "normal" mode
       if (this.miniState) {
         this.miniState = false
-
-        // notice we have registered an event with capture flag;
-        // we need to stop further propagation as this click is
-        // intended for switching drawer to "normal" mode only
         e.stopPropagation()
       }
+    },
+    hideSideBar () {
+      this.$emit('updateLeftDrawer')
     }
   }
 }

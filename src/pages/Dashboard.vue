@@ -1,7 +1,7 @@
 <template>
   <q-page class="bg-blue-grey-1 q-pa-md">
     <div class="row q-col-gutter-md">
-      <div class="col-4" v-for="i in 3" :key="i">
+      <div class="col-12 col-sm-6 col-md-4" v-for="i in 3" :key="i">
         <q-card class="my-card">
           <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
@@ -46,7 +46,7 @@
           </q-card-actions>
         </q-card>
       </div>
-      <div class="col-8">
+      <div class="col-12 col-md-8">
         <q-table
           title="Users"
           :data="data"
@@ -89,7 +89,7 @@
           </template>
         </q-table>
       </div>
-      <div class="col-4">
+      <div class="col-12 col-md-4">
         <div class="bg-white">
           <q-scroll-area class="full-width" style="height: 435px;">
             <div class="q-pa-md">

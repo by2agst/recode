@@ -1,8 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <toolbar-top />
+    <toolbar-top @openMenu="openMenu"/>
 
-    <sidebar-left/>
+    <sidebar-left :left-drawer-open="leftDrawerOpen" @updateLeftDrawer="updateLeftDrawer"/>
 
     <q-page-container>
       <router-view />
@@ -22,25 +22,15 @@ export default {
   },
   data () {
     return {
-      leftDrawerOpen: false,
-      miniState: false
+      leftDrawerOpen: true
     }
   },
   methods: {
-    drawerClick (e) {
-      // if in "mini" state and user
-      // click on drawer, we switch it to "normal" mode
-      if (this.miniState) {
-        this.miniState = false
-
-        // notice we have registered an event with capture flag;
-        // we need to stop further propagation as this click is
-        // intended for switching drawer to "normal" mode only
-        e.stopPropagation()
-      }
+    openMenu () {
+      this.leftDrawerOpen = !this.leftDrawerOpen
     },
-    onItemClick () {
-      // console.log('Clicked on an Item')
+    updateLeftDrawer () {
+      this.leftDrawerOpen = false
     }
   }
 }
