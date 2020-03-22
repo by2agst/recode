@@ -24,7 +24,7 @@
           <q-icon name="home" />
         </q-item-section>
         <q-item-section>
-          <q-item-label>Dashboard</q-item-label>
+          <q-item-label>{{$t('menu.dashboard')}}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item-label header class="regular">Default</q-item-label>

@@ -6,6 +6,6 @@ export default {
   success: 'Action was successful',
 
   menu: {
-    dashboard: 'Dashboard'
+    dashboard: 'Beranda'
   }
 }
