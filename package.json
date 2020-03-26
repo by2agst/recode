@@ -14,8 +14,11 @@
   "dependencies": {
     "@quasar/extras": "^1.6.0",
     "axios": "^0.18.1",
+    "highcharts": "^8.0.4",
+    "masonry-layout": "^4.2.2",
     "quasar": "^1.9.10",
-    "vue-i18n": "^8.0.0"
+    "vue-i18n": "^8.0.0",
+    "vue-resize-directive": "^1.2.0"
   },
   "devDependencies": {
     "@quasar/app": "^1.6.0",

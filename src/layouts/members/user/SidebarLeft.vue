@@ -21,10 +21,26 @@
       </q-item>
       <q-item clickable to="/user/dashboard" active-class="side-menu-left-active">
         <q-item-section avatar>
-          <q-icon name="home" />
+          <q-icon name="fas fa-home"/>
         </q-item-section>
         <q-item-section>
           <q-item-label>{{$t('menu.dashboard')}}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable to="/user/chart" active-class="side-menu-left-active">
+        <q-item-section avatar>
+          <q-icon name="fas fa-chart-bar"/>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{$t('menu.chart')}}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable to="/user/gallery" active-class="side-menu-left-active">
+        <q-item-section avatar>
+          <q-icon name="fas fa-images"/>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{$t('menu.gallery')}}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item-label header class="regular">Default</q-item-label>

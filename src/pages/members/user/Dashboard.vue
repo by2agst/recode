@@ -29,19 +29,18 @@
 
           <q-card-section class="q-pt-none">
             <div class="text-subtitle1">
-              $・Italian, Cafe
+              Quasar
             </div>
             <div class="text-caption text-grey">
-              Small plates, salads & sandwiches in an intimate setting.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </div>
           </q-card-section>
 
           <q-separator />
 
           <q-card-actions>
-            <q-btn flat round icon="event" />
             <q-btn flat color="primary">
-              Reserve
+              Read more ...
             </q-btn>
           </q-card-actions>
         </q-card>
@@ -179,7 +178,7 @@
 
 <script>
 export default {
-  name: 'PageIndex',
+  name: 'Dashboard',
   data () {
     return {
       stars: 3,

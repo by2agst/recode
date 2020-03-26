@@ -10,7 +10,7 @@
               round
               @click="openMenu"
               aria-label="Menu"
-              class="menu-button">
+              v-if="$q.screen.lt.md">
               <i class="fas fa-bars"></i>
             </q-btn>
             <q-btn
@@ -77,7 +77,7 @@
                     </q-list>
                   </div>
 
-                  <q-separator vertical inset class="q-mx-lg" />
+                  <q-separator vertical inset class="q-mx-md" />
 
                   <div class="column">
                     <q-list dense>
@@ -129,7 +129,7 @@
                     </q-list>
                   </div>
 
-                  <q-separator vertical inset class="q-mx-lg" />
+                  <q-separator vertical inset class="q-mx-md" />
 
                   <div class="column">
                     <q-list dense>
@@ -181,7 +181,7 @@
                     </q-list>
                   </div>
 
-                  <q-separator vertical inset class="q-mx-lg" />
+                  <q-separator vertical inset class="q-mx-md" />
 
                   <div class="column">
                     <q-list dense>
@@ -263,32 +263,7 @@
               icon="far fa-chart-bar"
               size="sm"
             />
-            <q-btn
-              flat
-              round>
-              <q-avatar size="15px">
-                <img :src="`statics/flags/${activeLangSvg}.svg`">
-              </q-avatar>
-              <q-menu anchor="bottom right" self="top right" :offset="[0, 10]">
-                <q-list>
-                  <q-item
-                    clickable
-                    v-ripple
-                    v-for="language in langOptions"
-                    :key="language.value"
-                    @click="changeLanguage(language.value)" >
-                    <q-item-section>
-                      <q-item-label>
-                        <q-avatar size="15px" class="q-mr-sm">
-                          <img :src="`statics/flags/${language.svg}.svg`">
-                        </q-avatar>
-                        <span class="vertical-middle">{{language.label}}</span>
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
+            <languages />
             <q-btn
               flat
               no-caps
@@ -297,16 +272,18 @@
               Hi,<b class="q-ml-sm">Re</b>
               <q-menu anchor="bottom right" self="top right" :offset="[0, 10]" :content-style="{ minWidth: '370px' }">
                 <q-card class="my-card">
-                  <q-card-section class="bg-primary text-white">
+                  <q-card-section class="bg-8 text-white q-py-lg">
                     <div class="row q-col-gutter-sm items-center">
                       <div class="col-auto">
-                        <q-avatar rounded color="indigo-4" text-color="white">R</q-avatar>
+                        <q-avatar rounded color="indigo-4" text-color="white">
+                          <!-- <img src="/statics/users/rc19.jpg"> -->R
+                        </q-avatar>
                       </div>
                       <div class="col">
                         <span class="text-h5  q-mt-xs">Re:code</span>
                       </div>
                       <div class="col text-center">
-                        <q-btn color="positive">10 Messages</q-btn>
+                        <q-btn color="accent">10 Messages</q-btn>
                       </div>
                     </div>
                   </q-card-section>
@@ -391,27 +368,21 @@
 </template>
 
 <script>
+import Languages from 'src/components/Languages.vue'
+
 export default {
   name: 'UserToolbarTop',
 
+  components: {
+    Languages
+  },
   data () {
     return {
-      lang: this.$i18n.locale,
-      activeLangSvg: '012-uk',
-      langOptions: [
-        { value: 'en-us', label: 'English', svg: '012-uk' },
-        { value: 'id', label: 'Indonesia', svg: '004-indonesia' }
-      ]
     }
   },
   methods: {
     openMenu () {
       this.$emit('openMenu')
-    },
-    changeLanguage (lang) {
-      this.$i18n.locale = lang
-      let active = this.langOptions.find(l => l.value === lang)
-      this.activeLangSvg = active.svg
     },
     onItemClick () {
       console.log('%c-test', 'color: yellow;')

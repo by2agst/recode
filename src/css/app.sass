@@ -18,7 +18,21 @@
 .poppins-r, .regular
   font-family: 'poppinsregular'
 
-.bg-0, .bg-1, .bg-2, .bg-3, .bg-4, .bg-5, .bg-6, .bg-7
+.landing__space
+  width: 400vw
+  height: 400vh
+  top: 50%
+  left: 50%
+  margin-top: -200vh
+  margin-left: -200vw
+  -webkit-animation: logo-rotate 200s linear infinite
+  animation: logo-rotate 200s linear infinite
+  background-size: 240px
+  -webkit-backface-visibility: visible
+  backface-visibility: visible
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTA2IDkwaDJ2MmgtMnpNNzQgNjNoMXYxaC0xek0yMyA2NmgxdjFoLTF6TTUwIDExMGgxdjFoLTF6TTYzIDEyOGgxdjFoLTF6TTQ1IDE0OWgxdjFoLTF6TTkyIDE1MWgxdjFoLTF6TTU4IDhoMXYxaC0xek0xNDcgMzNoMnYyaC0yek05MSA0M2gxdjFoLTF6TTE2OSAyOWgxdjFoLTF6TTE4MiAxOWgxdjFoLTF6TTE2MSA1OWgxdjFoLTF6TTEzOCA5NWgxdjFoLTF6TTE5OSA3MWgzdjNoLTN6TTIxMyAxNTNoMnYyaC0yek0xMjggMTYzaDF2MWgtMXpNMjA1IDE3NGgxdjFoLTF6TTE1MiAyMDBoMXYxaC0xek01MiAyMTFoMnYyaC0yek0wIDE5MWgxdjFIMHpNMTEwIDE4NGgxdjFoLTF6Ii8+PC9zdmc+)
+
+.bg-0, .bg-1, .bg-2, .bg-3, .bg-4, .bg-5, .bg-6, .bg-7, .bg-8
   background-position: center center
 .bg-0
   background-image: url('~assets/bg/bg-0.jpg')
@@ -36,6 +50,8 @@
   background-image: url('~assets/bg/bg-6.jpg')
 .bg-7
   background-image: url('~assets/bg/bg-7.jpg')
+.bg-8
+  background-image: url('~assets/bg/bg-8.jpg')
 
 body
   font-family: 'poppinsmedium'
@@ -46,6 +62,9 @@ a
 .inline-block
   display: inline-block
 
+.overflow-hidden
+  overflow: hidden
+
 .side-menu-left-active
   .q-item__section--avatar
     color: $primary
@@ -55,16 +74,22 @@ a
 .q-avatar
   font-size: 44px
 
+.q-drawer--left
+  .q-list
+    .fas, .far, .fab
+      font-size: 18px
+
 .full-height-header
   height: calc(100vh - 50px)
-
-.menu-button
-    display: none
-
-@media (max-width: 1024px)
-  .menu-button
-    display: inline-flex
 
 @media (min-width: 320px) and (max-width: 480px)
   .full-height-header
     height: calc(50vh - 50px)
+
+@-webkit-keyframes logo-rotate
+  to
+    transform: rotate(-360deg)
+
+@keyframes logo-rotate
+  to
+    transform: rotate(-360deg)

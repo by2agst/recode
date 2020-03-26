@@ -11,7 +11,9 @@ const routes = [
     path: '/user',
     component: () => import('layouts/members/user/Default.vue'),
     children: [
-      { path: 'dashboard', component: () => import('pages/members/user/Dashboard.vue') }
+      { path: 'dashboard', component: () => import('pages/members/user/Dashboard.vue') },
+      { path: 'chart', component: () => import('pages/members/user/Chart.vue') },
+      { path: 'gallery', component: () => import('pages/members/user/Gallery.vue') }
     ]
   }
 ]
