@@ -22,7 +22,7 @@ export default {
   },
   data () {
     return {
-      leftDrawerOpen: true
+      leftDrawerOpen: !this.$q.screen.lt.md
     }
   },
   methods: {

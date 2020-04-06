@@ -1,9 +1,9 @@
 <template>
   <q-drawer
-    v-model="localLeftDrawerOpen"
-    show-if-above
-    bordered
     content-class="bg-2"
+    v-model="localLeftDrawerOpen"
+    bordered
+    show-if-above
 
     :mini="!localLeftDrawerOpen || miniState"
     @click.capture="drawerClick"
@@ -100,7 +100,7 @@
       </q-item>
     </q-list>
 
-    <div class="q-mini-drawer-hide absolute" style="top: 7px; right: 17px">
+    <!-- <div class="q-mini-drawer-hide absolute" style="top: 7px; right: 17px">
       <q-btn
         dense
         round
@@ -109,7 +109,7 @@
         icon="chevron_left"
         @click="miniState = true"
       />
-    </div>
+    </div> -->
   </q-drawer>
 </template>
 

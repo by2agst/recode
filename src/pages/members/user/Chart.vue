@@ -1,14 +1,16 @@
 <template>
   <q-page class="bg-blue-grey-1 q-pa-md">
-    <div class="row q-col-gutter-md">
-      <div class="col-sm-12 col-md-6">
-        <div class="bg-white">
-          <div id="chart-1" style="height: 400px" />
+    <div class="full-width">
+      <div class="row q-col-gutter-md" v-resize:debounce="onResize">
+        <div class="col-sm-12 col-md-6">
+          <div class="bg-white high-chart" ref="chart1">
+            <div id="chart-1" />
+          </div>
         </div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <div class="bg-white">
-          <div id="chart-2" style="height: 400px" />
+        <div class="col-sm-12 col-md-6">
+          <div class="bg-white high-chart" ref="chart2">
+            <div id="chart-2" />
+          </div>
         </div>
       </div>
     </div>
@@ -16,12 +18,19 @@
 </template>
 
 <script>
+import resize from 'vue-resize-directive'
+
 export default {
   name: 'Chart',
+  directives: {
+    resize
+  },
   data () {
     return {
       chart1: '',
-      chart2: ''
+      chart1Options: '',
+      chart2: '',
+      chart2Options: ''
     }
   },
   mounted () {
@@ -29,10 +38,7 @@ export default {
   },
   methods: {
     renderHighchart () {
-      let options = {}
-      let HighChart
-
-      options = {
+      this.chart1Options = {
         chart: {
           renderTo: 'chart-1',
           type: 'area'
@@ -57,12 +63,10 @@ export default {
           data: [3, 4, 4, -2, 5]
         }]
       }
-      HighChart = () => {
-        this.$highcharts.chart(options)
-      }
-      this.chart1 = new HighChart()
 
-      options = {
+      this.chart1 = this.$highcharts.chart(this.chart1Options)
+
+      this.chart2Options = {
         chart: {
           renderTo: 'chart-2',
           type: 'pie',
@@ -79,7 +83,7 @@ export default {
         },
         plotOptions: {
           pie: {
-            innerSize: 100,
+            innerSize: this.$q.screen.lt.md ? 50 : 100,
             depth: 45
           }
         },
@@ -98,12 +102,13 @@ export default {
         }]
       }
 
-      HighChart = () => {
-        this.$highcharts.chart(options)
-      }
-      this.chart2 = new HighChart()
+      this.chart2 = this.$highcharts.chart(this.chart2Options)
+    },
+    onResize () {
+      console.log('%c-reflow', 'color: yellow;')
+      this.chart1.reflow()
+      this.chart2.reflow()
     }
-
   }
 }
 </script>

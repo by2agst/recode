@@ -79,12 +79,26 @@ a
     .fas, .far, .fab
       font-size: 18px
 
+.q-btn--round
+  &.square
+    border-radius: 3px
+  .q-btn__wrapper
+    min-width: 2.5em
+    min-height: 2.5em
+
+.q-btn
+  .q-icon
+    &.fas, &.far, &.fab
+      font-size: 18px
+
 .full-height-header
   height: calc(100vh - 50px)
 
 @media (min-width: 320px) and (max-width: 480px)
   .full-height-header
     height: calc(50vh - 50px)
+  .high-chart
+    width: calc(100vw - 32px)
 
 @-webkit-keyframes logo-rotate
   to

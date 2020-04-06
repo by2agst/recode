@@ -280,7 +280,9 @@
                         </q-avatar>
                       </div>
                       <div class="col">
-                        <span class="text-h5  q-mt-xs">Re:code</span>
+                        <span class="text-h5  q-mt-xs">
+                          Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+                        </span>
                       </div>
                       <div class="col text-center">
                         <q-btn color="accent">10 Messages</q-btn>
@@ -292,7 +294,7 @@
 
                   <q-card-section class="q-pa-none">
                     <q-list>
-                      <q-item clickable v-ripple>
+                      <q-item clickable v-ripple to="/user/profile">
                         <q-item-section avatar>
                           <q-avatar icon="fas fa-id-badge" color="clear" text-color="positive" />
                         </q-item-section>

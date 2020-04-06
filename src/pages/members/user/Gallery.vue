@@ -1,12 +1,20 @@
 <template>
   <q-page class="bg-blue-grey-1 q-pa-md">
-    <div class="grid full-width row" ref="grid" v-resize:debounce="onResize">
+    <div class="row" ref="grid" v-resize:debounce="onResize">
       <div class="grid-sizer col-1" />
-      <div class="grid-item col-8 q-pa-xs">
+      <div class="grid-item col-8 q-pa-xs" @mouseover="showCaption = true" @mouseout="showCaption = false">
         <q-img
           src="/statics/users/rc19.jpg"
           :ratio="1"
-        />
+          >
+          <div
+            class="text-subtitle2 flex flex-center"
+            :class="$q.screen.lt.md ? 'absolute-bottom' : 'absolute-full'"
+            v-show="showCaption"
+            >
+            Anti Covid
+          </div>
+        </q-img>
       </div>
       <div class="grid-item col-4 q-pa-xs" v-for="i in 6" :key="i">
         <q-img
@@ -37,7 +45,8 @@ export default {
     return {
       instance: '',
       masonry: '',
-      grid: ''
+      grid: '',
+      showCaption: this.$q.screen.lt.md
     }
   },
   mounted () {
