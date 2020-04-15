@@ -106,8 +106,8 @@ export default {
     },
     onResize () {
       console.log('%c-reflow', 'color: yellow;')
-      this.chart1.reflow()
-      this.chart2.reflow()
+      // this.chart1.reflow()
+      // this.chart2.reflow()
     }
   }
 }

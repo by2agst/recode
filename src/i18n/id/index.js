@@ -26,6 +26,7 @@ export default {
 
   menu: {
     dashboard: 'Beranda',
+    users: 'Pengguna',
     chart: 'Grafik',
     gallery: 'Galeri'
   }

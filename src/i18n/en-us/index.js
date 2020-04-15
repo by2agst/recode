@@ -26,6 +26,7 @@ export default {
 
   menu: {
     dashboard: 'Dashboard',
+    users: 'Users',
     chart: 'Chart',
     gallery: 'Gallery'
   }

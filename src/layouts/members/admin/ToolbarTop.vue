@@ -294,7 +294,7 @@
 
                   <q-card-section class="q-pa-none">
                     <q-list>
-                      <q-item clickable v-ripple to="/user/profile">
+                      <q-item clickable v-ripple to="/admin/profile">
                         <q-item-section avatar>
                           <q-avatar icon="fas fa-id-badge" color="clear" text-color="positive" />
                         </q-item-section>

@@ -1,3 +1,5 @@
+import admin from 'layouts/members/admin/Admin.routes.js'
+
 const routes = [
   {
     path: '/',
@@ -7,16 +9,7 @@ const routes = [
       { path: 'login', component: () => import('pages/Login.vue') }
     ]
   },
-  {
-    path: '/user',
-    component: () => import('layouts/members/user/Default.vue'),
-    children: [
-      { path: 'profile', component: () => import('pages/members/user/Profile.vue') },
-      { path: 'dashboard', component: () => import('pages/members/user/Dashboard.vue') },
-      { path: 'chart', component: () => import('pages/members/user/Chart.vue') },
-      { path: 'gallery', component: () => import('pages/members/user/Gallery.vue') }
-    ]
-  }
+  admin
 ]
 
 // Always leave this as last one

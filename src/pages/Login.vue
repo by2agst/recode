@@ -142,7 +142,7 @@ export default {
       if (this.$refs.username.hasError || this.$refs.password.hasError) {
         // this.formHasError = true
       } else {
-        this.$router.replace('/user/dashboard')
+        this.$router.replace('/admin/dashboard')
       }
     }
   }
