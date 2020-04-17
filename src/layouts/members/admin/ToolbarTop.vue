@@ -359,12 +359,22 @@
       </div>
     </q-toolbar>
 
-    <q-toolbar class="q-gutter-x-md">
-      <div>Dashboard</div>
+    <q-toolbar>
+      <div class="row full-width">
+        <div class="col-12 col-sm-6">
+          <div class="row q-gutter-x-md">
+            <div>{{ activeMenu }}</div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="row justify-end">
+            <div class="col-auto">
+              <div class="poppins-r" style="width: 150px">{{ timeStamp }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <q-separator vertical inset />
-
-      <div class="poppins-r">{{ new Date }}</div>
     </q-toolbar>
   </q-header>
 </template>
@@ -380,6 +390,19 @@ export default {
   },
   data () {
     return {
+      timeStamp: this.$moment().format('DD MMM YYYY HH:mm:ss'),
+      interval: null
+    }
+  },
+  created () {
+    this.interval = setInterval(() => {
+      this.timeStamp = this.$moment().format('DD MMM YYYY HH:mm:ss')
+    }, 1000)
+  },
+  computed: {
+    activeMenu: function () {
+      console.log('\x1b[36m%s\x1b[0m', '>>> this.route :', this.$route)
+      return this.$route.name.replace(/([A-Z])/g, ' $1') || ''
     }
   },
   methods: {
@@ -389,6 +412,9 @@ export default {
     onItemClick () {
       console.log('%c-test', 'color: yellow;')
     }
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }
 </script>

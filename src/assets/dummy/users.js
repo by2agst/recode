@@ -22,7 +22,7 @@ export default [
     totalPayment: '$246154.65',
     status: 3,
     type: 2,
-    actions: null
+    actions: ['edit', 'delete']
   },
   {
     recordID: 2,
