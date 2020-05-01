@@ -1,4 +1,4 @@
-import admin from 'layouts/members/admin/Admin.routes.js'
+import admin from './Admin.routes.js'
 
 const routes = [
   {

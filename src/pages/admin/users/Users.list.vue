@@ -19,7 +19,7 @@
                   <q-item-label>Excel</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup @click="exportPdf">
                 <q-item-section>
                   <q-item-label>PDF</q-item-label>
                 </q-item-section>
@@ -126,6 +126,8 @@
 <script>
 import datauser from 'src/assets/dummy/users'
 import XLSX from 'xlsx'
+import JsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 export default {
   name: 'Users',
@@ -238,22 +240,44 @@ export default {
       }
       return props[key]
     },
-    convertData () {
-      let newData = this.data.map(r => {
-        return this.visibleColumns.map(col => {
-          return (r[col] || '')
+    convertData (type = 'excel') {
+      let visibleColumns = [...this.visibleColumns]
+      this.$_.remove(visibleColumns, col => col === 'action')
+      let body = [...this.data].map(r => {
+        return visibleColumns.map(col => {
+          let { format } = this.columns.find(c => c.name === col)
+          return (format(r[col]) || '')
         })
       })
 
-      newData.unshift(this.visibleColumns)
-      return newData
+      let head = visibleColumns.map(col => {
+        let { label } = this.columns.find(c => c.name === col)
+        return label || ''
+      })
+
+      let result
+      if (type === 'excel') {
+        body.unshift(head)
+        result = body
+      } else if (type === 'pdf') {
+        result = {
+          headStyles: { fillColor: [88, 103, 221] },
+          head: [head],
+          body
+        }
+      }
+      return result
     },
     exportExcel () {
-      console.log('\x1b[36m%s\x1b[0m', '>>> this.data :', this.data)
-      const ws = XLSX.utils.aoa_to_sheet(this.convertData(this.data))
+      const ws = XLSX.utils.aoa_to_sheet(this.convertData('excel'))
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, ws, 'users')
       XLSX.writeFile(wb, `users-${this.$moment().format('YYMMDD-hhmmss')}.xlsx`)
+    },
+    async exportPdf () {
+      let doc = new JsPDF({})
+      doc.autoTable(this.convertData('pdf'))
+      doc.save(`users-${this.$moment().format('YYMMDD-hhmmss')}.pdf`)
     }
   }
 }
