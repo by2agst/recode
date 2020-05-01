@@ -3,7 +3,8 @@ export default {
   path: 'users',
   component: () => import('./Users.page.vue'),
   children: [
-    { name: 'UsersList', path: '', component: () => import('./Users.list.vue') },
-    { name: 'UsersEdit', path: 'edit/:id?', component: () => import('./Users.edit.vue') }
+    { name: 'Users-List', path: '', component: () => import('./Users.list.vue') },
+    { name: 'Users-Add', path: 'edit', component: () => import('./Users.edit.vue') },
+    { name: 'Users-Edit', path: 'edit/:id', component: () => import('./Users.edit.vue') }
   ]
 }

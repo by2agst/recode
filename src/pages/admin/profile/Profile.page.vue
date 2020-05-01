@@ -88,7 +88,7 @@
           <q-tab-panel name="personalInformation">
             <div class="text-subtitle1 q-mb-md">
               Personal Information
-              <small class="text-grey">update your personal informaiton</small>
+              <small class="text-grey">update your personal information</small>
             </div>
             <div class="full-width">
               <div class="row justify-center">
@@ -101,7 +101,7 @@
                       <q-input
                         dense
                         outlined
-                        ref="fullName"
+                        ref="email"
                         v-model="form.email"
                         placeholder="Full Name"
                         disabled

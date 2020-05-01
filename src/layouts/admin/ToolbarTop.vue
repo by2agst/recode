@@ -402,7 +402,7 @@ export default {
   computed: {
     activeMenu: function () {
       console.log('\x1b[36m%s\x1b[0m', '>>> this.route :', this.$route)
-      return this.$route.name.replace(/([A-Z])/g, ' $1') || ''
+      return this.$route.name.replace(/([-_])/g, ' $1 ').replace(/([A-Z])/g, ' $1') || ''
     }
   },
   methods: {

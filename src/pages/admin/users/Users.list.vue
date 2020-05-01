@@ -8,10 +8,10 @@
         :grid="$q.screen.xs"
         :pagination.sync="pagination"
         :visible-columns="visibleColumns"
-        row-key="recordID"
+        row-key="_id"
         >
         <template v-slot:top>
-          <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" class="q-mr-sm"/>
+          <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" class="q-mr-sm" to="/admin/users/edit"/>
           <q-btn-dropdown no-caps color="positive" label="Export">
             <q-list>
               <q-item clickable v-close-popup @click="exportExcel">
@@ -88,7 +88,7 @@
         </template>
         <template v-slot:body-cell-action="props">
           <q-td :props="props">
-            <q-btn flat round class="square" color="primary" icon="far fa-edit">
+            <q-btn flat round class="square" color="primary" icon="far fa-edit" @click="edit(props.value)">
               <q-tooltip anchor="top middle" self="center middle">
                 Edit
               </q-tooltip>
@@ -173,7 +173,7 @@ export default {
           required: true,
           label: 'Action',
           align: 'center',
-          field: row => row.recordID,
+          field: row => row._id,
           format: val => `${val}`,
           headerClasses: 'bg-grey-2',
           sortable: true
@@ -184,6 +184,9 @@ export default {
     }
   },
   methods: {
+    edit (id) {
+      this.$router.push(`/admin/users/edit/${id}`)
+    },
     jobName (code) {
       let job = code
       switch (code) {
