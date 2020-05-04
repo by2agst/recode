@@ -369,7 +369,7 @@
         <div class="col-12 col-sm-6">
           <div class="row justify-end">
             <div class="col-auto">
-              <div class="poppins-r" style="width: 150px">{{ timeStamp }}</div>
+              <div class="poppins-r" style="width: 160px">{{ timeStamp }}</div>
             </div>
           </div>
         </div>
