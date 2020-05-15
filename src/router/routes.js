@@ -1,23 +1,29 @@
 import DefaultLayout from 'layouts/DefaultLayout.vue'
 import BlankLayout from 'layouts/BlankLayout.vue'
+/* plop-modify-route-import-layout */
 
 import admin from './Admin.routes.js'
+/* plop-modify-route-import-role-routes */
 
-const routes = [
+let routes = [
   {
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') }/* plop-modify-route-default */
     ]
   }, {
-    path: '/login',
+    path: '/',
     component: BlankLayout,
     children: [
-      { path: '', component: () => import('pages/Login.vue') }
+      { path: 'login', component: () => import('pages/Login.vue') }/* plop-modify-route-blank */
     ]
-  },
-  admin
+  }/* plop-modify-route-parent */
+]
+
+routes = [
+  ...routes,
+  ...admin/* plop-modify-route-roles */
 ]
 
 // Always leave this as last one

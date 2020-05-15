@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'BlankLayout',
+  name: '{{pascalCase layoutName}}Layout',
 
   data () {
     return {
