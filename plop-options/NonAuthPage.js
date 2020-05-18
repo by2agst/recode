@@ -77,7 +77,7 @@ module.exports = {
   }, {
     type: 'input',
     name: 'layoutName',
-    message: 'input layout Name (use PascalCase)',
+    message: 'input layout name* (use PascalCase)',
     when: function (answers) {
       return answers.type === 'new'
     },
@@ -101,7 +101,7 @@ module.exports = {
   }, {
     type: 'input',
     name: 'name',
-    message: 'input page name (use PascalCase)',
+    message: 'input page name* (use PascalCase)',
     validate: function (value) {
       return validatePascalCase(value)
     }

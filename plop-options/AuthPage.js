@@ -14,7 +14,12 @@ const optionRoles = roles.map(name => {
 })
 
 const files = {
-  blank: [
+  single: [
+    'page.vue',
+    'routes.js'
+  ],
+  multiple: [
+    'default.vue',
     'page.vue',
     'routes.js'
   ],
@@ -68,21 +73,45 @@ const actions = answer => {
 module.exports = {
   description: 'Create Auth Page',
   prompts: [{
+    type: 'confirm',
+    name: 'createRole',
+    message: 'Create new role? (default: no)',
+    default: false
+  }, {
+    type: 'input',
+    name: 'roleName',
+    message: 'Input role name* (use PascalCase)',
+    when: function (answers) {
+      return answers.createRole
+    },
+    validate: function (value) {
+      return validatePascalCase(value)
+    }
+  }, {
     type: 'checkbox',
     name: 'role',
     message: 'What role it will be rendered?',
-    choices: optionRoles
+    choices: optionRoles,
+    when: function (answers) {
+      return !answers.createRole
+    }
   }, {
     type: 'list',
     name: 'type',
     message: 'What is your page type?',
     choices: [{
-      name: 'Blank Page',
-      value: 'blank'
+      name: 'Single Page',
+      value: 'single'
+    }, {
+      name: 'Multiple Page',
+      value: 'multiple'
     }, {
       name: 'CRUD Page',
       value: 'crud'
-    }]
+    }],
+    when: function (answers) {
+      return !answers.createRole
+    }
   }, {
     type: 'input',
     name: 'name',

@@ -6,7 +6,7 @@ import Gallery from 'pages/admin/gallery/Gallery.routes.js'/* plop-modify-route-
 
 export default [{
   path: '/admin',
-  component: () => import('layouts/admin/Default.vue'),
+  component: () => import('layouts/admin/DefaultLayout.vue'),
   children: [
     Profile,
     Dashboard,
