@@ -16,11 +16,11 @@ const ls = (layoutDir = '', type = '') => {
 }
 
 const validateDashCase = (string) => {
-  return (/^[a-z]+([a-z\-]+)?$/).test(string) || 'Invalid Input'
+  return (/^[a-z]+([a-z\-]+)?$/).test(string)
 }
 
 const validatePascalCase = (string) => {
-  return (/^[A-Z]{1}[A-Za-z]{1,}$/).test(string) || 'Invalid Input'
+  return (/^[A-Z]{1}[A-Za-z]{1,}$/).test(string)
 }
 
 const toDashCase = (string) => {

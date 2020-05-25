@@ -1,8 +1,8 @@
-const { ls, validatePascalCase, toPascalCase } = require('../src/boot/global.js')
+const { ls, validatePascalCase, toDashCase, toPascalCase } = require('../src/boot/global.js')
 
 const roles = ls('./src/layouts', 'd')
 
-const optionRoles = roles.map(name => {
+let optionRoles = roles.map(name => {
   if (roles.length === 1) {
     return {
       name: name,
@@ -13,7 +13,7 @@ const optionRoles = roles.map(name => {
   }
 })
 
-const files = {
+const pages = {
   single: [
     'page.vue',
     'routes.js'
@@ -31,38 +31,68 @@ const files = {
   ]
 }
 
+const roleLayouts = {
+  layout: [
+    'DefaultLayout.vue',
+    'SidebarLeft.vue',
+    'ToolbarTop.vue'
+  ],
+  router: 'routes.js',
+  pages: [
+    'Dashboard',
+    'Profile'
+  ]
+}
+
 const actions = answer => {
   // console.log('\x1b[36m%s\x1b[0m', '>>> answer :', answer)
   let addType = []
   let modifyType = []
-  answer.role.forEach(r => {
-    // console.log('\x1b[36m%s\x1b[0m', '\nROLES :', r)
-    files[answer.type].forEach(file => {
-      // console.log('\n', {
-      //   type: 'add',
-      //   path: `src/pages/${r.toLowerCase()}/${answer.name.toLowerCase()}/${answer.name}.${file}`,
-      //   templateFile: `plop-options/plop-templates/auth/${answer.type.toLowerCase()}/${file}`
-      // })
+
+  if (answer.createRole) {
+    roleLayouts.layout.forEach(layout => {
       addType.push({
         type: 'add',
-        path: `src/pages/${r.toLowerCase()}/{{dashCase name}}/{{pascalCase name}}.${file}`,
-        templateFile: `plop-options/plop-templates/auth/{{lowerCase type}}/${file}`
+        path: `src/layouts/{{dashCase roleName}}/${layout}`,
+        templateFile: `plop-options/plop-templates/auth/roles/layouts/${layout}`
       })
     })
 
-    modifyType = [...modifyType, ...[
-      {
-        type: 'modify',
-        path: `src/router/${toPascalCase(r)}.routes.js`,
-        pattern: /(\/\* plop-modify-route-import \*\/)/,
-        template: `\nimport {{pascalCase name}} from 'pages/${r.toLowerCase()}/{{dashCase name}}/{{pascalCase name}}.routes'$1`
-      }, {
-        type: 'modify',
-        path: `src/router/${toPascalCase(r)}.routes.js`,
-        pattern: /(\/\* plop-modify-route \*\/)/,
-        template: `,\n    {{pascalCase name}}$1`
-      }
-    ]]
+    addType.push({
+      type: 'add',
+      path: `src/router/{{pascalCase roleName}}.routes.js`,
+      templateFile: `plop-options/plop-templates/auth/roles/router/${roleLayouts.router}`
+    })
+  }
+
+  answer.role.forEach(r => {
+    // console.log('\x1b[36m%s\x1b[0m', '\nROLES :', r)
+    pages[answer.type].forEach(page => {
+      // console.log('\n', {
+      //   type: 'add',
+      //   path: `src/pages/${r.toLowerCase()}/${answer.name.toLowerCase()}/${answer.name}.${page}`,
+      //   templateFile: `plop-options/plop-templates/auth/${answer.type.toLowerCase()}/${page}`
+      // })
+      addType.push({
+        type: 'add',
+        path: `src/pages/${toDashCase(r)}/{{dashCase name}}/{{pascalCase name}}.${page}`,
+        templateFile: `plop-options/plop-templates/auth/pages/{{lowerCase type}}/${page}`
+      })
+    })
+
+    modifyType.push({
+      type: 'modify',
+      path: `src/router/${toPascalCase(r)}.routes.js`,
+      pattern: /(\/\* plop-modify-route-import \*\/)/,
+      template: `\nimport {{pascalCase name}} from 'pages/${toDashCase(r)}/{{dashCase name}}/{{pascalCase name}}.routes'$1`
+    })
+
+    modifyType.push({
+      type: 'modify',
+      path: `src/router/${toPascalCase(r)}.routes.js`,
+      pattern: /(\/\* plop-modify-route-default \*\/)/,
+      template: `,\n      {{pascalCase name}}$1`
+    })
 
     console.log('\x1b[36m%s\x1b[0m', '>>> modifyType :', modifyType)
   })
@@ -85,16 +115,21 @@ module.exports = {
       return answers.createRole
     },
     validate: function (value) {
-      return validatePascalCase(value)
+      let v = validatePascalCase(value)
+      if (v) {
+        optionRoles[0].checked = false
+        optionRoles.push({
+          name: toDashCase(value),
+          checked: true
+        })
+      }
+      return v || 'Invalid Input'
     }
   }, {
     type: 'checkbox',
     name: 'role',
     message: 'What role it will be rendered?',
-    choices: optionRoles,
-    when: function (answers) {
-      return !answers.createRole
-    }
+    choices: optionRoles
   }, {
     type: 'list',
     name: 'type',
@@ -108,16 +143,13 @@ module.exports = {
     }, {
       name: 'CRUD Page',
       value: 'crud'
-    }],
-    when: function (answers) {
-      return !answers.createRole
-    }
+    }]
   }, {
     type: 'input',
     name: 'name',
     message: 'input page name (use PascalCase)',
     validate: function (value) {
-      return validatePascalCase(value)
+      return validatePascalCase(value) || 'Invalid Input'
     }
   }],
   actions

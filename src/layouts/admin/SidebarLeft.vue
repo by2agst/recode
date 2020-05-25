@@ -24,7 +24,7 @@
           <q-icon name="fas fa-home"/>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{$t('menu.dashboard')}}</q-item-label>
+          <q-item-label>{{ $t('menu.dashboard') }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item clickable to="/admin/users" active-class="side-menu-left-active">
@@ -32,7 +32,7 @@
           <q-icon name="fas fa-users"/>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{$t('menu.users')}}</q-item-label>
+          <q-item-label>{{ $t('menu.users') }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item clickable to="/admin/chart" active-class="side-menu-left-active">
@@ -40,7 +40,7 @@
           <q-icon name="fas fa-chart-bar"/>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{$t('menu.chart')}}</q-item-label>
+          <q-item-label>{{ $t('menu.chart') }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item clickable to="/admin/gallery" active-class="side-menu-left-active">
@@ -48,7 +48,7 @@
           <q-icon name="fas fa-images"/>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{$t('menu.gallery')}}</q-item-label>
+          <q-item-label>{{ $t('menu.gallery') }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item-label header class="regular">Default</q-item-label>

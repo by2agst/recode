@@ -82,7 +82,7 @@ module.exports = {
       return answers.type === 'new'
     },
     validate: function (value) {
-      return validatePascalCase(value)
+      return validatePascalCase(value) || 'Invalid Input'
     }
   }, {
     type: 'input',
@@ -95,7 +95,7 @@ module.exports = {
       if (!value) {
         return true
       } else {
-        return validateDashCase(value)
+        return validateDashCase(value) || 'Invalid Input'
       }
     }
   }, {
@@ -103,7 +103,7 @@ module.exports = {
     name: 'name',
     message: 'input page name* (use PascalCase)',
     validate: function (value) {
-      return validatePascalCase(value)
+      return validatePascalCase(value) || 'Invalid Input'
     }
   }],
   actions
