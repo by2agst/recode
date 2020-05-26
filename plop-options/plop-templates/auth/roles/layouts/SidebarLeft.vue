@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'UserSidebarLeft',
+  name: '{{ pascalCase roleName }}SidebarLeft',
 
   props: {
     leftDrawerOpen: {

@@ -26,14 +26,14 @@ const actions = answer => {
 
   addType.push({
     type: 'add',
-    path: 'src/pages/{{name}}.vue',
+    path: 'src/pages/{{ pascalCase name }}.vue',
     templateFile: './plop-options/plop-templates/non-auth/page.vue'
   })
 
   if (answer.layoutName) {
     addType.push({
       type: 'add',
-      path: `src/layouts/{{pascalCase layoutName}}Layout.vue`,
+      path: `src/layouts/{{ pascalCase layoutName }}Layout.vue`,
       templateFile: `plop-options/plop-templates/non-auth/layout.vue`
     })
     pattern = `(\\/\\* plop-modify-route-import-layout \\*\\/)`
@@ -42,7 +42,7 @@ const actions = answer => {
       type: 'modify',
       path: `src/router/routes.js`,
       pattern: regex,
-      template: `import {{pascalCase layoutName}}Layout from 'layouts/{{pascalCase layoutName}}Layout.vue'\n$1`
+      template: `import {{ pascalCase layoutName }}Layout from 'layouts/{{ pascalCase layoutName }}Layout.vue'\n$1`
     })
     pattern = `(\\/\\* plop-modify-route-parent \\*\\/)`
     regex = new RegExp(pattern)
@@ -50,7 +50,7 @@ const actions = answer => {
       type: 'modify',
       path: `src/router/routes.js`,
       pattern: regex,
-      template: `, {\n    path: '/{{dashCase pathParrent}}',\n    component: {{pascalCase layoutName}}Layout,\n    children: [\n      { path: '{{dashCase name}}', component: () => import('pages/{{pascalCase name}}.vue') }/* plop-modify-route-{{dashCase layoutName}} */\n    ]\n  }$1`
+      template: `, {\n    path: '/{{ dashCase pathParrent }}',\n    component: {{ pascalCase layoutName }}Layout,\n    children: [\n      { path: '{{ dashCase name }}', component: () => import('pages/{{ pascalCase name }}.vue') }/* plop-modify-route-{{ dashCase layoutName }} */\n    ]\n  }$1`
     })
   } else {
     pattern = `(\\/\\* plop-modify-route-${toDashCase(answer.type)} \\*\\/)`
@@ -60,7 +60,7 @@ const actions = answer => {
       type: 'modify',
       path: `src/router/routes.js`,
       pattern: regex,
-      template: `,\n      { path: '{{dashCase name}}', component: () => import('pages/{{pascalCase name}}.vue') }$1`
+      template: `,\n      { path: '{{ dashCase name }}', component: () => import('pages/{{ pascalCase name }}.vue') }$1`
     })
   }
 

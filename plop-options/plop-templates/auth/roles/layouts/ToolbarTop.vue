@@ -133,13 +133,13 @@
       <div class="row full-width">
         <div class="col-12 col-sm-6">
           <div class="row q-gutter-x-md">
-            <div>{{ activeMenu }}</div>
+            <div>\{{ activeMenu }}</div>
           </div>
         </div>
         <div class="col-12 col-sm-6">
           <div class="row justify-end">
             <div class="col-auto">
-              <div class="poppins-r" style="width: 160px">{{ timeStamp }}</div>
+              <div class="poppins-r" style="width: 160px">\{{ timeStamp }}</div>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@
 import Languages from 'src/components/Languages.vue'
 
 export default {
-  name: 'UserToolbarTop',
+  name: '{{ pascalCase roleName }}ToolbarTop',
 
   components: {
     Languages

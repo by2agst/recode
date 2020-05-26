@@ -15,7 +15,7 @@ import ToolbarTop from './ToolbarTop.vue'
 import SidebarLeft from './SideBarLeft.vue'
 
 export default {
-  name: '{{ roleName }}DefaultLayout',
+  name: '{{ pascalCase roleName }}DefaultLayout',
   components: {
     ToolbarTop,
     SidebarLeft

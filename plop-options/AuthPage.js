@@ -53,15 +53,43 @@ const actions = answer => {
     roleLayouts.layout.forEach(layout => {
       addType.push({
         type: 'add',
-        path: `src/layouts/{{dashCase roleName}}/${layout}`,
+        path: `src/layouts/{{ dashCase roleName }}/${layout}`,
         templateFile: `plop-options/plop-templates/auth/roles/layouts/${layout}`
       })
     })
 
     addType.push({
       type: 'add',
-      path: `src/router/{{pascalCase roleName}}.routes.js`,
+      path: `src/router/{{ pascalCase roleName }}.routes.js`,
       templateFile: `plop-options/plop-templates/auth/roles/router/${roleLayouts.router}`
+    })
+
+    roleLayouts.pages.forEach(folderName => {
+      addType.push({
+        type: 'add',
+        path: `src/pages/{{ dashCase roleName }}/${toDashCase(folderName)}/${toPascalCase(folderName)}.page.vue`,
+        templateFile: `plop-options/plop-templates/auth/roles/pages/${folderName.toLowerCase()}/${toPascalCase(folderName)}.page.vue`
+      })
+
+      addType.push({
+        type: 'add',
+        path: `src/pages/{{ dashCase roleName }}/${toDashCase(folderName)}/${toPascalCase(folderName)}.routes.js`,
+        templateFile: `plop-options/plop-templates/auth/roles/pages/${folderName.toLowerCase()}/${toPascalCase(folderName)}.routes.js`
+      })
+    })
+
+    modifyType.push({
+      type: 'modify',
+      path: `src/router/routes.js`,
+      pattern: /(\/\* plop-modify-route-import-role-routes \*\/)/,
+      template: `import {{ camelCase roleName }} from './{{ pascalCase roleName }}.routes.js'\n$1`
+    })
+
+    modifyType.push({
+      type: 'modify',
+      path: `src/router/routes.js`,
+      pattern: /(\/\* plop-modify-route-roles \*\/)/,
+      template: `,\n  ...{{ camelCase roleName }}$1`
     })
   }
 
@@ -75,7 +103,7 @@ const actions = answer => {
       // })
       addType.push({
         type: 'add',
-        path: `src/pages/${toDashCase(r)}/{{dashCase name}}/{{pascalCase name}}.${page}`,
+        path: `src/pages/${toDashCase(r)}/{{ dashCase name }}/{{ pascalCase name }}.${page}`,
         templateFile: `plop-options/plop-templates/auth/pages/{{lowerCase type}}/${page}`
       })
     })
@@ -84,14 +112,14 @@ const actions = answer => {
       type: 'modify',
       path: `src/router/${toPascalCase(r)}.routes.js`,
       pattern: /(\/\* plop-modify-route-import \*\/)/,
-      template: `\nimport {{pascalCase name}} from 'pages/${toDashCase(r)}/{{dashCase name}}/{{pascalCase name}}.routes'$1`
+      template: `\nimport {{ pascalCase name }} from 'pages/${toDashCase(r)}/{{ dashCase name }}/{{ pascalCase name }}.routes.js'$1`
     })
 
     modifyType.push({
       type: 'modify',
       path: `src/router/${toPascalCase(r)}.routes.js`,
       pattern: /(\/\* plop-modify-route-default \*\/)/,
-      template: `,\n      {{pascalCase name}}$1`
+      template: `,\n      {{ pascalCase name }}$1`
     })
 
     console.log('\x1b[36m%s\x1b[0m', '>>> modifyType :', modifyType)
