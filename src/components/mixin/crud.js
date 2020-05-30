@@ -18,6 +18,11 @@ export const crud = () => {
         confirmToDelete: false
       }
     },
+    computed: {
+      optionsColumns () {
+        return [...this.columns].filter(c => !c.required)
+      }
+    },
     methods: {
       convertData (type = 'excel') {
         let visibleColumns = [...this.visibleColumns]

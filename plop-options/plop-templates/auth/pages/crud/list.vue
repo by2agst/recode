@@ -38,7 +38,7 @@
             :display-value="$q.lang.table.columns"
             emit-value
             map-options
-            :options="columns"
+            :options="optionsColumns"
             option-value="name"
             options-cover
             style="min-width: 150px;"
@@ -76,6 +76,29 @@
             </q-btn>
           </q-td>
         </template>
+        <!-- mobile -->
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+            <q-card>
+              <q-card-section>
+                <div v-for="(p, i) in props.colsMap" :key="i">
+                  <div class="row q-my-sm" v-if="p.name !== 'action'">
+                    <div class="col-12 text-primary">{{ p.label }}</div>
+                    <div class="col-12">{{ props.row[p.name] }}</div>
+                  </div>
+                </div>
+              </q-card-section>
+              <q-separator />
+              <q-card-section class="flex flex-center">
+                <div class="q-gutter-md">
+                  <q-btn flat color="primary" icon="far fa-edit" label="Edit" @click="edit(props.row._id)" />
+                  <q-btn flat color="negative" icon="far fa-trash-alt" label="Delete" @click="confirmToDelete = true" />
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+        <!-- end of mobile -->
       </q-table>
     </div>
     <dialog-icon :dialog-icon-model="confirmToDelete" @updateDialogModel="updateDialogModel" />
