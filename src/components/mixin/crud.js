@@ -6,6 +6,7 @@ export const crud = () => {
   return {
     data () {
       return {
+        fileName: '',
         pagination: {
           descending: false,
           page: 1,
@@ -49,13 +50,13 @@ export const crud = () => {
       exportExcel () {
         const ws = XLSX.utils.aoa_to_sheet(this.convertData('excel'))
         const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, 'users')
-        XLSX.writeFile(wb, `users-${this.$moment().format('YYMMDD-hhmmss')}.xlsx`)
+        XLSX.utils.book_append_sheet(wb, ws, `${this.fileName}`)
+        XLSX.writeFile(wb, `${this.fileName}-${this.$moment().format('YYMMDD-hhmmss')}.xlsx`)
       },
       async exportPdf () {
         let doc = new JsPDF({})
         doc.autoTable(this.convertData('pdf'))
-        doc.save(`users-${this.$moment().format('YYMMDD-hhmmss')}.pdf`)
+        doc.save(`${this.fileName}-${this.$moment().format('YYMMDD-hhmmss')}.pdf`)
       }
     }
   }

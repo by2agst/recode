@@ -121,6 +121,7 @@ export default {
   ],
   data () {
     return {
+      fileName: 'Users',
       pagination: {
         descending: false,
         page: 1,

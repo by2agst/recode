@@ -88,7 +88,7 @@ import { crud } from 'src/components/mixin/crud'
 import DialogIcon from 'src/components/DialogIcon.vue'
 
 export default {
-  name: 'Users',
+  name: '{{ pascalCase name }}',
   components: {
     DialogIcon
   },
@@ -97,6 +97,7 @@ export default {
   ],
   data () {
     return {
+      fileName: '{{ pascalCase name }}',
       pagination: {
         descending: false,
         page: 1,
