@@ -13,7 +13,7 @@
         <template v-slot:top>
           <div class="full-width">
             <div class="row">
-              <div class="col-12 col-md-6 q-mb-sm q-gutter-sm">
+              <div class="col-12 col-sm-6 q-mb-sm q-gutter-sm">
                 <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/admin/users/edit"/>
                   <q-btn-dropdown no-caps color="positive" label="Export">
                     <q-list>
@@ -30,8 +30,8 @@
                     </q-list>
                   </q-btn-dropdown>
               </div>
-              <div class="col-12 col-md-6 q-mb-sm">
-                <div class="row" :class="{ 'justify-end': $q.screen.md }">
+              <div class="col-12 col-sm-6 q-mb-sm">
+                <div class="row" :class="{ 'justify-end': $q.screen.gt.xs }">
                   <div class="col-auto">
                     <q-select
                       v-model="visibleColumns"

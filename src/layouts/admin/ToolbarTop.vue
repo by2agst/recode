@@ -362,12 +362,12 @@
     <q-toolbar>
       <div class="row full-width">
         <div class="col-12 col-sm-6">
-          <div class="row q-gutter-x-md">
+          <div class="row q-gutter-x-md" :class="{ 'justify-center': $q.screen.lt.sm }">
             <div>{{ activeMenu }}</div>
           </div>
         </div>
         <div class="col-12 col-sm-6">
-          <div class="row" :class="{ 'justify-end': $q.screen.md }">
+          <div class="row" :class="{ 'justify-end': $q.screen.gt.xs, 'justify-center': $q.screen.lt.sm }">
             <div class="col-auto">
               <div class="poppins-r" style="width: 160px">{{ timeStamp }}</div>
             </div>
