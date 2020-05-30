@@ -156,7 +156,7 @@ module.exports = {
   }, {
     type: 'checkbox',
     name: 'role',
-    message: 'What role it will be rendered?',
+    message: 'What roles it will be rendered?',
     choices: optionRoles
   }, {
     type: 'list',

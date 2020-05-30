@@ -3,7 +3,7 @@
     <div class="col-12">
       <q-table
         title="Users"
-        :data="data"
+        :data="dataTable"
         :columns="columns"
         :grid="$q.screen.xs"
         :pagination.sync="pagination"
@@ -93,7 +93,7 @@
                 Edit
               </q-tooltip>
             </q-btn>
-            <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirm = true">
+            <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirmToDelete = true">
               <q-tooltip anchor="top middle" self="center middle">
                 Delete
               </q-tooltip>
@@ -102,43 +102,29 @@
         </template>
       </q-table>
     </div>
-    <q-dialog v-model="confirm" persistent transition-show="scale" transition-hide="scale">
-      <q-card class="bg-white text-negative" style="width: 400px; max-width: 80vw;">
-        <q-card-section class="text-center">
-          <q-icon name="far fa-times-circle q-mb-md" style="font-size: 100px;"/>
-          <div class="text-h6">Are you Sure?</div>
-        </q-card-section>
-
-        <q-card-section class="q-py-sm text-center">
-          <p>Do you realy want to delete these record?<br>
-          This process can't be undone</p>
-        </q-card-section>
-
-        <q-card-actions align="right" class="bg-negative text-white">
-          <q-btn no-caps flat label="Cancel" v-close-popup />
-          <q-btn no-caps flat label="Ok" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <dialog-icon :dialog-icon-model="confirmToDelete" @updateDialogModel="updateDialogModel" />
   </div>
 </template>
 
 <script>
-import datauser from 'src/assets/dummy/users'
-import XLSX from 'xlsx'
-import JsPDF from 'jspdf'
-import 'jspdf-autotable'
+import dataUser from 'src/assets/dummy/users'
+import { crud } from 'src/components/mixin/crud'
+import DialogIcon from 'src/components/DialogIcon.vue'
 
 export default {
   name: 'Users',
+  components: {
+    DialogIcon
+  },
+  mixins: [
+    crud()
+  ],
   data () {
     return {
       pagination: {
-        // sortBy: 'action',
         descending: false,
         page: 1,
         rowsPerPage: 10
-        // rowsNumber: xx if getting data from a server
       },
       visibleColumns: ['companyAgent', 'companyName', 'status'],
       columns: [
@@ -179,11 +165,14 @@ export default {
           sortable: true
         }
       ],
-      data: datauser,
-      confirm: false
+      dataTable: dataUser,
+      confirmToDelete: false
     }
   },
   methods: {
+    updateDialogModel (val) {
+      this.confirmToDelete = val
+    },
     edit (id) {
       this.$router.push(`/admin/users/edit/${id}`)
     },
@@ -242,45 +231,6 @@ export default {
         }
       }
       return props[key]
-    },
-    convertData (type = 'excel') {
-      let visibleColumns = [...this.visibleColumns]
-      this.$_.remove(visibleColumns, col => col === 'action')
-      let body = [...this.data].map(r => {
-        return visibleColumns.map(col => {
-          let { format } = this.columns.find(c => c.name === col)
-          return (format(r[col]) || '')
-        })
-      })
-
-      let head = visibleColumns.map(col => {
-        let { label } = this.columns.find(c => c.name === col)
-        return label || ''
-      })
-
-      let result
-      if (type === 'excel') {
-        body.unshift(head)
-        result = body
-      } else if (type === 'pdf') {
-        result = {
-          headStyles: { fillColor: [88, 103, 221] },
-          head: [head],
-          body
-        }
-      }
-      return result
-    },
-    exportExcel () {
-      const ws = XLSX.utils.aoa_to_sheet(this.convertData('excel'))
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, 'users')
-      XLSX.writeFile(wb, `users-${this.$moment().format('YYMMDD-hhmmss')}.xlsx`)
-    },
-    async exportPdf () {
-      let doc = new JsPDF({})
-      doc.autoTable(this.convertData('pdf'))
-      doc.save(`users-${this.$moment().format('YYMMDD-hhmmss')}.pdf`)
     }
   }
 }
