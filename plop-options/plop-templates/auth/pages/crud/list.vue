@@ -11,38 +11,47 @@
         row-key="_id"
         >
         <template v-slot:top>
-          <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" class="q-mr-sm" to="/admin/{{dashCase name}}/edit"/>
-          <q-btn-dropdown no-caps color="positive" label="Export">
-            <q-list>
-              <q-item clickable v-close-popup @click="exportExcel">
-                <q-item-section>
-                  <q-item-label>Excel</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup @click="exportPdf">
-                <q-item-section>
-                  <q-item-label>PDF</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
-
-          <q-space />
-
-          <q-select
-            v-model="visibleColumns"
-            multiple
-            outlined
-            dense
-            options-dense
-            :display-value="$q.lang.table.columns"
-            emit-value
-            map-options
-            :options="optionsColumns"
-            option-value="name"
-            options-cover
-            style="min-width: 150px;"
-          />
+          <div class="full-width">
+            <div class="row">
+              <div class="col-12 col-md-6 q-mb-sm q-gutter-sm">
+                <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/{{dashCase role}}/{{dashCase name}}/edit"/>
+                  <q-btn-dropdown no-caps color="positive" label="Export">
+                    <q-list>
+                      <q-item clickable v-close-popup @click="exportExcel">
+                        <q-item-section>
+                          <q-item-label>Excel</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="exportPdf">
+                        <q-item-section>
+                          <q-item-label>PDF</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-btn-dropdown>
+              </div>
+              <div class="col-12 col-md-6 q-mb-sm">
+                <div class="row" :class="{ 'justify-end': $q.screen.md }">
+                  <div class="col-auto">
+                    <q-select
+                      v-model="visibleColumns"
+                      multiple
+                      outlined
+                      dense
+                      options-dense
+                      :display-value="$q.lang.table.columns"
+                      emit-value
+                      map-options
+                      :options="optionsColumns"
+                      option-value="name"
+                      options-cover
+                      style="min-width: 150px;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </template>
 
         <template v-slot:body-cell-companyAgent="props">
