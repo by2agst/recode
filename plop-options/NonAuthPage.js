@@ -1,4 +1,4 @@
-const { ls, validateDashCase, validatePascalCase, toDashCase } = require('../src/boot/global.js')
+const { ls, validateDashCase, validatePascalCase, toDashCase } = require('./__helper.js')
 
 const layouts = ls('./src/layouts').filter(name => {
   return (/([A-Z]{1}[\w\d]{1,})Layout.vue$/).test(name)

@@ -1,30 +1,10 @@
 <template>
   <q-page class="bg-blue-grey-1 q-pa-md">
     <div class="row" ref="grid" v-resize:debounce="onResize">
-      <div class="grid-sizer col-1" />
-      <div class="grid-item col-8 q-pa-xs" @mouseover="showCaption = true" @mouseout="showCaption = false">
+      <div class="grid-sizer col-xs-1 col-md-1" />
+      <div class="grid-item q-pa-xs" :class="i % 3 == 0 ? 'col-xs-12 col-md-4' : 'col-xs-6 col-md-2'" v-for="(img, i) in images" :key="i">
         <q-img
-          src="/statics/users/rc19.jpg"
-          :ratio="1"
-          >
-          <div
-            class="text-subtitle2 flex flex-center"
-            :class="$q.screen.lt.md ? 'absolute-bottom' : 'absolute-full'"
-            v-show="showCaption"
-            >
-            Anti Covid
-          </div>
-        </q-img>
-      </div>
-      <div class="grid-item col-4 q-pa-xs" v-for="i in 6" :key="i">
-        <q-img
-          :src="`/statics/gallery/g0${i}.jpg`"
-          :ratio="1"
-        />
-      </div>
-      <div class="grid-item col-8 q-pa-xs">
-        <q-img
-          src="/statics/users/rc19-1.jpg"
+          :src="img"
           :ratio="1"
         />
       </div>
@@ -43,6 +23,24 @@ export default {
   },
   data () {
     return {
+      images: [
+        'https://cdna.artstation.com/p/assets/images/images/026/722/634/large/yuhong-ding-kyoto-final.jpg?1589542650',
+        'https://cdnb.artstation.com/p/assets/images/images/025/115/617/large/yuhong-ding-march-19th-2019.jpg?1584667057',
+        'https://cdnb.artstation.com/p/assets/images/images/023/561/355/large/jordan-grimmer-fguhfugbfubgf.jpg?1579615379',
+        'https://cdna.artstation.com/p/assets/images/images/019/989/218/large/avant-choi-0815.jpg?1565877963',
+        'https://cdna.artstation.com/p/assets/images/images/018/823/294/large/minsung-jeon-13-55.jpg?1560870860',
+        'https://cdnb.artstation.com/p/assets/images/images/020/085/583/large/donglu-yu-b612-20190820-084048-144.jpg?1566307016',
+        'https://cdnb.artstation.com/p/assets/images/images/024/588/377/large/shal-e-1-3.jpg?1582897587',
+        'https://cdnb.artstation.com/p/assets/images/images/015/176/477/large/seokyun-jang-light04-fin01.jpg?1547376023',
+        'https://cdna.artstation.com/p/assets/images/images/026/722/634/large/yuhong-ding-kyoto-final.jpg?1589542650',
+        'https://cdnb.artstation.com/p/assets/images/images/025/115/617/large/yuhong-ding-march-19th-2019.jpg?1584667057',
+        'https://cdnb.artstation.com/p/assets/images/images/023/561/355/large/jordan-grimmer-fguhfugbfubgf.jpg?1579615379',
+        'https://cdna.artstation.com/p/assets/images/images/019/989/218/large/avant-choi-0815.jpg?1565877963',
+        'https://cdna.artstation.com/p/assets/images/images/018/823/294/large/minsung-jeon-13-55.jpg?1560870860',
+        'https://cdnb.artstation.com/p/assets/images/images/020/085/583/large/donglu-yu-b612-20190820-084048-144.jpg?1566307016',
+        'https://cdnb.artstation.com/p/assets/images/images/024/588/377/large/shal-e-1-3.jpg?1582897587',
+        'https://cdnb.artstation.com/p/assets/images/images/015/176/477/large/seokyun-jang-light04-fin01.jpg?1547376023'
+      ],
       instance: '',
       masonry: '',
       grid: '',

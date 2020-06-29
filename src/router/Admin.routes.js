@@ -8,6 +8,9 @@ export default [
   {
     path: '/admin',
     component: () => import('layouts/admin/DefaultLayout.vue'),
+    meta: {
+      auth: ['admin']
+    },
     children: [
       Profile,
       Dashboard,

@@ -1,4 +1,4 @@
-const { ls, validatePascalCase, toDashCase, toPascalCase } = require('../src/boot/global.js')
+const { ls, validatePascalCase, toDashCase, toPascalCase } = require('./__helper.js')
 
 const roles = ls('./src/layouts', 'd')
 

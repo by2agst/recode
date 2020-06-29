@@ -35,26 +35,28 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-12 col-sm-6 col-md-4" v-for="i in 3" :key="i">
+      <div class="col-12 col-sm-6 col-md-4" v-for="(img, i) in images" :key="i">
         <q-card>
-          <q-img :src="`statics/space/s${i}.jpg`" />
+          <q-img
+            :src="img"
+            :ratio="1"
+          />
 
           <q-card-section>
             <q-btn
               fab
               color="primary"
-              icon="place"
+              :label="i"
               class="absolute"
               style="top: 0; right: 12px; transform: translateY(-50%);"
             />
 
             <div class="row no-wrap items-center">
               <div class="col text-h6 ellipsis">
-                Product {{i}}
+                Img {{i+1}}
               </div>
               <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-                <q-icon name="place" />
-                250 ft
+
               </div>
             </div>
 
@@ -218,6 +220,11 @@ export default {
   data () {
     return {
       stars: 3,
+      images: [
+        'https://cdnb.artstation.com/p/assets/images/images/023/969/931/large/yerim-kim-2.jpg?1580904395',
+        'https://cdna.artstation.com/p/assets/images/images/023/969/908/large/yerim-kim-20.jpg?1580904367',
+        'https://cdna.artstation.com/p/assets/images/images/023/969/920/large/yerim-kim-18.jpg?1580904387'
+      ],
       columns: [
         {
           name: 'companyAgent',

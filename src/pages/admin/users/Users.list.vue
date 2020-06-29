@@ -15,20 +15,20 @@
             <div class="row">
               <div class="col-12 col-sm-6 q-mb-sm q-gutter-sm">
                 <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/admin/users/edit"/>
-                  <q-btn-dropdown no-caps color="positive" label="Export">
-                    <q-list>
-                      <q-item clickable v-close-popup @click="exportExcel">
-                        <q-item-section>
-                          <q-item-label>Excel</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                      <q-item clickable v-close-popup @click="exportPdf">
-                        <q-item-section>
-                          <q-item-label>PDF</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-btn-dropdown>
+                <q-btn-dropdown no-caps color="positive" label="Export">
+                  <q-list>
+                    <q-item clickable v-close-popup @click="exportExcel">
+                      <q-item-section>
+                        <q-item-label>Excel</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup @click="exportPdf">
+                      <q-item-section>
+                        <q-item-label>PDF</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
               </div>
               <div class="col-12 col-sm-6 q-mb-sm">
                 <div class="row" :class="{ 'justify-end': $q.screen.gt.xs }">
@@ -54,43 +54,23 @@
           </div>
         </template>
 
-        <template v-slot:body-cell-companyAgent="props">
+        <template v-slot:body-cell-confirmed="props">
           <q-td :props="props">
-            <q-item dense class="q-px-none">
-              <q-item-section avatar>
-                <q-avatar>
-                  <q-avatar color="blue-grey" text-color="white">{{props.value.substring(0,1)}}</q-avatar>
-                </q-avatar>
-              </q-item-section>
+            <div :class="{ 'text-primary': props.value, 'text-negative': !props.value }">
+              <q-icon
+                size="xs"
+                :name="props.value ? 'fas fa-check' : 'fas fa-times'"
+              />
+            </div>
+          </q-td>
+        </template>
 
-              <q-item-section>
-                <q-item-label>
-                  {{props.value}}
-                </q-item-label>
-                <q-item-label caption>
-                  {{jobName(props.row.type)}}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-td>
-        </template>
-        <template v-slot:body-cell-companyName="props">
+        <template v-slot:body-cell-blocked="props">
           <q-td :props="props">
-            <q-item dense class="q-px-none">
-              <q-item-section>
-                <q-item-label>
-                  {{props.value}}
-                </q-item-label>
-                <q-item-label caption>
-                  {{props.row.country}}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-td>
-        </template>
-        <template v-slot:body-cell-status="props">
-          <q-td :props="props">
-            <q-chip size="sm" :color="statusProps(props.row.status, 'color')" text-color="white">
+            <q-chip
+              size="sm"
+              :class="{ 'bg-negative': props.row.blocked, 'bg-primary': !props.row.blocked }"
+              text-color="white">
               {{props.value}}
             </q-chip>
           </q-td>
@@ -139,7 +119,6 @@
 </template>
 
 <script>
-import dataUser from 'src/assets/dummy/users'
 import { crud } from 'src/components/mixin/crud'
 import DialogIcon from 'src/components/DialogIcon.vue'
 
@@ -151,6 +130,13 @@ export default {
   mixins: [
     crud()
   ],
+  mounted () {
+    this.$axios.get('users').then(({ data }) => {
+      this.dataTable = data
+    }).catch(e => {
+      console.log('%c-e', 'color: yellow;', e)
+    })
+  },
   data () {
     return {
       fileName: 'Users',
@@ -159,32 +145,39 @@ export default {
         page: 1,
         rowsPerPage: 10
       },
-      visibleColumns: ['companyAgent', 'companyName', 'status'],
+      visibleColumns: ['username', 'email', 'confirmed', 'blocked'],
       columns: [
         {
-          name: 'companyAgent',
+          name: 'username',
           required: true,
-          label: 'User',
+          label: 'Username',
           align: 'left',
-          field: row => row.companyAgent,
+          field: row => row.username,
           format: val => `${val}`,
           headerClasses: 'bg-blue-grey text-white',
           classes: 'bg-grey-2 ellipsis',
           sortable: true
         }, {
-          name: 'companyName',
-          label: 'Country',
+          name: 'email',
+          label: 'Email',
           align: 'left',
-          field: row => row.companyName,
+          field: row => row.email,
           format: val => `${val}`,
           headerClasses: 'bg-grey-2',
           sortable: true
         }, {
-          name: 'status',
-          label: 'Status',
+          name: 'confirmed',
+          label: 'Confirmed',
           align: 'left',
-          field: row => row.status,
-          format: val => `${this.statusProps(val)}`,
+          field: row => row.confirmed,
+          headerClasses: 'bg-grey-2',
+          sortable: true
+        }, {
+          name: 'blocked',
+          label: 'Blocked',
+          align: 'left',
+          field: row => row.blocked,
+          format: val => val ? 'blocked' : 'active',
           headerClasses: 'bg-grey-2',
           sortable: true
         }, {
@@ -198,7 +191,7 @@ export default {
           sortable: true
         }
       ],
-      dataTable: dataUser,
+      dataTable: [],
       confirmToDelete: false
     }
   },
@@ -208,62 +201,6 @@ export default {
     },
     edit (id) {
       this.$router.push(`/admin/users/edit/${id}`)
-    },
-    jobName (code) {
-      let job = code
-      switch (code) {
-        case 1:
-          job = 'CEO'
-          break
-        case 2:
-          job = 'Manager'
-          break
-        case 3:
-          job = 'Designer'
-          break
-        case 4:
-          job = 'Developer'
-          break
-      }
-      return job
-    },
-    statusProps (code, key = 'status') {
-      let props = {
-        status: '',
-        color: ''
-      }
-      if (code === 1) {
-        props = {
-          status: 'Cheking',
-          color: 'grey'
-        }
-      } else if (code === 2) {
-        props = {
-          status: 'Pending',
-          color: 'warning'
-        }
-      } else if (code === 3) {
-        props = {
-          status: 'Success',
-          color: 'positive'
-        }
-      } else if (code === 4) {
-        props = {
-          status: 'Danger',
-          color: 'negative'
-        }
-      } else if (code === 5) {
-        props = {
-          status: 'Rejected',
-          color: 'accent'
-        }
-      } else if (code === 6) {
-        props = {
-          status: 'Canceled',
-          color: 'primary'
-        }
-      }
-      return props[key]
     }
   }
 }

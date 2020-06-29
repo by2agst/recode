@@ -8,7 +8,7 @@
               <div class="col-auto">
                 <q-avatar rounded size="100px">
                   <q-img
-                    src="/statics/users/rc19.jpg"
+                    src="https://cdna.artstation.com/p/assets/images/images/023/969/922/large/yerim-kim-1.jpg?1580904390"
                     :ratio="1"
                   />
                 </q-avatar>
@@ -269,7 +269,7 @@
                 <div class="col-sm-12 col-md-8">
                   <vue-cropper
                     ref="cropper"
-                    src="/statics/users/rc19.jpg"
+                    src="https://cdna.artstation.com/p/assets/images/images/023/969/922/large/yerim-kim-1.jpg?1580904390"
                     alt="Photo Profile"
                     :aspect-ratio="1"
                     :view-mode="3"

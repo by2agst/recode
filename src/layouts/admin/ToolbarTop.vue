@@ -17,13 +17,23 @@
               flat
               no-caps
               color="primary"
-              label="Pages"
+              label="Home"
+              @click="$router.push('/')"
             />
             <q-btn
               flat
               no-caps
               color="primary"
-              label="Features"
+              label="Strapi"
+              type="a"
+              href="https://strapi.io/documentation/v3.x/getting-started/quick-start.html"
+              target="_blank"
+            />
+            <q-btn
+              flat
+              no-caps
+              color="primary"
+              label="Mega Menu"
               >
               <q-menu :offset="[0, 10]">
                 <div class="row no-wrap q-pa-md">
@@ -236,13 +246,6 @@
                 </div>
               </q-menu>
             </q-btn>
-
-            <q-btn
-              flat
-              no-caps
-              color="primary"
-              label="Apps"
-            />
           </div>
         </div>
         <div class="col-12 col-sm-6">
@@ -254,34 +257,37 @@
               color="primary"
               icon="far fa-circle"
               size="sm"
-            />
-            <q-btn
-              flat
-              round
-              aria-label="search"
-              color="primary"
-              icon="far fa-chart-bar"
-              size="sm"
-            />
+              >
+              <q-menu :offset="[0, 10]">
+                <div class="row no-wrap q-pa-none">
+                  <q-input outlined v-model="search" label="search">
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                </div>
+              </q-menu>
+            </q-btn>
             <languages />
             <q-btn
               flat
               no-caps
               color="primary"
               >
-              Hi,<b class="q-ml-sm">Re</b>
+              Hi,<b class="q-ml-sm">{{me.username | capitalize}}</b>
               <q-menu anchor="bottom right" self="top right" :offset="[0, 10]" :content-style="{ minWidth: '370px' }">
                 <q-card class="my-card">
                   <q-card-section class="bg-8 text-white q-py-lg">
                     <div class="row q-col-gutter-sm items-center">
                       <div class="col-auto">
                         <q-avatar rounded color="indigo-4" text-color="white">
-                          <!-- <img src="/statics/users/rc19.jpg"> -->R
+                          <!-- <img src="/statics/users/rc19.jpg"> -->
+                          {{me.username[0] | capitalize}}
                         </q-avatar>
                       </div>
                       <div class="col">
                         <span class="text-h5  q-mt-xs">
-                          Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+                          {{me.username | capitalize}}
                         </span>
                       </div>
                       <div class="col text-center">
@@ -349,7 +355,7 @@
 
                   <q-card-actions align="around">
                     <q-btn flat color="primary">Upgrade Pro</q-btn>
-                    <q-btn flat color="primary" to="/login" >Sign Out</q-btn>
+                    <q-btn flat color="primary" @click="logout()" >Sign Out</q-btn>
                   </q-card-actions>
                 </q-card>
               </q-menu>
@@ -384,14 +390,14 @@ import Languages from 'src/components/Languages.vue'
 
 export default {
   name: 'UserToolbarTop',
-
   components: {
     Languages
   },
   data () {
     return {
       timeStamp: this.$moment().format('DD MMM YYYY HH:mm:ss'),
-      interval: null
+      interval: null,
+      search: ''
     }
   },
   created () {
@@ -401,8 +407,10 @@ export default {
   },
   computed: {
     activeMenu: function () {
-      console.log('\x1b[36m%s\x1b[0m', '>>> this.route :', this.$route)
       return this.$route.name.replace(/([-_])/g, ' $1 ').replace(/([A-Z])/g, ' $1') || ''
+    },
+    me () {
+      return this.$auth.user()
     }
   },
   methods: {
@@ -411,6 +419,10 @@ export default {
     },
     onItemClick () {
       console.log('%c-test', 'color: yellow;')
+    },
+    logout () {
+      this.$auth.logout()
+      this.$router.replace('/')
     }
   },
   beforeDestroy () {

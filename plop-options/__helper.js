@@ -16,7 +16,7 @@ const ls = (layoutDir = '', type = '') => {
 }
 
 const validateDashCase = (string) => {
-  return (/^[a-z]+([a-z\-]+)?$/).test(string)
+  return (/^[a-z]+([a-z-]+)?$/).test(string)
 }
 
 const validatePascalCase = (string) => {
@@ -28,6 +28,7 @@ const toDashCase = (string) => {
     .replace(/(^[\w])/, ($1) => $1.toLowerCase())
     .replace(/([A-Z])/, ($1) => `-${$1.toLowerCase()}`)
 }
+
 const toPascalCase = (string) => {
   return `${string}`
     .replace(new RegExp(/[-_]+/, 'g'), ' ')
@@ -40,10 +41,4 @@ const toPascalCase = (string) => {
     .replace(new RegExp(/\w/), s => s.toUpperCase())
 }
 
-module.exports = {
-  ls,
-  validateDashCase,
-  validatePascalCase,
-  toDashCase,
-  toPascalCase
-}
+module.exports { ls, validateDashCase, validatePascalCase, toDashCase, toPascalCase }

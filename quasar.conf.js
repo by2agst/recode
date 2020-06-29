@@ -1,5 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const { endpoint } = require('./custom.config.js')
 
 module.exports = function (ctx) {
   return {
@@ -7,9 +8,11 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
+      '__global',
       '_',
       'i18n',
       'axios',
+      'auth',
       'highcharts',
       'moment'
     ],
@@ -51,8 +54,17 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
+        'LoadingBar',
+        'LocalStorage',
         'Notify'
-      ]
+      ],
+      config: {
+        loadingBar: {
+          color: 'accent',
+          size: '3px',
+          position: 'top'
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -80,6 +92,10 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+      },
+      env: {
+        API: JSON.stringify(endpoint),
+        PACKAGE_JSON: `"${escape(JSON.stringify(require('./package.json')))}"`
       }
     },
 

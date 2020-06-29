@@ -13,23 +13,25 @@
     "generate": "plop"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.1",
+    "@quasar/extras": "^1.8.2",
     "axios": "^0.18.1",
     "highcharts": "^8.0.4",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.4.4",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "masonry-layout": "^4.2.2",
     "moment": "^2.24.0",
     "plop": "^2.6.0",
-    "quasar": "^1.12.1",
+    "quasar": "^1.12.8",
+    "validator": "^12.1.0",
     "vue-cropperjs": "^4.0.1",
     "vue-i18n": "^8.0.0",
     "vue-resize-directive": "^1.2.0",
     "xlsx": "^0.15.6"
   },
   "devDependencies": {
-    "@quasar/app": "^1.9.2",
+    "@quasar/app": "^1.9.6",
     "@vue/devtools": "^5.3.3",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",

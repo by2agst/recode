@@ -51,12 +51,12 @@
                     <q-input
                       dense
                       lazy-rules
-                      ref="username"
-                      v-model="form.username"
-                      label="username / email / phone number"
+                      ref="identifier"
+                      v-model="form.identifier"
+                      label="username / email"
                       :rules="[
-                        val => !!val || $t('rules.required', { name: 'usename' }),
-                        val => val.length > 6 || $t('rules.minLength', { name: 'usename', length: 6 })
+                        val => !!val || $t('rules.required', { name: 'identifier' }),
+                        val => val.length > 6 || $t('rules.minLength', { name: 'identifier', length: 6 })
                       ]"
                       />
                     <q-input
@@ -84,7 +84,7 @@
                         <router-link to="/" class="text-primary">forgot password?</router-link>
                       </div>
                       <div class="col-auto">
-                        <q-btn no-caps color="primary" label="login" @click="login" />
+                        <q-btn no-caps color="primary" label="login" @click="login" :loading="loading" :disabled="loading" />
                       </div>
                     </div>
                     <div class="row items-center justify-between q-my-xl">
@@ -129,21 +129,37 @@ export default {
   data () {
     return {
       form: {
-        username: 'username',
-        password: 'password'
+        identifier: 'admin@recode.com',
+        password: '12345678',
+        rememberMe: true
       },
+      loading: false,
       isPwd: true
     }
   },
   methods: {
     login () {
-      this.$refs.username.validate()
+      this.$refs.identifier.validate()
       this.$refs.password.validate()
 
-      if (this.$refs.username.hasError || this.$refs.password.hasError) {
+      if (this.$refs.identifier.hasError || this.$refs.password.hasError) {
         // this.formHasError = true
+        return true
       } else {
-        this.$router.replace('/admin/dashboard')
+        this.loading = true
+        this.$auth.login({ body: this.form }).then(({ user }) => {
+          console.log('%c-user', 'color: cyan;', user)
+          this.loading = false
+          this.$router.replace(`/${user.role.type}/dashboard`)
+        }).catch(e => {
+          this.loading = false
+          let errMessage = this.$g.errorMessage(e)
+          this.$q.notify({
+            type: 'axios-notify',
+            message: 'Login Failed',
+            caption: errMessage
+          })
+        })
       }
     }
   }
