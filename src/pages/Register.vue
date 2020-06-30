@@ -2,7 +2,7 @@
   <q-page>
     <div class="row">
       <div class="col-12 col-sm-5 bg-dark text-white">
-        <div class="column window-height bg-0">
+        <div class="column window-height bg-1">
           <div class="col">
             <div class="column full-height justify-center">
               <div class="col-auto text-center">
@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                Don't have an account yet? <router-link to="/register" class="text-primary">Sign Up</router-link>
+                <router-link to="/login" class="text-primary">Sign In</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
@@ -44,16 +44,28 @@
               <div class="col-auto text-center">
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6 q-gutter-md">
-                    <h5>Sign In</h5>
+                    <h5>Sign Up</h5>
                     <q-input
                       dense
                       lazy-rules
-                      ref="identifier"
-                      v-model="form.identifier"
-                      label="username / email"
+                      ref="email"
+                      v-model="form.email"
+                      label="email"
+                      type="email"
                       :rules="[
-                        val => !!val || $t('rules.required', { name: 'identifier' }),
-                        val => val.length > 6 || $t('rules.minLength', { name: 'identifier', length: 6 })
+                        val => !!val || $t('rules.required', { name: 'email' }),
+                        val => val.length > 6 || $t('rules.minLength', { name: 'email', length: 6 })
+                      ]"
+                    />
+                    <q-input
+                      dense
+                      lazy-rules
+                      ref="username"
+                      v-model="form.username"
+                      label="username"
+                      :rules="[
+                        val => !!val || $t('rules.required', { name: 'username' }),
+                        val => val.length > 6 || $t('rules.minLength', { name: 'username', length: 6 })
                       ]"
                     />
                     <q-input
@@ -76,28 +88,29 @@
                         />
                       </template>
                     </q-input>
-                    <div class="row items-center justify-between">
+                    <q-input
+                      dense
+                      lazy-rules
+                      ref="retypePassword"
+                      v-model="form.retypePassword"
+                      label="retype password"
+                      :type="isRePwd ? 'password' : 'text'"
+                      :rules="[
+                        val => !!val || $t('rules.required', { name: 'retypePassword' }),
+                        val => val.length > 6 || $t('rules.minLength', { name: 'retypePassword', length: 6 })
+                      ]"
+                      >
+                      <template v-slot:append>
+                        <q-icon
+                          :name="isRePwd ? 'visibility_off' : 'visibility'"
+                          class="cursor-pointer"
+                          @click="isRePwd = !isRePwd"
+                        />
+                      </template>
+                    </q-input>
+                    <div class="row items-center justify-end">
                       <div class="col-auto">
-                        <router-link to="/register" class="text-primary">forgot password?</router-link>
-                      </div>
-                      <div class="col-auto">
-                        <q-btn no-caps color="primary" label="login" @click="login" :loading="loading" :disabled="loading" />
-                      </div>
-                    </div>
-                    <div class="column items-center justify-between q-my-xl">
-                      <q-separator />
-                      <div class="col-auto q-px-sm text-grey">OR</div>
-                      <q-separator />
-                    </div>
-                    <div class="row items-center justify-between">
-                      <div class="col-xs-12 col-md-4">
-                        <q-btn flat no-caps dense color="primary" label="facebook" icon="fab fa-facebook-square"/>
-                      </div>
-                      <div class="col-xs-12 col-md-4">
-                        <q-btn flat no-caps dense color="info" label="twitter" icon="fab fa-twitter-square"/>
-                      </div>
-                      <div class="col-xs-12 col-md-4">
-                        <q-btn flat no-caps dense color="negative" label="google" icon="fab fa-google-plus-square"/>
+                        <q-btn no-caps color="primary" label="register" @click="login" :loading="loading" :disabled="loading" />
                       </div>
                     </div>
                   </div>
@@ -126,20 +139,23 @@ export default {
   data () {
     return {
       form: {
-        identifier: 'admin@recode.com',
-        password: '12345678',
-        rememberMe: true
+        email: '',
+        username: '',
+        password: '',
+        retypePassword: ''
       },
       loading: false,
-      isPwd: true
+      isPwd: true,
+      isRePwd: true
     }
   },
   methods: {
     login () {
-      this.$refs.identifier.validate()
+      this.$refs.email.validate()
+      this.$refs.username.validate()
       this.$refs.password.validate()
 
-      if (this.$refs.identifier.hasError || this.$refs.password.hasError) {
+      if (this.$refs.email.hasError || this.$refs.username.hasError || this.$refs.password.hasError) {
         // this.formHasError = true
         return true
       } else {

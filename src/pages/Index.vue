@@ -10,6 +10,7 @@
                   Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
                 </div>
                 <div class="text-h6 regular">Quasar v<div class="inline-block text-accent text-bold">{{ $q.version }}</div></div>
+                <div class="text-h6 regular">Strapi v<div class="inline-block text-accent text-bold">^3.0.0</div></div>
               </div>
             </div>
           </div>

@@ -3,8 +3,9 @@ import { LoadingBar } from 'quasar'
 export default ({ app, router, store, Vue }) => {
   router.beforeEach(async (to, from, next) => {
     LoadingBar.start()
-    const record = to.matched.find(record => record.meta.auth)
-    if (record) {
+    const authRouter = to.matched.find(router => router.meta.auth)
+    const nonAuthRouter = to.matched.find(router => router.meta.nonAuth)
+    if (authRouter) {
       let loggedIn = await store.getters['auth/loggedIn']
       if (loggedIn === undefined) {
         console.log('%c-HARD RELOAD', 'color: yellow;')
@@ -19,7 +20,7 @@ export default ({ app, router, store, Vue }) => {
         LoadingBar.stop()
         next('/')
       } else {
-        let checkRole = await store.getters['auth/check'](record.meta.auth)
+        let checkRole = await store.getters['auth/check'](authRouter.meta.auth)
         LoadingBar.stop()
         if (checkRole) {
           next()
@@ -27,7 +28,33 @@ export default ({ app, router, store, Vue }) => {
           next('/')
         }
       }
+    } else if (nonAuthRouter) {
+      let loggedIn = await store.getters['auth/loggedIn']
+      if (loggedIn === undefined) {
+        try {
+          await store.dispatch('auth/fetch')
+        } catch (e) {
+          // store.dispatch('auth/logout')
+        }
+        loggedIn = await store.getters['auth/loggedIn']
+      }
+      if (loggedIn) {
+        let user = await store.getters['auth/user']
+        LoadingBar.stop()
+        next(`/${user.role.type}/dashboard`)
+      } else {
+        LoadingBar.stop()
+        next()
+      }
     } else {
+      let loggedIn = await store.getters['auth/loggedIn']
+      if (loggedIn === undefined) {
+        try {
+          await store.dispatch('auth/fetch')
+        } catch (e) {
+          // store.dispatch('auth/logout')
+        }
+      }
       LoadingBar.stop()
       next()
     }

@@ -14,7 +14,8 @@
         <q-toolbar-title>
           Re:<div class="inline-block flip-horizontal">c</div>ode
         </q-toolbar-title>
-        <router-link to="/login" class="text-primary">Sign In</router-link>
+        <auth-button v-if="me.role && me.role.type" />
+        <router-link v-else to="/login" class="text-primary">Sign In</router-link>
       </q-toolbar>
 
       <!-- <q-tabs>
@@ -62,12 +63,22 @@
 </template>
 
 <script>
+import AuthButton from 'src/components/AuthButton.vue'
+
 export default {
   name: 'BlankLayout',
 
+  components: {
+    AuthButton
+  },
   data () {
     return {
       leftDrawer: false
+    }
+  },
+  computed: {
+    me () {
+      return this.$auth.user()
     }
   }
 }

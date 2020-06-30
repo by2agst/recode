@@ -61,11 +61,12 @@ export async function fetch (state) {
   }
 }
 
-export function logout (state) {
+export async function logout (state) {
   if (LocalStorage.has('authorization_token')) {
     LocalStorage.remove('authorization_token')
   }
-  state.commit('setUser', {})
+  await state.commit('setUser', {})
+  return true
 }
 
 export function verify (state, token) {

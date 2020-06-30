@@ -4,6 +4,7 @@ export default function () {
   return {
     user: {},
     userData: (data) => {
+      if (!data) { return { role: {} } }
       let { role } = data
       let result = {}
       result = {

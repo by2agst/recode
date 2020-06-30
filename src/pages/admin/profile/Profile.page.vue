@@ -15,9 +15,9 @@
               </div>
               <div class="col">
                 <div class="text-h6">
-                  Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+                  {{me.username | capitalize}}
                 </div>
-                <div class="text-subtitle2 text-grey">Head of Development</div>
+                <div class="text-subtitle2 text-grey">{{me.role.name}}</div>
                 <div class="q-gutter-sm">
                   <q-btn no-caps size="sm" color="positive">Upgrade</q-btn>
                   <q-btn no-caps size="sm" color="accent">10 Messages</q-btn>
@@ -25,15 +25,15 @@
               </div>
             </div>
             <div class="row q-my-sm">
-              <div class="col">Email:</div>
-              <div class="col text-right text-grey">user@recode.com</div>
+              <div class="col-auto">Email:</div>
+              <div class="col text-right text-grey">{{me.email}}</div>
             </div>
             <div class="row q-my-sm">
-              <div class="col">Phone:</div>
+              <div class="col-auto">Phone:</div>
               <div class="col text-right text-grey">0888888888888</div>
             </div>
             <div class="row q-my-sm">
-              <div class="col">Location:</div>
+              <div class="col-auto">Location:</div>
               <div class="col text-right text-grey">Indonesia</div>
             </div>
             <q-list class="q-mt-md" dense>
@@ -98,34 +98,15 @@
                       Email
                     </div>
                     <div class="col-8">
-                      <q-input
-                        dense
-                        outlined
-                        ref="email"
-                        v-model="form.email"
-                        placeholder="Full Name"
-                        disabled
-                      />
+                      {{me.email}}
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
+                  <div class="row q-col-gutter-sm items-center q-mb-md">
                     <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Full Name
-                      </div>
+                        Username
                     </div>
                     <div class="col-8">
-                      <q-input
-                        dense
-                        lazy-rules
-                        outlined
-                        ref="fullName"
-                        v-model="form.fullName"
-                        placeholder="Full Name"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'fullname' })
-                        ]"
-                      />
+                      {{me.username}}
                     </div>
                   </div>
                   <div class="row q-col-gutter-sm items-center">
@@ -335,12 +316,16 @@ export default {
   },
   mounted () {
   },
+  computed: {
+    me () {
+      return this.$auth.user()
+    }
+  },
   methods: {
     updatePersonal () {
-      this.$refs.fullName.validate()
       this.$refs.address.validate()
 
-      if (this.$refs.fullName.hasError || this.$refs.address.hasError) {
+      if (this.$refs.address.hasError) {
         this.$q.notify({
           type: 'negative',
           message: `Update personal information failed`
