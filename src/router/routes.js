@@ -17,7 +17,7 @@ let routes = [
     component: BlankLayout,
     children: [
       { path: 'register', component: () => import('pages/Register.vue'), meta: { nonAuth: true } },
-      { path: 'login', component: () => import('pages/Login.vue'), meta: { nonAuth: true } }/* plop-modify-route-blank */
+      { path: 'login/:params?', component: () => import('pages/Login.vue'), meta: { nonAuth: true } }/* plop-modify-route-blank */
     ]
   }/* plop-modify-route-parent */
 ]

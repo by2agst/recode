@@ -4,38 +4,64 @@
       <div class="row justify-center q-col-gutter-md">
         <div class="col-12 col-sm-8">
           <div class="full-width">
-            <div class="row justify-center">
-              <div class="col-sm-12 col-md-8">
-                <div class="row q-col-gutter-sm items-center">
-                  <div class="col-4 text-right">
-                    <div class="q-pt-xs q-pb-lg">
-                      Name
+            <q-form class="q-gutter-y-md" ref="myForm" @submit="save">
+              <div class="row justify-center">
+                <div class="col-sm-12 col-md-8">
+                  <div class="row q-col-gutter-sm items-center">
+                    <div class="col-4 text-right">
+                      <div class="q-pt-xs q-pb-lg">
+                        Email
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div class="q-pt-xs q-pb-lg q-pl-sm">
+                        {{data.email}}
+                      </div>
                     </div>
                   </div>
-                  <div class="col-8">
-                    <q-input
-                      dense
-                      lazy-rules
-                      outlined
-                      ref="name"
-                      v-model="form.name"
-                      placeholder="Name"
-                      :rules="[
-                        val => !!val || $t('rules.required', { name: 'name' })
-                      ]"
-                    />
+                  <div class="row q-col-gutter-sm items-center">
+                    <div class="col-4 text-right">
+                      <div class="q-pt-xs q-pb-lg">
+                        Username
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div class="q-pt-xs q-pb-lg q-pl-sm">
+                        {{data.username}}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="row q-col-gutter-sm items-center">
-                  <div class="col-8 offset-4">
-                    <div class="q-gutter-sm">
-                      <q-btn no-caps color="negative" label="Cancel" @click="$router.replace('/admin/users')" />
-                      <q-btn no-caps color="primary" label="Save" @click="save" />
+                  <div class="row q-col-gutter-sm items-center">
+                    <div class="col-4 text-right">
+                      <div class="q-pt-xs q-pb-lg">
+                        Full Name
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <q-input
+                        dense
+                        lazy-rules
+                        outlined
+                        ref="fullName"
+                        v-model="form.fullName"
+                        placeholder="Name"
+                        :rules="[
+                          val => !!val || $t('rules.required', { name: 'fullName' })
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-col-gutter-sm items-center">
+                    <div class="col-8 offset-4">
+                      <div class="q-gutter-sm">
+                        <q-btn no-caps color="negative" label="Cancel" @click="$router.replace('/admin/users')" />
+                        <q-btn no-caps color="primary" label="Save" @click="save" />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </q-form>
           </div>
         </div>
       </div>
@@ -47,27 +73,47 @@
 export default {
   data () {
     return {
+      id: this.$route.params.id,
+      data: {
+        email: '',
+        username: ''
+      },
       form: {
-        name: ''
+        fullName: ''
       }
     }
   },
+  mounted () {
+    this.getData()
+  },
   methods: {
+    getData () {
+      this.$axios.get(`users/${this.id}`).then(({ data }) => {
+        this.data = data
+        this.form = this.$_.pick(data, ['fullName'])
+      })
+    },
     save () {
-      console.log('%c-save', 'color: cyan;', this.form)
-      this.$refs.name.validate()
-
-      if (this.$refs.name) {
-        this.$q.notify({
-          type: 'negative',
-          message: `Save failed`
-        })
-      } else {
-        this.$q.notify({
-          type: 'positive',
-          message: `Save successful`
-        })
-      }
+      this.$refs.myForm.validate().then(success => {
+        if (success) {
+          this.$axios.patch(`users/${this.id}`, this.form).then(({ data }) => {
+            this.$q.notify({
+              type: 'axios-notify',
+              color: 'positive',
+              icon: 'far fa-check-circle',
+              message: 'Success',
+              caption: 'Data updated'
+            })
+          }).catch(e => {
+            let errMessage = this.$g.errorMessage(e)
+            this.$q.notify({
+              type: 'axios-notify',
+              message: 'Login Failed',
+              caption: errMessage
+            })
+          })
+        }
+      })
     }
   }
 }

@@ -24,13 +24,21 @@ export const crud = () => {
       }
     },
     methods: {
+      getValue (cols, name) {
+        const { value } = cols.find(r => r.name === name)
+        return value
+      },
       convertData (type = 'excel') {
         let visibleColumns = [...this.visibleColumns]
         this.$_.remove(visibleColumns, col => col === 'action')
         let body = [...this.dataTable].map(r => {
           return visibleColumns.map(col => {
             let { format } = this.columns.find(c => c.name === col)
-            return (format(r[col]) || '')
+            if (format) {
+              return (format(r[col]) || '')
+            } else {
+              return r[col] || ''
+            }
           })
         })
 

@@ -270,14 +270,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.my-table-details {
-  font-size: 0.85em;
-  font-style: italic;
-  max-width: 200px;
-  white-space: normal;
-  color: #555;
-  margin-top: 4px;
-}
-</style>

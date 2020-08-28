@@ -6,6 +6,12 @@
           <div class="col">
             <div class="column full-height justify-center">
               <div class="col-auto text-center">
+                <div class="logo-container">
+                  <div class="quasar" />
+                  <div class="orbit">
+                    <div class="strapi" />
+                  </div>
+                </div>
                 <div class="text-h3">
                   Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
                 </div>
@@ -97,3 +103,41 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="sass">
+.logo-container
+  display: flex
+  justify-content: center
+  margin-bottom: 100px
+
+.orbit
+  width: 200px
+  height: 200px
+  border: 1px solid rgba(255, 255, 255, 0.12)
+  position: absolute
+  border-radius: 100%
+  margin: -50px auto
+  animation: orbit 20s linear infinite
+
+.quasar
+  background: url('https://cdn.quasar.dev/logo/svg/quasar-logo.svg')
+  width: 100px
+  height: 100px
+  border-radius: 100%
+  animation: logo-rotate 80s linear infinite
+
+.strapi
+  background: url('https://d2zv2ciw0ln4h1.cloudfront.net/uploads/hp-logo-hero_c94026101f.svg')
+  background-size: cover
+  width: 50px
+  height: 50px
+  margin: 10px
+
+@keyframes orbit
+  to
+    transform: rotate(360deg)
+
+@keyframes logo-rotate
+  to
+    transform: rotate(-360deg)
+</style>

@@ -3,17 +3,26 @@
     <div class="col-12">
       <q-table
         title="Users"
+        @request="onRequest"
         :data="dataTable"
         :columns="columns"
+        :filter="filter"
         :grid="$q.screen.xs"
+        :loading="loading"
         :pagination.sync="pagination"
         :visible-columns="visibleColumns"
-        row-key="_id"
+        row-key="id"
+        binary-state-sort
         >
+
+        <template v-slot:loading>
+          <q-inner-loading showing color="primary" />
+        </template>
+
         <template v-slot:top>
           <div class="full-width">
-            <div class="row">
-              <div class="col-12 col-sm-6 q-mb-sm q-gutter-sm">
+            <div class="row justify-between">
+              <div class="col-12 col-sm-auto q-mb-sm q-gutter-sm">
                 <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/admin/users/edit"/>
                 <q-btn-dropdown no-caps color="positive" label="Export">
                   <q-list>
@@ -30,8 +39,15 @@
                   </q-list>
                 </q-btn-dropdown>
               </div>
-              <div class="col-12 col-sm-6 q-mb-sm">
-                <div class="row" :class="{ 'justify-end': $q.screen.gt.xs }">
+              <div class="col-12 col-sm-auto q-mb-sm">
+                <div class="row q-col-gutter-sm" :class="{ 'justify-end': $q.screen.gt.xs }">
+                  <div class="col-auto">
+                    <q-input outlined dense debounce="300" v-model="filter" placeholder="Search">
+                      <template v-slot:append>
+                        <q-icon name="search" />
+                      </template>
+                    </q-input>
+                  </div>
                   <div class="col-auto">
                     <q-select
                       v-model="visibleColumns"
@@ -46,6 +62,13 @@
                       option-value="name"
                       options-cover
                       style="min-width: 150px;"
+                    />
+                  </div>
+                  <div class="col-auto">
+                    <q-btn
+                      multiple
+                      icon="fas fa-sync"
+                      @click="refresh"
                     />
                   </div>
                 </div>
@@ -82,7 +105,7 @@
                 Edit
               </q-tooltip>
             </q-btn>
-            <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirmToDelete = true">
+            <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirmDelete(props.value)">
               <q-tooltip anchor="top middle" self="center middle">
                 Delete
               </q-tooltip>
@@ -97,15 +120,15 @@
                 <div v-for="(p, i) in props.colsMap" :key="i">
                   <div class="row q-my-sm" v-if="p.name !== 'action'">
                     <div class="col-12 text-primary">{{ p.label }}</div>
-                    <div class="col-12">{{ props.row[p.name] }}</div>
+                    <div class="col-12">{{getValue(props.cols, p.name)}}</div>
                   </div>
                 </div>
               </q-card-section>
               <q-separator />
               <q-card-section class="flex flex-center">
-                <div class="q-gutter-md">
-                  <q-btn flat color="primary" icon="far fa-edit" label="Edit" @click="edit(props.row._id)" />
-                  <q-btn flat color="negative" icon="far fa-trash-alt" label="Delete" @click="confirmToDelete = true" />
+                <div class="q-gutter-x-md">
+                  <q-btn flat no-caps color="primary" icon="far fa-edit" label="Edit" @click="edit(props.row._id)" />
+                  <q-btn flat no-caps color="negative" icon="far fa-trash-alt" label="Delete" @click="confirmDelete(props.row._id)" />
                 </div>
               </q-card-section>
             </q-card>
@@ -114,38 +137,38 @@
         <!-- end of mobile -->
       </q-table>
     </div>
-    <dialog-icon :dialog-icon-model="confirmToDelete" @updateDialogModel="updateDialogModel" />
   </div>
 </template>
 
 <script>
 import { crud } from 'src/components/mixin/crud'
-import DialogIcon from 'src/components/DialogIcon.vue'
+import dialogIcon from 'src/components/dialog/Icon.vue'
 
 export default {
   name: 'Users',
-  components: {
-    DialogIcon
-  },
   mixins: [
     crud()
   ],
   mounted () {
-    this.$axios.get('users').then(({ data }) => {
-      this.dataTable = data
-    }).catch(e => {
-      console.log('%c-e', 'color: yellow;', e)
+    this.onRequest({
+      pagination: this.pagination,
+      filter: null
     })
   },
   data () {
     return {
+      serviceName: 'users',
       fileName: 'Users',
+      filter: null,
+      loading: false,
       pagination: {
+        sortBy: '',
         descending: false,
         page: 1,
-        rowsPerPage: 10
+        rowsPerPage: 10,
+        rowsNumber: 10
       },
-      visibleColumns: ['username', 'email', 'confirmed', 'blocked'],
+      visibleColumns: ['username', 'email', 'confirmed', 'status'],
       columns: [
         {
           name: 'username',
@@ -173,8 +196,8 @@ export default {
           headerClasses: 'bg-grey-2',
           sortable: true
         }, {
-          name: 'blocked',
-          label: 'Blocked',
+          name: 'status',
+          label: 'Status',
           align: 'left',
           field: row => row.blocked,
           format: val => val ? 'blocked' : 'active',
@@ -191,8 +214,7 @@ export default {
           sortable: true
         }
       ],
-      dataTable: [],
-      confirmToDelete: false
+      dataTable: []
     }
   },
   methods: {
@@ -201,6 +223,74 @@ export default {
     },
     edit (id) {
       this.$router.push(`/admin/users/edit/${id}`)
+    },
+    refresh () {
+      this.onRequest({
+        pagination: this.pagination,
+        filter: this.filter || null
+      })
+    },
+    async onRequest (props) {
+      const { page, rowsPerPage, sortBy, descending } = props.pagination
+      const filter = props.filter
+
+      this.loading = true
+      let params = {}
+      if (filter) {
+        params._q = filter
+      }
+      if (sortBy) {
+        params._sort = `${sortBy}:${descending ? 'DESC' : 'ASC'}`
+      }
+      await this.getData(params, props)
+
+      this.pagination.page = page
+      this.pagination.rowsPerPage = rowsPerPage
+      this.pagination.sortBy = sortBy
+      this.pagination.descending = descending
+
+      this.loading = false
+    },
+    getData (params = {}, props) {
+      const { page, rowsPerPage } = props.pagination
+      const start = (page - 1) * rowsPerPage
+      this.$axios.get('users', { params: { ...params, _start: start, _limit: rowsPerPage } }).then(({ data }) => {
+        this.dataTable = data
+      }).catch(e => {
+        console.log('%c-e', 'color: yellow;', e)
+      })
+      this.$axios.get('users/count', { params }).then(({ data }) => {
+        this.pagination.rowsNumber = data
+      }).catch(e => {
+        console.log('%c-e', 'color: yellow;', e)
+      })
+    },
+    confirmDelete (id) {
+      this.$q.dialog({
+        component: dialogIcon,
+        parent: this,
+        persistent: true,
+        icon: 'far fa-trash-alt',
+        title: 'Are you Sure?',
+        text: 'Do you realy want to delete these record? This process can\'t be undone',
+        cancelButton: true,
+        headerClass: 'text-accent',
+        buttonColor: 'accent'
+      }).onOk(() => {
+        console.log('delete')
+        this.$axios.delete(`users/${id}`).then(({ data }) => {
+          this.$q.notify({
+            type: 'axios-notify',
+            color: 'positive',
+            icon: 'far fa-check-circle',
+            message: 'Success',
+            caption: 'Data deleted'
+          })
+          this.refresh()
+        }).catch(e => {
+          console.log('%c-e', 'color: yellow;', e)
+        })
+      })
     }
   }
 }

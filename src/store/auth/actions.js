@@ -2,20 +2,20 @@ import { axiosInstance } from 'boot/axios'
 import { LocalStorage } from 'quasar'
 
 const REGISTER_ROUTE = '/auth/local/register'
-const VERIFICATION_ROUTE = '/auth/verification'
+const VERIFICATION_ROUTE = '/auth/email-confirmation'
 const LOGIN_ROUTE = '/auth/local'
 const FETCH_USER_ROUTE = '/users/me'
 const PASSWORD_FORGOT_ROUTE = '/auth/passwordForgot'
 const PASSWORD_RESET_ROUTE = '/auth/passwordReset'
 
-export function register (state, data) {
-  return axiosInstance.post(REGISTER_ROUTE, data)
+export function register (state, formData) {
+  return axiosInstance.post(REGISTER_ROUTE, formData)
 }
 
-export function login (state, data) {
+export function login (state, formData) {
   const p = new Promise(function (resolve, reject) {
     return axiosInstance
-      .post(LOGIN_ROUTE, data.body)
+      .post(LOGIN_ROUTE, formData)
       .then(({ data }) => {
         console.log('%c-data.user ', 'color: yellow;', data.user)
         if (data.user) {
@@ -62,6 +62,7 @@ export async function fetch (state) {
 }
 
 export async function logout (state) {
+  delete axiosInstance.defaults.headers.common['Authorization']
   if (LocalStorage.has('authorization_token')) {
     LocalStorage.remove('authorization_token')
   }
@@ -70,10 +71,11 @@ export async function logout (state) {
 }
 
 export function verify (state, token) {
-  return axiosInstance.get(VERIFICATION_ROUTE + '?token=' + token)
+  return axiosInstance.get(VERIFICATION_ROUTE + '?confirmation=' + token)
 }
-export function passwordForgot (state, data) {
-  return axiosInstance.post(PASSWORD_FORGOT_ROUTE, data)
+
+export function passwordForgot (state, formData) {
+  return axiosInstance.post(PASSWORD_FORGOT_ROUTE, formData)
 }
 
 export function passwordReset (state, { token, data }) {

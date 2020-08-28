@@ -240,6 +240,7 @@
               </div>
             </div>
           </q-tab-panel>
+
           <q-tab-panel name="changePhoto">
             <div class="text-subtitle1 q-mb-md">
               Change Photo
@@ -291,6 +292,7 @@
 </template>
 
 <script>
+import mime from 'mime-types'
 import VueCropper from 'vue-cropperjs'
 import 'cropperjs/dist/cropper.css'
 
@@ -381,10 +383,37 @@ export default {
     showFileChooser () {
       this.$refs.input.click()
     },
+    dataURLtoFile (dataurl) {
+      let arr = dataurl.split(',')
+      let type = arr[0].match(/:(.*?);/)[1]
+      let bstr = window.atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      const extension = mime.extension(type)
+      const filename = `${this.$moment().format('YYYY-MM-DD HH:mm:ss')}.${extension}`
+      return new File([u8arr], filename, { type: type })
+    },
     cropImage () {
       // get image data for post processing, e.g. upload or setting image src
       this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL()
-      console.log('\x1b[36m%s\x1b[0m', '>>> cropImg :', this.cropImg)
+      const file = this.dataURLtoFile(this.cropImg)
+      let formData = new FormData()
+      formData.append('files', file)
+      console.log('%c-file', 'color: yellow;', file)
+      this.$axios.post('upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).then(() => {
+        console.log('SUCCESS!!')
+      })
     },
     flipX (event) {
       const dom = event.currentTarget
