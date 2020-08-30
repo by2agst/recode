@@ -39,10 +39,10 @@
                         lazy-rules
                         outlined
                         ref="email"
-                        v-model="form.email"
+                        v-model="form.username"
                         placeholder="username"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'email' })
+                          val => !!val || $t('rules.required', { name: 'username' })
                         ]"
                       />
                     </div>
@@ -59,7 +59,7 @@
                         lazy-rules
                         outlined
                         ref="email"
-                        v-model="form.email"
+                        v-model="form.password"
                         placeholder="password"
                         :type="isPwd ? 'password' : 'text'"
                         :rules="[
@@ -136,7 +136,7 @@
                   <div class="row q-col-gutter-sm items-center">
                     <div class="col-8 offset-4">
                       <div class="q-gutter-sm">
-                        <q-btn no-caps color="negative" label="Cancel" @click="$router.replace('/admin/users')" />
+                        <q-btn no-caps color="negative" label="Cancel" @click="back" />
                         <q-btn no-caps color="primary" label="Save" @click="save" />
                       </div>
                     </div>
@@ -155,7 +155,7 @@
 export default {
   data () {
     return {
-      id: this.$route.params.id,
+      serviceName: 'users',
       isPwd: false,
       form: {
         email: '',
@@ -168,19 +168,15 @@ export default {
     }
   },
   mounted () {
-    this.getData()
   },
   methods: {
-    getData () {
-      this.$axios.get(`users/${this.id}`).then(({ data }) => {
-        this.data = data
-        this.form = this.$_.pick(data, ['fullName'])
-      })
+    back () {
+      this.$router.replace(`/${this.$auth.role()}/${this.serviceName}`)
     },
     save () {
       this.$refs.myForm.validate().then(success => {
         if (success) {
-          this.$axios.patch(`users/${this.id}`, this.form).then(({ data }) => {
+          this.$axios.post(`${this.serviceName}`, this.form).then(({ data }) => {
             this.$q.notify({
               type: 'axios-notify',
               color: 'positive',

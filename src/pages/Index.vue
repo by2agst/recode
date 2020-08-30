@@ -131,7 +131,7 @@ export default {
   background-size: cover
   width: 50px
   height: 50px
-  margin: 10px
+  margin: 5px
 
 @keyframes orbit
   to

@@ -5,6 +5,10 @@ export function user (state) {
   return state.user
 }
 
+export function role (state) {
+  return state.user.role ? state.user.role.type : ''
+}
+
 export function loggedIn (state) {
   let currentTime = Date.now() / 1000
   let token = LocalStorage.getItem('authorization_token') || ''

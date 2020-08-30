@@ -7,7 +7,6 @@ export default function () {
       if (!data) { return { role: {} } }
       let { role } = data
       let result = {}
-      console.log('%c-data', 'color: yellow;', data)
       result = {
         ...data,
         role: pick(role, ['name', 'type', 'description'])

@@ -24,6 +24,7 @@ const pages = {
     'routes.js'
   ],
   crud: [
+    'add.vue',
     'edit.vue',
     'list.vue',
     'page.vue',

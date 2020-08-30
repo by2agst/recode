@@ -89,7 +89,7 @@
                   <div class="row q-col-gutter-sm items-center">
                     <div class="col-8 offset-4">
                       <div class="q-gutter-sm">
-                        <q-btn no-caps color="negative" label="Cancel" @click="$router.replace('/admin/users')" />
+                        <q-btn no-caps color="negative" label="Cancel" @click="back" />
                         <q-btn no-caps color="primary" label="Save" @click="save" />
                       </div>
                     </div>
@@ -109,6 +109,7 @@ export default {
   data () {
     return {
       id: this.$route.params.id,
+      serviceName: 'users',
       data: {
         email: '',
         username: ''
@@ -124,8 +125,11 @@ export default {
     this.getData()
   },
   methods: {
+    back () {
+      this.$router.replace(`/${this.$auth.role()}/${this.serviceName}`)
+    },
     getData () {
-      this.$axios.get(`users/${this.id}`).then(({ data }) => {
+      this.$axios.get(`${this.serviceName}/${this.id}`).then(({ data }) => {
         this.data = data
         this.form = this.$_.pick(data, ['fullName', 'confirmed', 'blocked'])
       })
@@ -133,7 +137,7 @@ export default {
     save () {
       this.$refs.myForm.validate().then(success => {
         if (success) {
-          this.$axios.patch(`users/${this.id}`, this.form).then(({ data }) => {
+          this.$axios.patch(`${this.serviceName}/${this.id}`, this.form).then(({ data }) => {
             this.$q.notify({
               type: 'axios-notify',
               color: 'positive',

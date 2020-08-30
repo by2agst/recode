@@ -72,5 +72,6 @@ export default ({ app, router, store, Vue }) => {
   auth.setHeader = (data) => store.dispatch('auth/setHeader', data)
   auth.fetch = () => store.dispatch('auth/fetch')
   auth.user = () => store.getters['auth/user']
+  auth.role = () => store.getters['auth/role']
   Vue.prototype.$auth = auth
 }
