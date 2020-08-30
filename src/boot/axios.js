@@ -13,13 +13,11 @@ Notify.registerType('axios-notify', {
   position: 'bottom-right'
 })
 
-const env = process.env
-
 const axiosInstance = axios.create({
   paramsSerializer: params => {
     return qs.stringify(params, { arrayFormat: 'repeat' })
   },
-  baseURL: env.API[env.NODE_ENV]
+  baseURL: process.env.BASE_URL
 })
 
 const setErrorInterceptor = (errorFunction) => {

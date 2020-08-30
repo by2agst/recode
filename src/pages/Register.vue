@@ -94,7 +94,7 @@
                         lazy-rules
                         ref="passwordConfirmation"
                         v-model="form.passwordConfirmation"
-                        label="retype password"
+                        label="password confirmation"
                         :type="isPwdCnf ? 'password' : 'text'"
                         :rules="[
                           val => !!val || $t('rules.required', { name: 'passwordConfirmation' }),

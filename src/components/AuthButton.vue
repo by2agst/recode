@@ -11,17 +11,23 @@
           <div class="row q-col-gutter-sm items-center">
             <div class="col-auto">
               <q-avatar rounded color="indigo-4" text-color="white">
-                <!-- <img src="/statics/users/rc19.jpg"> -->
-                {{me.username ? me.username[0] : '' | capitalize}}
+                <q-img
+                  v-if="me.avatar"
+                  :src="$g.getSrc(me.avatar.formats.thumbnail.url)"
+                  :ratio="1"
+                />
+                <div v-else>
+                  {{$g.initialName(me.username)}}
+                </div>
               </q-avatar>
             </div>
             <div class="col">
-              <span class="text-h5  q-mt-xs">
+              <div class="text-h5 q-mt-xs">
                 {{me.username | capitalize}}
-              </span>
-            </div>
-            <div class="col text-center">
-              <q-btn color="accent">10 Messages</q-btn>
+              </div>
+              <div class="q-mt-xs">
+                {{me.email}}
+              </div>
             </div>
           </div>
         </q-card-section>

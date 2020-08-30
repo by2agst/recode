@@ -23,7 +23,7 @@
           <div class="full-width">
             <div class="row justify-between">
               <div class="col-12 col-sm-auto q-mb-sm q-gutter-sm">
-                <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/admin/users/edit"/>
+                <q-btn no-caps color="primary" label="Add" icon="fas fa-plus" to="/admin/users/add"/>
                 <q-btn-dropdown no-caps color="positive" label="Export">
                   <q-list>
                     <q-item clickable v-close-popup @click="exportExcel">
@@ -66,7 +66,7 @@
                   </div>
                   <div class="col-auto">
                     <q-btn
-                      multiple
+                      padding="12px"
                       icon="fas fa-sync"
                       @click="refresh"
                     />

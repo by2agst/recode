@@ -14,9 +14,17 @@
                       </div>
                     </div>
                     <div class="col-8">
-                      <div class="q-pt-xs q-pb-lg">
-                        {{data.email}}
-                      </div>
+                      <q-input
+                        dense
+                        lazy-rules
+                        outlined
+                        ref="email"
+                        v-model="form.email"
+                        placeholder="email"
+                        :rules="[
+                          val => !!val || $t('rules.required', { name: 'email' })
+                        ]"
+                      />
                     </div>
                   </div>
                   <div class="row q-col-gutter-sm items-center">
@@ -26,9 +34,47 @@
                       </div>
                     </div>
                     <div class="col-8">
+                      <q-input
+                        dense
+                        lazy-rules
+                        outlined
+                        ref="email"
+                        v-model="form.email"
+                        placeholder="username"
+                        :rules="[
+                          val => !!val || $t('rules.required', { name: 'email' })
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-col-gutter-sm items-center">
+                    <div class="col-4 text-right">
                       <div class="q-pt-xs q-pb-lg">
-                        {{data.username}}
+                        Password
                       </div>
+                    </div>
+                    <div class="col-8">
+                      <q-input
+                        dense
+                        lazy-rules
+                        outlined
+                        ref="email"
+                        v-model="form.email"
+                        placeholder="password"
+                        :type="isPwd ? 'password' : 'text'"
+                        :rules="[
+                          val => !!val || $t('rules.required', { name: 'password' }),
+                          val => val.length > 6 || $t('rules.minLength', { name: 'password', length: 6 })
+                        ]"
+                        >
+                        <template v-slot:append>
+                          <q-icon
+                            :name="isPwd ? 'visibility_off' : 'visibility'"
+                            class="cursor-pointer"
+                            @click="isPwd = !isPwd"
+                          />
+                        </template>
+                      </q-input>
                     </div>
                   </div>
                   <div class="row q-col-gutter-sm items-center">
@@ -44,9 +90,10 @@
                         outlined
                         ref="fullName"
                         v-model="form.fullName"
-                        placeholder="Name"
-                        :rules="[]"
-                        class="q-mb-md"
+                        placeholder="full name"
+                        :rules="[
+                          val => !!val || $t('rules.required', { name: 'fullName' })
+                        ]"
                       />
                     </div>
                   </div>
@@ -109,11 +156,11 @@ export default {
   data () {
     return {
       id: this.$route.params.id,
-      data: {
-        email: '',
-        username: ''
-      },
+      isPwd: false,
       form: {
+        email: '',
+        username: '',
+        password: '',
         fullName: '',
         confirmed: true,
         blocked: false
@@ -127,7 +174,7 @@ export default {
     getData () {
       this.$axios.get(`users/${this.id}`).then(({ data }) => {
         this.data = data
-        this.form = this.$_.pick(data, ['fullName', 'confirmed', 'blocked'])
+        this.form = this.$_.pick(data, ['fullName'])
       })
     },
     save () {

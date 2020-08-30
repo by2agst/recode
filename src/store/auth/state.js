@@ -7,8 +7,9 @@ export default function () {
       if (!data) { return { role: {} } }
       let { role } = data
       let result = {}
+      console.log('%c-data', 'color: yellow;', data)
       result = {
-        ...pick(data, ['id', 'email', 'username', 'confirmed', 'blocked']),
+        ...data,
         role: pick(role, ['name', 'type', 'description'])
       }
       return result

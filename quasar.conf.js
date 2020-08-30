@@ -1,6 +1,5 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-const { endpoint } = require('./custom.config.js')
 
 module.exports = function (ctx) {
   return {
@@ -93,10 +92,6 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
-      },
-      env: {
-        API: JSON.stringify(endpoint),
-        PACKAGE_JSON: `"${escape(JSON.stringify(require('./package.json')))}"`
       }
     },
 

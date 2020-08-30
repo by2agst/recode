@@ -17,8 +17,18 @@ const errorMessage = (e) => {
   return errMessage
 }
 
+const getSrc = (url) => {
+  return `${process.env.BASE_URL}${url.substring(1)}`
+}
+
+const initialName = (name) => {
+  return name.split(' ').map(str => str[0].toUpperCase()).join('').substr(0, 2)
+}
+
 Vue.prototype.$g = {
-  errorMessage
+  errorMessage,
+  getSrc,
+  initialName
 }
 
 Vue.filter('capitalize', function (value) {
