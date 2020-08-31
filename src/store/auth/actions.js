@@ -5,8 +5,8 @@ const REGISTER_ROUTE = '/auth/local/register'
 const VERIFICATION_ROUTE = '/auth/email-confirmation'
 const LOGIN_ROUTE = '/auth/local'
 const FETCH_USER_ROUTE = '/users/me'
-const PASSWORD_FORGOT_ROUTE = '/auth/passwordForgot'
-const PASSWORD_RESET_ROUTE = '/auth/passwordReset'
+const PASSWORD_FORGOT_ROUTE = '/auth/forgot-password'
+const PASSWORD_RESET_ROUTE = '/auth/reset-password'
 
 export function register (state, formData) {
   return axiosInstance.post(REGISTER_ROUTE, formData)
@@ -78,6 +78,6 @@ export function passwordForgot (state, formData) {
   return axiosInstance.post(PASSWORD_FORGOT_ROUTE, formData)
 }
 
-export function passwordReset (state, { token, data }) {
-  return axiosInstance.post(PASSWORD_RESET_ROUTE + '?token=' + token, data)
+export function passwordReset (state, formData) {
+  return axiosInstance.post(PASSWORD_RESET_ROUTE, formData)
 }

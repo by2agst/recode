@@ -44,31 +44,8 @@
               <div class="col-auto text-center">
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
-                    <q-form class="q-gutter-y-md" ref="myForm" @submit="register">
-                      <h5>Sign Up</h5>
-                      <q-input
-                        dense
-                        lazy-rules
-                        ref="email"
-                        v-model="form.email"
-                        label="email"
-                        type="email"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'email' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'email', length: 6 })
-                        ]"
-                      />
-                      <q-input
-                        dense
-                        lazy-rules
-                        ref="username"
-                        v-model="form.username"
-                        label="username"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'username' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'username', length: 6 })
-                        ]"
-                      />
+                    <q-form class="q-gutter-y-md" ref="myForm" @submit="reset">
+                      <h5>Reset password</h5>
                       <q-input
                         dense
                         lazy-rules
@@ -112,7 +89,7 @@
                       </q-input>
                       <div class="row items-center justify-end">
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="register" @click="register" :loading="loading" :disabled="loading" />
+                          <q-btn no-caps color="primary" label="reset" @click="reset" :loading="loading" :disabled="loading" />
                         </div>
                       </div>
                     </q-form>
@@ -142,28 +119,31 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        username: '',
         password: '',
-        passwordConfirmation: ''
+        passwordConfirmation: '',
+        code: ''
       },
       loading: false,
       isPwd: true,
       isPwdCnf: true
     }
   },
+  mounted () {
+    const { code } = this.$route.query
+    this.form.code = code
+  },
   methods: {
-    register () {
+    reset () {
       this.$refs.myForm.validate().then(success => {
         if (success) {
           this.loading = true
-          this.$auth.register(this.form).then(({ data }) => {
+          this.$auth.passwordReset(this.form).then(({ data }) => {
             this.loading = false
             this.$q.notify({
               color: 'primary',
               type: 'axios-notify',
-              message: 'Register is successfull',
-              caption: 'Confirmation email has been sent please check your email'
+              message: 'Reset is successfull',
+              caption: 'Password was successfully changed'
             })
             this.$router.push('/login')
           }).catch(e => {
@@ -171,7 +151,7 @@ export default {
             let errMessage = this.$g.errorMessage(e)
             this.$q.notify({
               type: 'axios-notify',
-              message: 'Register failed',
+              message: 'Reset Failed',
               caption: errMessage
             })
           })

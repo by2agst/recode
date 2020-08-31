@@ -44,8 +44,8 @@
               <div class="col-auto text-center">
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
-                    <q-form class="q-gutter-y-md" ref="myForm" @submit="register">
-                      <h5>Sign Up</h5>
+                    <q-form class="q-gutter-y-md" ref="myForm" @submit="send">
+                      <h5>Forgot Password</h5>
                       <q-input
                         dense
                         lazy-rules
@@ -58,61 +58,9 @@
                           val => val.length > 6 || $t('rules.minLength', { name: 'email', length: 6 })
                         ]"
                       />
-                      <q-input
-                        dense
-                        lazy-rules
-                        ref="username"
-                        v-model="form.username"
-                        label="username"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'username' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'username', length: 6 })
-                        ]"
-                      />
-                      <q-input
-                        dense
-                        lazy-rules
-                        ref="password"
-                        v-model="form.password"
-                        label="password"
-                        :type="isPwd ? 'password' : 'text'"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'password' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'password', length: 6 })
-                        ]"
-                        >
-                        <template v-slot:append>
-                          <q-icon
-                            :name="isPwd ? 'visibility_off' : 'visibility'"
-                            class="cursor-pointer"
-                            @click="isPwd = !isPwd"
-                          />
-                        </template>
-                      </q-input>
-                      <q-input
-                        dense
-                        lazy-rules
-                        ref="passwordConfirmation"
-                        v-model="form.passwordConfirmation"
-                        label="password confirmation"
-                        :type="isPwdCnf ? 'password' : 'text'"
-                        :rules="[
-                          val => !!val || $t('rules.required', { name: 'passwordConfirmation' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'passwordConfirmation', length: 6 }),
-                          val => val === form.password || $t('rules.sameAs', { name: 'passwordConfirmation', field: 'password' })
-                        ]"
-                        >
-                        <template v-slot:append>
-                          <q-icon
-                            :name="isPwdCnf ? 'visibility_off' : 'visibility'"
-                            class="cursor-pointer"
-                            @click="isPwdCnf = !isPwdCnf"
-                          />
-                        </template>
-                      </q-input>
                       <div class="row items-center justify-end">
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="register" @click="register" :loading="loading" :disabled="loading" />
+                          <q-btn no-caps color="primary" label="send" @click="send" :loading="loading" :disabled="loading" />
                         </div>
                       </div>
                     </q-form>
@@ -142,10 +90,7 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        username: '',
-        password: '',
-        passwordConfirmation: ''
+        email: ''
       },
       loading: false,
       isPwd: true,
@@ -153,17 +98,17 @@ export default {
     }
   },
   methods: {
-    register () {
+    send () {
       this.$refs.myForm.validate().then(success => {
         if (success) {
           this.loading = true
-          this.$auth.register(this.form).then(({ data }) => {
+          this.$auth.passwordForgot(this.form).then(({ data }) => {
             this.loading = false
             this.$q.notify({
               color: 'primary',
               type: 'axios-notify',
-              message: 'Register is successfull',
-              caption: 'Confirmation email has been sent please check your email'
+              message: 'Send email is successfull',
+              caption: 'Link has been sent please check your email'
             })
             this.$router.push('/login')
           }).catch(e => {
@@ -171,7 +116,7 @@ export default {
             let errMessage = this.$g.errorMessage(e)
             this.$q.notify({
               type: 'axios-notify',
-              message: 'Register failed',
+              message: 'Send email failed',
               caption: errMessage
             })
           })

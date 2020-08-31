@@ -79,7 +79,7 @@
                       </q-input>
                       <div class="row items-center justify-between">
                         <div class="col-auto">
-                          <router-link to="/register" class="text-primary">forgot password?</router-link>
+                          <router-link to="/forgot-password" class="text-primary">forgot password?</router-link>
                         </div>
                         <div class="col-auto">
                           <q-btn no-caps color="primary" label="login" @click="login" :loading="loading" :disabled="loading" />
