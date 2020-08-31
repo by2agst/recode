@@ -120,14 +120,14 @@ export default {
   animation: orbit 20s linear infinite
 
 .quasar
-  background: url('https://cdn.quasar.dev/logo/svg/quasar-logo.svg')
+  background-image: url('~assets/quasar-logo.svg')
   width: 100px
   height: 100px
   border-radius: 100%
   animation: logo-rotate 80s linear infinite
 
 .strapi
-  background: url('https://d2zv2ciw0ln4h1.cloudfront.net/uploads/hp-logo-hero_c94026101f.svg')
+  background-image: url('~assets/strapi-logo.svg')
   background-size: cover
   width: 50px
   height: 50px
