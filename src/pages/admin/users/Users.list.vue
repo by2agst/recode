@@ -98,6 +98,7 @@
             </q-chip>
           </q-td>
         </template>
+
         <template v-slot:body-cell-action="props">
           <q-td :props="props">
             <q-btn flat round class="square" color="primary" icon="far fa-edit" @click="edit(props.value)">
@@ -112,6 +113,7 @@
             </q-btn>
           </q-td>
         </template>
+
         <!-- mobile -->
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
@@ -198,29 +200,6 @@ export default {
           sortable: true
         }
       ]
-    }
-  },
-  methods: {
-    async onRequest (props) {
-      const { page, rowsPerPage, sortBy, descending } = props.pagination
-      const filter = props.filter
-
-      this.loading = true
-      let params = {}
-      if (filter) {
-        params._q = filter
-      }
-      if (sortBy) {
-        params._sort = `${sortBy}:${descending ? 'DESC' : 'ASC'}`
-      }
-      await this.getData(params, props)
-
-      this.pagination.page = page
-      this.pagination.rowsPerPage = rowsPerPage
-      this.pagination.sortBy = sortBy
-      this.pagination.descending = descending
-
-      this.loading = false
     }
   }
 }
