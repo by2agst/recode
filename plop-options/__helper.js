@@ -41,4 +41,4 @@ const toPascalCase = (string) => {
     .replace(new RegExp(/\w/), s => s.toUpperCase())
 }
 
-module.exports { ls, validateDashCase, validatePascalCase, toDashCase, toPascalCase }
+module.exports = { ls, validateDashCase, validatePascalCase, toDashCase, toPascalCase }

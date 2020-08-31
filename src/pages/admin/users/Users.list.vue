@@ -122,7 +122,7 @@
                 <div v-for="(p, i) in props.colsMap" :key="i">
                   <div class="row q-my-sm" v-if="p.name !== 'action'">
                     <div class="col-12 text-primary">{{ p.label }}</div>
-                    <div class="col-12">{{getValue(props.cols, p.name)}}</div>
+                    <div class="col-12">{{ getValue(props.cols, p.name) }}</div>
                   </div>
                 </div>
               </q-card-section>
