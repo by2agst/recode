@@ -297,9 +297,10 @@ export default {
     updatePersonal () {
       this.$refs.formPersonal.validate().then(success => {
         if (success) {
-          this.$axios.patch(`users/${this.me.id}`, {
+          this.$axios.patch('users/me', {
             fullName: this.form.fullName
           }).then(({ data }) => {
+            this.$auth.fetch()
             this.$q.notify({
               type: 'axios-notify',
               color: 'positive',
@@ -321,10 +322,11 @@ export default {
     updatePassword () {
       this.$refs.formPassword.validate().then(success => {
         if (success) {
-          this.$axios.patch(`users/${this.me.id}`, {
+          this.$axios.patch('users/me', {
             oldPassword: this.form.oldPassword,
             password: this.form.newPassword
           }).then(({ data }) => {
+            this.$auth.fetch()
             this.$q.notify({
               type: 'axios-notify',
               color: 'positive',
@@ -350,7 +352,13 @@ export default {
       formData.append('ref', 'user')
       formData.append('source', 'users-permissions')
 
+      let params = {}
+      if (this.me.avatar && this.me.avatar._id) {
+        params.id = this.me.avatar._id
+      }
+
       this.$axios.post('upload', formData, {
+        params: params,
         headers: {
           'Content-Type': 'multipart/form-data'
         }
