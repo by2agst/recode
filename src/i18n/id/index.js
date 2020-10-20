@@ -24,6 +24,20 @@ export default {
     url: '{name} harus mengandung url yang valid'
   },
 
+  auth: {
+    logIn: 'Log In',
+    logOut: 'Log Out',
+    register: 'Register',
+    signIn: 'Sign In',
+    signOut: 'Sign Out',
+    signUp: 'Sign Up',
+    username: 'Username',
+    email: 'Email',
+    password: 'Password',
+    passwordConfirmation: 'Password Confimation',
+    forgotPassword: 'Forgot password'
+  },
+
   menu: {
     dashboard: 'Beranda',
     users: 'Pengguna',

@@ -52,6 +52,7 @@ export async function fetch (state) {
       state.commit('setUser', response.data)
       return response.data
     }).catch(error => {
+      state.dispatch('logout')
       return error
     })
   } else {
