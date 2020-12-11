@@ -1,8 +1,8 @@
 <template>
   <q-header class="bg-grey-1 text-black">
     <q-toolbar>
-      <div class="row full-width">
-        <div class="col-12 col-sm-6">
+      <div class="row full-width justify-between">
+        <div class="col-auto col-sm-6">
           <div class="full-width">
             <q-btn
               flat
@@ -19,15 +19,6 @@
               color="primary"
               label="Home"
               @click="$router.push('/')"
-            />
-            <q-btn
-              flat
-              no-caps
-              color="primary"
-              label="Strapi"
-              type="a"
-              href="https://strapi.io/documentation/v3.x/getting-started/quick-start.html"
-              target="_blank"
             />
             <q-btn
               flat
@@ -248,7 +239,7 @@
             </q-btn>
           </div>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-auto col-sm-6">
           <div class="full-width text-right">
             <q-btn
               flat
@@ -285,7 +276,7 @@
         <div class="col-12 col-sm-6">
           <div class="row" :class="{ 'justify-end': $q.screen.gt.xs, 'justify-center': $q.screen.lt.sm }">
             <div class="col-auto">
-              <div class="poppins-r" style="width: 160px">{{ timeStamp }}</div>
+              <div class="hundin text-uppercase">{{ timeStamp }}</div>
             </div>
           </div>
         </div>

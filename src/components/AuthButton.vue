@@ -2,9 +2,10 @@
   <q-btn
     flat
     no-caps
-    color="primary"
+    round
+    color="primary square"
+    icon="far fa-user"
     >
-    Hi,<b class="q-ml-sm">{{me.username | capitalize}}</b>
     <q-menu anchor="bottom right" self="top right" :offset="[0, 10]" :content-style="{ minWidth: '370px' }">
       <q-card class="my-card">
         <q-card-section class="bg-8 text-white q-py-lg">

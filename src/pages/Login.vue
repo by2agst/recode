@@ -79,6 +79,11 @@
                       </q-input>
                       <div class="row items-center justify-between">
                         <div class="col-auto">
+                          <q-checkbox v-model="form.rememberMe" label="Remember Me" size="xs" color="secondary" class="text-secondary" />
+                        </div>
+                      </div>
+                      <div class="row items-center justify-between">
+                        <div class="col-auto">
                           <router-link to="/forgot-password" class="text-primary">forgot password?</router-link>
                         </div>
                         <div class="col-auto">

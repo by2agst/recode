@@ -17,6 +17,11 @@ export function login (state, formData) {
     return axiosInstance
       .post(LOGIN_ROUTE, formData)
       .then(({ data }) => {
+        if (formData.rememberMe) {
+          LocalStorage.set('remember_me', true)
+        } else {
+          LocalStorage.remove('remember_me')
+        }
         console.log('%c-data.user ', 'color: yellow;', data.user)
         if (data.user) {
           if (data.user.confirmed && !data.user.blocked) {

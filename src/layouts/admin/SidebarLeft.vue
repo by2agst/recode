@@ -61,6 +61,15 @@
           <q-item-label caption>quasar.dev</q-item-label>
         </q-item-section>
       </q-item>
+      <q-item clickable tag="a" target="_blank" href="https://strapi.io/" >
+        <q-item-section avatar>
+          <q-icon name="school" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Docs</q-item-label>
+          <q-item-label caption>strapi.io</q-item-label>
+        </q-item-section>
+      </q-item>
       <q-item clickable tag="a" target="_blank" href="https://github.quasar.dev">
         <q-item-section avatar>
           <q-icon name="code" />

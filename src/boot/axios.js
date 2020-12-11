@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import { Notify } from 'quasar'
+import { LocalStorage, Notify } from 'quasar'
 
 Notify.registerType('axios-notify', {
   actions: [{ icon: 'close', color: 'white' }],
@@ -34,6 +34,29 @@ const setErrorInterceptor = (errorFunction) => {
 const setBaseUrl = (baseURL) => {
   axiosInstance.defaults.baseURL = baseURL
 }
+
+axiosInstance.interceptors.response.use((response) => {
+  return response
+}, async (error) => {
+  const rememberMe = LocalStorage.getItem('remember_me') || false
+  if (error.response && error.response.status === 401 && rememberMe) {
+    const originalRequest = error.config
+    const token = LocalStorage.getItem('authorization_token')
+
+    delete axiosInstance.defaults.headers.common['Authorization']
+    return axiosInstance.post('/auth/refresh-token', { jwt: token }).then(({ data: { jwt } }) => {
+      LocalStorage.set('authorization_token', jwt)
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`
+      const retryOriginalRequest = new Promise((resolve) => {
+        originalRequest.headers['Authorization'] = `Bearer ${jwt}`
+        resolve(axiosInstance(originalRequest))
+      })
+
+      return retryOriginalRequest
+    })
+  }
+  return Promise.reject(error)
+})
 
 Vue.prototype.$axios = axiosInstance
 
