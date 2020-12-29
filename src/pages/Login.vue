@@ -144,7 +144,6 @@ export default {
   },
   mounted () {
     const { params } = this.$route.params
-    console.log('%c-oi', 'color: yellow;', params)
     if (params === 'confirmed') {
       this.$q.dialog({
         component: dialogIcon,

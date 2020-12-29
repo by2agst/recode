@@ -2,7 +2,7 @@
   <q-layout view="hHh Lpr fff"> <!-- Be sure to play with the Layout demo on docs -->
 
     <!-- (Optional) The Header -->
-    <q-header class="bg-grey-1 text-black">
+    <q-header elevated class="bg-grey-1 text-black">
       <q-toolbar>
         <!-- <q-btn
           flat
@@ -34,13 +34,6 @@
       </q-tabs> -->
     </q-header>
 
-    <!-- (Optional) The Footer -->
-    <q-footer class="bg-white text-black">
-      <q-toolbar>
-        <q-toolbar-title>Footer</q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-
     <!-- (Optional) A Drawer; you can add one more with side="right" or change this one's side -->
     <q-drawer
       v-model="leftDrawer"
@@ -58,6 +51,15 @@
       <!-- This is where pages get injected -->
       <router-view />
     </q-page-container>
+
+    <!-- (Optional) The Footer -->
+    <!--
+    <q-footer elevated class="bg-white text-black">
+      <q-toolbar>
+        <q-toolbar-title>Footer</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+    -->
 
   </q-layout>
 </template>
