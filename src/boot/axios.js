@@ -15,7 +15,7 @@ Notify.registerType('axios-notify', {
 
 const axiosInstance = axios.create({
   paramsSerializer: params => {
-    return qs.stringify(params, { arrayFormat: 'repeat' })
+    return qs.stringify(params, { arrayFormat: 'indices' })
   },
   baseURL: process.env.BASE_URL
 })
