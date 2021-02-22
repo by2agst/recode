@@ -221,9 +221,9 @@ export default {
     return {
       stars: 3,
       images: [
-        'https://cdnb.artstation.com/p/assets/images/images/023/969/931/large/yerim-kim-2.jpg?1580904395',
-        'https://cdna.artstation.com/p/assets/images/images/023/969/908/large/yerim-kim-20.jpg?1580904367',
-        'https://cdna.artstation.com/p/assets/images/images/023/969/920/large/yerim-kim-18.jpg?1580904387'
+        'https://via.placeholder.com/1280x720.png/646c9a/ffffff/',
+        'https://via.placeholder.com/1024x768.png/fd397a/ffffff/',
+        'https://via.placeholder.com/800x600.png/34bfa3/ffffff/'
       ],
       columns: [
         {
