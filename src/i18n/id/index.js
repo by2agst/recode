@@ -24,24 +24,66 @@ export default {
     url: '{name} harus mengandung url yang valid'
   },
 
-  auth: {
-    logIn: 'Log In',
-    logOut: 'Log Out',
-    register: 'Register',
-    signIn: 'Sign In',
-    signOut: 'Sign Out',
-    signUp: 'Sign Up',
-    username: 'Username',
-    email: 'Email',
-    password: 'Password',
-    passwordConfirmation: 'Password Confimation',
-    forgotPassword: 'Forgot password'
-  },
-
   menu: {
     dashboard: 'Beranda',
     users: 'Pengguna',
     chart: 'Grafik',
     gallery: 'Galeri'
+  },
+
+  auth: {
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
+    forgotPassword: 'Lupa Password',
+    resetPassword: 'Reset Password',
+    login: {
+      dontHaveAccount: 'Belum punya akun?',
+      forgotPassword: 'Lupa password?',
+      form: {
+        identifier: 'Username / Email',
+        password: 'Password',
+        rememberMe: 'Ingatkan saya'
+      },
+      button: {
+        login: 'Login'
+      },
+      congratulations: 'Selamat',
+      accountActive: 'Akun Anda aktif',
+      loginFailed: 'Gagal masuk'
+    },
+    register: {
+      form: {
+        email: 'Email',
+        username: 'Username',
+        password: 'Password',
+        passwordConfirmation: 'Konfirmasi Password'
+      },
+      button: {
+        register: 'Daftar'
+      },
+      registerSuccess: 'Daftar berhasil',
+      registerFailed: 'Pendaftaran gagal',
+      checkEmail: 'Email konfirmasi sudah terkirim silahkan cek email anda'
+    },
+    forgot: {
+      form: {
+        email: 'Email'
+      },
+      button: {
+        send: 'Kirim'
+      },
+      sendSuccess: 'Mengirim email berhasil ',
+      sendFailed: 'Pengiriman email gagal ',
+      checkEmail: 'Tautan telah dikirim, silakan periksa email Anda'
+    },
+    reset: {
+      form: {
+        password: 'Password',
+        passwordConfirmation: 'Konfirmasi Password'
+      },
+      button: {
+        save: 'Simpan'
+      }
+    }
   }
 }

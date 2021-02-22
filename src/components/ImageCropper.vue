@@ -81,11 +81,11 @@ export default {
       this.$refs.input.click()
     },
     dataURLtoFile (dataurl) {
-      let arr = dataurl.split(',')
-      let type = arr[0].match(/:(.*?);/)[1]
-      let bstr = window.atob(arr[1])
+      const arr = dataurl.split(',')
+      const type = arr[0].match(/:(.*?);/)[1]
+      const bstr = window.atob(arr[1])
       let n = bstr.length
-      let u8arr = new Uint8Array(n)
+      const u8arr = new Uint8Array(n)
 
       while (n--) {
         u8arr[n] = bstr.charCodeAt(n)
@@ -97,7 +97,7 @@ export default {
     cropImage () {
       this.cropImg = this.$refs.cropper.getCroppedCanvas({ width: 1024, height: 1024 }).toDataURL()
       const file = this.dataURLtoFile(this.cropImg)
-      let formData = new FormData()
+      const formData = new FormData()
       formData.append('files', file)
       return formData
     },

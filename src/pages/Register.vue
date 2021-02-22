@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                <router-link to="/login" class="text-primary">Sign In</router-link>
+                <router-link to="/login" class="text-primary">{{$t('auth.signin')}}</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
@@ -45,40 +45,43 @@
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
                     <q-form class="q-gutter-y-md" ref="myForm" @submit="register">
-                      <h5>Sign Up</h5>
+                      <h5>{{$t('auth.signUp')}}</h5>
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="email"
                         v-model="form.email"
-                        label="email"
                         type="email"
+                        :label="$t('auth.register.form.email')"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'email' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'email', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.register.form.email') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.register.form.email'), length: 6 })
                         ]"
                       />
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="username"
                         v-model="form.username"
-                        label="username"
+                        :label="$t('auth.register.form.username')"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'username' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'username', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.register.form.username') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.register.form.username'), length: 6 })
                         ]"
                       />
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="password"
                         v-model="form.password"
-                        label="password"
+                        :label="$t('auth.register.form.password')"
                         :type="isPwd ? 'password' : 'text'"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'password' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'password', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.register.form.password') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.register.form.password'), length: 6 })
                         ]"
                         >
                         <template v-slot:append>
@@ -92,14 +95,15 @@
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="passwordConfirmation"
                         v-model="form.passwordConfirmation"
-                        label="password confirmation"
+                        :label="$t('auth.register.form.passwordConfirmation')"
                         :type="isPwdCnf ? 'password' : 'text'"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'passwordConfirmation' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'passwordConfirmation', length: 6 }),
-                          val => val === form.password || $t('rules.sameAs', { name: 'passwordConfirmation', field: 'password' })
+                          val => !!val || $t('rules.required', { name: $t('auth.register.form.passwordConfirmation') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.register.form.passwordConfirmation'), length: 6 }),
+                          val => val === form.password || $t('rules.sameAs', { name: $t('auth.register.form.passwordConfirmation'), field: 'password' })
                         ]"
                         >
                         <template v-slot:append>
@@ -112,7 +116,14 @@
                       </q-input>
                       <div class="row items-center justify-end">
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="register" @click="register" :loading="loading" :disabled="loading" />
+                          <q-btn
+                            no-caps
+                            color="primary"
+                            @click="register"
+                            :label="$t('auth.register.button.register')"
+                            :loading="loading"
+                            :disabled="loading"
+                          />
                         </div>
                       </div>
                     </q-form>
@@ -162,16 +173,16 @@ export default {
             this.$q.notify({
               color: 'primary',
               type: 'axios-notify',
-              message: 'Register is successfull',
-              caption: 'Confirmation email has been sent please check your email'
+              message: this.$t('auth.register.registerSuccess'),
+              caption: this.$t('auth.register.checkEmail')
             })
             this.$router.push('/login')
           }).catch(e => {
             this.loading = false
-            let errMessage = this.$g.errorMessage(e)
+            const errMessage = this.$g.errorMessage(e)
             this.$q.notify({
               type: 'axios-notify',
-              message: 'Register failed',
+              message: this.$t('auth.register.registerFailed'),
               caption: errMessage
             })
           })

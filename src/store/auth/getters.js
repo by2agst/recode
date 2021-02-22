@@ -10,12 +10,12 @@ export function role (state) {
 }
 
 export function loggedIn (state) {
-  let currentTime = Date.now() / 1000
-  let token = LocalStorage.getItem('authorization_token') || ''
+  const currentTime = Date.now() / 1000
+  const token = LocalStorage.getItem('authorization_token') || ''
   let checkToken = false
   if (token) {
-    let jwtExtracted = jwtDecode(token)
-    let exp = jwtExtracted.exp
+    const jwtExtracted = jwtDecode(token)
+    const exp = jwtExtracted.exp
     checkToken = exp > currentTime
   }
   return state.user && state.user.role && checkToken

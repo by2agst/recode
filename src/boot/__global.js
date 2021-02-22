@@ -17,8 +17,8 @@ const errorMessage = (e) => {
   return errMessage
 }
 
-const getSrc = (url) => {
-  return `${process.env.BASE_URL}${url.substring(1)}`
+const getSrc = (url, timeStamp = false) => {
+  return `${process.env.BASE_URL}${url.substring(1)}${timeStamp ? '?' + new Date().getTime() : ''}`
 }
 
 const initialName = (name) => {

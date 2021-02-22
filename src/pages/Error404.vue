@@ -1,19 +1,32 @@
 <template>
-  <div class="fixed-center text-center">
-    <p>
-      <img
-        src="~assets/sad.svg"
-        style="width:30vw;max-width:150px;"
-      >
-    </p>
-    <p class="text-faded">Sorry, nothing here...<strong>(404)</strong></p>
-    <q-btn
-      color="secondary"
-      style="width:200px;"
-      to="/"
-      label="Go back"
-    />
-  </div>
+    <div class="row">
+      <div class="col-12 bg-dark text-white">
+        <div class="column window-height bg-2">
+          <div class="col">
+            <div class="column full-height justify-center">
+              <div class="col-auto text-center">
+                <div class="logo-container">
+                  <div class="quasar" />
+                  <div class="orbit">
+                    <div class="strapi" />
+                  </div>
+                </div>
+                <div class="text-h3 q-gutter-y-md q-mb-md">
+                  <div>Sorry, nothing here...</div>
+                  <div class="text-bold">(404)</div>
+                </div>
+                <q-btn
+                  color="accent"
+                  style="width:200px;"
+                  to="/"
+                  label="Go back"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>

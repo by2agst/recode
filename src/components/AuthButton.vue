@@ -14,7 +14,7 @@
               <q-avatar rounded color="indigo-4" text-color="white">
                 <q-img
                   v-if="me.avatar"
-                  :src="$g.getSrc(me.avatar.formats.thumbnail.url)"
+                  :src="$g.getSrc(me.avatar.formats.thumbnail.url, true)"
                   :ratio="1"
                 />
                 <div v-else>
@@ -117,7 +117,9 @@ export default {
   methods: {
     logout () {
       this.$auth.logout()
-      this.$router.replace('/')
+      if (this.$route.path !== '/') {
+        this.$router.replace('/')
+      }
     }
   }
 }

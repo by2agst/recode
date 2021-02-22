@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                Don't have an account yet? <router-link to="/register" class="text-primary">Sign Up</router-link>
+                {{$t('auth.login.dontHaveAccount')}} <router-link to="/register" class="text-primary">{{$t('auth.signUp')}}</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
@@ -45,28 +45,31 @@
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
                     <q-form class="q-gutter-y-md" ref="myForm" @submit="login">
-                      <h5>Sign In</h5>
+                      <h5>{{$t('auth.signIn')}}</h5>
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="identifier"
                         v-model="form.identifier"
-                        label="username / email"
+                        :label="$t('auth.login.form.identifier')"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'identifier' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'identifier', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.login.form.identifier') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.login.form.identifier'), length: 6 })
                         ]"
                       />
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="password"
                         v-model="form.password"
-                        label="password"
+                        v-on:keyup.enter="login"
+                        :label="$t('auth.login.form.password')"
                         :type="isPwd ? 'password' : 'text'"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'password' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'password', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.login.form.password') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.login.form.password'), length: 6 })
                         ]"
                         >
                         <template v-slot:append>
@@ -79,18 +82,32 @@
                       </q-input>
                       <div class="row items-center justify-between">
                         <div class="col-auto">
-                          <q-checkbox v-model="form.rememberMe" label="Remember Me" size="xs" color="secondary" class="text-secondary" />
+                          <q-checkbox
+                            v-model="form.rememberMe"
+                            :label="$t('auth.login.form.rememberMe')"
+                            size="xs"
+                            color="secondary" class="text-secondary"
+                          />
                         </div>
                       </div>
                       <div class="row items-center justify-between">
                         <div class="col-auto">
-                          <router-link to="/forgot-password" class="text-primary">forgot password?</router-link>
+                          <router-link to="/forgot-password" class="text-primary">
+                            {{$t('auth.login.forgotPassword')}}
+                          </router-link>
                         </div>
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="login" @click="login" :loading="loading" :disabled="loading" />
+                          <q-btn
+                            no-caps
+                            color="primary"
+                            @click="login"
+                            :label="$t('auth.login.button.login')"
+                            :loading="loading"
+                            :disabled="loading"
+                          />
                         </div>
                       </div>
-                      <div class="column items-center justify-between q-my-xl">
+                      <!-- <div class="column items-center justify-between q-my-xl">
                         <q-separator />
                         <div class="col-auto q-px-sm text-grey">OR</div>
                         <q-separator />
@@ -105,7 +122,7 @@
                         <div class="col-xs-12 col-md-4">
                           <q-btn flat no-caps dense color="negative" label="google" icon="fab fa-google-plus-square"/>
                         </div>
-                      </div>
+                      </div> -->
                     </q-form>
                   </div>
                 </div>
@@ -149,8 +166,8 @@ export default {
         component: dialogIcon,
         parent: this,
         persistent: true,
-        title: 'Congratulations',
-        text: 'Your account is active'
+        title: this.$t('auth.login.congratulations'),
+        text: this.$t('auth.login.accountActive')
       }).onOk(() => {
         this.$router.replace('/login')
       })
@@ -162,15 +179,14 @@ export default {
         if (success) {
           this.loading = true
           this.$auth.login(this.form).then(({ user }) => {
-            console.log('%c-user', 'color: cyan;', user)
             this.loading = false
             this.$router.replace(`/${user.role.type}/dashboard`)
           }).catch(e => {
             this.loading = false
-            let errMessage = this.$g.errorMessage(e)
+            const errMessage = this.$g.errorMessage(e)
             this.$q.notify({
               type: 'axios-notify',
-              message: 'Login Failed',
+              message: this.$t('auth.login.loginFailed'),
               caption: errMessage
             })
           })

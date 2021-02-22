@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                <router-link to="/login" class="text-primary">Sign In</router-link>
+                <router-link to="/login" class="text-primary">{{$t('auth.signIn')}}</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
@@ -45,22 +45,30 @@
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
                     <q-form class="q-gutter-y-md" ref="myForm" @submit="send">
-                      <h5>Forgot Password</h5>
+                      <h5>{{$t('auth.forgotPassword')}}</h5>
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="email"
                         v-model="form.email"
-                        label="email"
                         type="email"
+                        :label="$t('auth.forgot.form.email')"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'email' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'email', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.forgot.form.email') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.forgot.form.email'), length: 6 })
                         ]"
                       />
                       <div class="row items-center justify-end">
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="send" @click="send" :loading="loading" :disabled="loading" />
+                          <q-btn
+                            no-caps
+                            color="primary"
+                            @click="send"
+                            :label="$t('auth.forgot.button.send')"
+                            :loading="loading"
+                            :disabled="loading"
+                          />
                         </div>
                       </div>
                     </q-form>
@@ -107,16 +115,16 @@ export default {
             this.$q.notify({
               color: 'primary',
               type: 'axios-notify',
-              message: 'Send email is successfull',
-              caption: 'Link has been sent please check your email'
+              message: this.$t('auth.forgot.sendSuccess'),
+              caption: this.$t('auth.forgot.checkEmail')
             })
             this.$router.push('/login')
           }).catch(e => {
             this.loading = false
-            let errMessage = this.$g.errorMessage(e)
+            const errMessage = this.$g.errorMessage(e)
             this.$q.notify({
               type: 'axios-notify',
-              message: 'Send email failed',
+              message: this.$t('auth.forgot.sendFailed'),
               caption: errMessage
             })
           })

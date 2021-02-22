@@ -9,7 +9,7 @@
                 <q-avatar rounded size="100px" color="primary" text-color="white">
                   <q-img
                     v-if="me.avatar"
-                    :src="$g.getSrc(me.avatar.formats.thumbnail.url)"
+                    :src="$g.getSrc(me.avatar.formats.thumbnail.url, true)"
                     :ratio="1"
                   />
                   <div v-else>
@@ -363,7 +363,6 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(() => {
-        console.log('SUCCESS!!')
         this.$auth.fetch()
         this.$q.notify({
           type: 'axios-notify',

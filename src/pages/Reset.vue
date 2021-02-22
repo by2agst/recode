@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                <router-link to="/login" class="text-primary">Sign In</router-link>
+                <router-link to="/login" class="text-primary">{{$t('auth.signIn')}}</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
@@ -45,17 +45,18 @@
                 <div class="row justify-center">
                   <div class="col-10 col-md-8 col-lg-6">
                     <q-form class="q-gutter-y-md" ref="myForm" @submit="reset">
-                      <h5>Reset password</h5>
+                      <h5>{{$t('auth.resetPassword')}}</h5>
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="password"
                         v-model="form.password"
-                        label="password"
+                        :label="$t('auth.reset.form.password')"
                         :type="isPwd ? 'password' : 'text'"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'password' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'password', length: 6 })
+                          val => !!val || $t('rules.required', { name: $t('auth.reset.form.password') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.reset.form.password'), length: 6 })
                         ]"
                         >
                         <template v-slot:append>
@@ -69,14 +70,15 @@
                       <q-input
                         dense
                         lazy-rules
+                        reactive-rules
                         ref="passwordConfirmation"
                         v-model="form.passwordConfirmation"
-                        label="password confirmation"
+                        :label="$t('auth.reset.form.passwordConfirmation')"
                         :type="isPwdCnf ? 'password' : 'text'"
                         :rules="[
-                          val => !!val || $t('rules.required', { name: 'passwordConfirmation' }),
-                          val => val.length > 6 || $t('rules.minLength', { name: 'passwordConfirmation', length: 6 }),
-                          val => val === form.password || $t('rules.sameAs', { name: 'passwordConfirmation', field: 'password' })
+                          val => !!val || $t('rules.required', { name: $t('auth.reset.form.passwordConfirmation') }),
+                          val => val.length > 6 || $t('rules.minLength', { name: $t('auth.reset.form.passwordConfirmation'), length: 6 }),
+                          val => val === form.password || $t('rules.sameAs', { name: $t('auth.reset.form.passwordConfirmation'), field: 'password' })
                         ]"
                         >
                         <template v-slot:append>
@@ -89,7 +91,14 @@
                       </q-input>
                       <div class="row items-center justify-end">
                         <div class="col-auto">
-                          <q-btn no-caps color="primary" label="reset" @click="reset" :loading="loading" :disabled="loading" />
+                          <q-btn
+                            no-caps
+                            color="primary"
+                            @click="reset"
+                            :label="$t('auth.reset.button.save')"
+                            :loading="loading"
+                            :disabled="loading"
+                          />
                         </div>
                       </div>
                     </q-form>

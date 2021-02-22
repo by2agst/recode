@@ -20,7 +20,7 @@ export default ({ app, router, store, Vue }) => {
         LoadingBar.stop()
         next('/')
       } else {
-        let checkRole = await store.getters['auth/check'](authRouter.meta.auth)
+        const checkRole = await store.getters['auth/check'](authRouter.meta.auth)
         LoadingBar.stop()
         if (checkRole) {
           next()
@@ -47,7 +47,7 @@ export default ({ app, router, store, Vue }) => {
         next()
       }
     } else {
-      let loggedIn = await store.getters['auth/loggedIn']
+      const loggedIn = await store.getters['auth/loggedIn']
       if (loggedIn === undefined) {
         try {
           await store.dispatch('auth/fetch')
