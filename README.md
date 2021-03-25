@@ -10,9 +10,14 @@
 ## re:code
 <p>quasar boilerplate with strapi as <a href="https://github.com/by2agst/recode_be.git">the backend</a></p>
 
+## 💰 Donation
+If this project help you reduce time to develop, you can give me a cup of coffee ☕ :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/recodeproject)
+
 ### 🖐 Requirements
 
-Complete installation requirements can be found in the documentation under <a href="https://quasar.dev/quasar-cli/installation">Installation Requirements</a>.
+Complete installation requirements can be found in the documentation under <a href="https://quasar.dev/quasar-cli/installation" target="_blank">Installation Requirements</a>.
 
 **Node:**
 
