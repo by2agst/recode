@@ -10,6 +10,9 @@
 ## re:code
 <p>quasar boilerplate with strapi as <a href="https://github.com/by2agst/recode_be.git">the backend</a></p>
 
+## 📺 Demo
+[![youtube](https://i.ytimg.com/vi/bsLoBhZ5s34/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBV610POfNTxaqEKY97VlVw-T9pYw)](https://www.youtube.com/watch?v=bsLoBhZ5s34)
+
 ## 💰 Donation
 If this project help you reduce time to develop, you can give me a cup of coffee ☕ :)
 
