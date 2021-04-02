@@ -132,8 +132,12 @@ export default {
     return {
       serviceName: '{{ lowerCase name }}',
       fileName: '{{ pascalCase name }}',
-      visibleColumns: [],
-      columns: [
+      visibleColumns: []
+    }
+  },
+  computed: {
+    columns () {
+      return [
         {
           name: 'action',
           required: true,

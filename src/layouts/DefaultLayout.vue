@@ -14,7 +14,7 @@
         <q-toolbar-title>
           Re:<div class="inline-block flip-horizontal">c</div>ode
         </q-toolbar-title>
-        <auth-button v-if="me.role && me.role.type" />
+        <auth-button v-if="user.role && user.role.type" />
         <router-link v-else to="/login" class="text-primary">Sign In</router-link>
       </q-toolbar>
 
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import AuthButton from 'src/components/AuthButton.vue'
 
 export default {
@@ -79,9 +80,7 @@ export default {
     }
   },
   computed: {
-    me () {
-      return this.$auth.user()
-    }
+    ...mapState('auth', ['user'])
   }
 }
 </script>

@@ -13,21 +13,21 @@
             <div class="col-auto">
               <q-avatar rounded color="indigo-4" text-color="white">
                 <q-img
-                  v-if="me.avatar"
-                  :src="$g.getSrc(me.avatar.formats.thumbnail.url, true)"
+                  v-if="user.avatar"
+                  :src="$g.getSrc(user.avatar.formats.thumbnail.url, true)"
                   :ratio="1"
                 />
                 <div v-else>
-                  {{$g.initialName(me.username)}}
+                  {{$g.initialName(user.username)}}
                 </div>
               </q-avatar>
             </div>
             <div class="col">
               <div class="text-h5 q-mt-xs">
-                {{me.username | capitalize}}
+                {{user.username | capitalize}}
               </div>
               <div class="q-mt-xs">
-                {{me.email}}
+                {{user.email}}
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@
 
         <q-card-section class="q-pa-none">
           <q-list>
-            <q-item clickable v-ripple :to="`/${me.role.type}/profile`">
+            <q-item clickable v-ripple :to="`/${user.role.type}/profile`">
               <q-item-section avatar>
                 <q-avatar icon="fas fa-id-badge" color="clear" text-color="positive" />
               </q-item-section>
@@ -100,6 +100,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'ComponentAuthButton',
 
@@ -110,9 +112,7 @@ export default {
   mounted () {
   },
   computed: {
-    me () {
-      return this.$auth.user()
-    }
+    ...mapState('auth', ['user'])
   },
   methods: {
     logout () {

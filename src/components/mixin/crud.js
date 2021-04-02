@@ -1,3 +1,5 @@
+import { remove } from 'lodash'
+import moment from 'moment'
 import XLSX from 'xlsx'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -19,11 +21,13 @@ export const crud = () => {
           rowsNumber: 10
         },
         visibleColumns: [],
-        columns: [],
         dataTable: []
       }
     },
     computed: {
+      columns () {
+        return []
+      },
       optionsColumns () {
         return [...this.columns].filter(c => !c.required)
       }
@@ -39,22 +43,39 @@ export const crud = () => {
         const { value } = cols.find(r => r.name === name)
         return value
       },
-      convertData (type = 'excel') {
-        let visibleColumns = [...this.visibleColumns]
-        this.$_.remove(visibleColumns, col => col === 'action')
-        let body = [...this.dataTable].map(r => {
-          return visibleColumns.map(col => {
-            let { format } = this.columns.find(c => c.name === col)
-            if (format) {
-              return (format(r[col]) || '')
-            } else {
-              return r[col] || ''
+      getLabelValue (data, col) {
+        const column = this.columns.find(c => c.name === col)
+        if (column) {
+          const { label, format } = column
+          if (format) {
+            return {
+              label: label || '',
+              value: (format(data[col]) || '')
             }
+          } else {
+            return {
+              label: label || '',
+              value: data[col] || ''
+            }
+          }
+        } else {
+          return {
+            label: col,
+            value: data[col] || ''
+          }
+        }
+      },
+      convertData (type = 'excel') {
+        const visibleColumns = [...this.visibleColumns]
+        remove(visibleColumns, col => col === 'action')
+        const body = [...this.dataTable].map(r => {
+          return visibleColumns.map(col => {
+            return this.getValue(r, col).value
           })
         })
 
-        let head = visibleColumns.map(col => {
-          let { label } = this.columns.find(c => c.name === col)
+        const head = visibleColumns.map(col => {
+          const { label } = this.columns.find(c => c.name === col)
           return label || ''
         })
 
@@ -75,12 +96,12 @@ export const crud = () => {
         const ws = XLSX.utils.aoa_to_sheet(this.convertData('excel'))
         const wb = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(wb, ws, `${this.fileName}`)
-        XLSX.writeFile(wb, `${this.fileName}-${this.$moment().format('YYMMDD-hhmmss')}.xlsx`)
+        XLSX.writeFile(wb, `${this.fileName}-${moment().format('YYMMDD-hhmmss')}.xlsx`)
       },
       async exportPdf () {
-        let doc = new JsPDF({})
+        const doc = new JsPDF({})
         doc.autoTable(this.convertData('pdf'))
-        doc.save(`${this.fileName}-${this.$moment().format('YYMMDD-hhmmss')}.pdf`)
+        doc.save(`${this.fileName}-${moment().format('YYMMDD-hhmmss')}.pdf`)
       },
 
       edit (id) {
@@ -97,7 +118,7 @@ export const crud = () => {
         const filter = props.filter
 
         this.loading = true
-        let params = {}
+        const params = {}
         if (filter) {
           params._q = filter
         }

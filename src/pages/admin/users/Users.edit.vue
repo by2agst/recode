@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import { pick } from 'lodash'
+
 export default {
   data () {
     return {
@@ -131,7 +133,7 @@ export default {
     getData () {
       this.$axios.get(`${this.serviceName}/${this.id}`).then(({ data }) => {
         this.data = data
-        this.form = this.$_.pick(data, ['fullName', 'confirmed', 'blocked'])
+        this.form = pick(data, ['fullName', 'confirmed', 'blocked'])
       })
     },
     save () {

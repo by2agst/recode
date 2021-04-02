@@ -3,9 +3,9 @@
     <div class="row justify-center q-mb-md">
       <div class="col-sm-12 col-md-8">
         <vue-cropper
+          alt="Photo Profile"
           ref="cropper"
           :src="cropperSrc"
-          alt="Photo Profile"
           :aspect-ratio="1"
           :view-mode="3"
         />
@@ -40,6 +40,7 @@
 
 <script>
 import mime from 'mime-types'
+import moment from 'moment'
 import VueCropper from 'vue-cropperjs'
 import 'cropperjs/dist/cropper.css'
 
@@ -91,7 +92,7 @@ export default {
         u8arr[n] = bstr.charCodeAt(n)
       }
       const extension = mime.extension(type)
-      const filename = `${this.$moment().format('YYYY-MM-DD HH:mm:ss')}.${extension}`
+      const filename = `${moment().format('YYYY-MM-DD HH:mm:ss')}.${extension}`
       return new File([u8arr], filename, { type: type })
     },
     cropImage () {

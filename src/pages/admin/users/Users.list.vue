@@ -154,8 +154,12 @@ export default {
     return {
       serviceName: 'users',
       fileName: 'Users',
-      visibleColumns: ['username', 'email', 'confirmed', 'status'],
-      columns: [
+      visibleColumns: ['username', 'email', 'confirmed', 'status']
+    }
+  },
+  computed: {
+    columns () {
+      return [
         {
           name: 'username',
           required: true,

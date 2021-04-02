@@ -287,6 +287,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import AuthButton from 'src/components/AuthButton.vue'
 import Languages from 'src/components/Languages.vue'
 
@@ -298,14 +299,14 @@ export default {
   },
   data () {
     return {
-      timeStamp: this.$moment().format('DD MMM YYYY HH:mm:ss'),
+      timeStamp: moment().format('DD MMM YYYY HH:mm:ss'),
       interval: null,
       search: ''
     }
   },
   created () {
     this.interval = setInterval(() => {
-      this.timeStamp = this.$moment().format('DD MMM YYYY HH:mm:ss')
+      this.timeStamp = moment().format('DD MMM YYYY HH:mm:ss')
     }, 1000)
   },
   computed: {

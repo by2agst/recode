@@ -2,7 +2,7 @@
   <q-dialog v-model="dialogIcon.model" persistent transition-show="scale" transition-hide="scale" @hide="hide">
     <q-card class="bg-white text-negative" style="width: 400px; max-width: 80vw;">
       <q-card-section class="text-center">
-        <q-icon name="far fa-times-circle q-mb-md" style="font-size: 100px;"/>
+        <q-icon name="far fa-times-circle q-mb-md" style="font-size: 70px;"/>
         <div class="text-h6">{{ dialogIcon.title }}</div>
       </q-card-section>
 

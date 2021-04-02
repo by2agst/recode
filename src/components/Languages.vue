@@ -3,7 +3,8 @@
     flat
     round>
     <q-avatar size="15px">
-      <img :src="`statics/flags/${activeLangSvg}.svg`">
+      <img v-if="lang === 'en-us'" src="~assets/flags/012-uk.svg">
+      <img v-else-if="lang === 'id'" src="~assets/flags/004-indonesia.svg">
     </q-avatar>
     <q-menu anchor="bottom right" self="top right" :offset="[0, 10]">
       <q-list>
@@ -16,7 +17,8 @@
           <q-item-section>
             <q-item-label>
               <q-avatar size="15px" class="q-mr-sm">
-                <img :src="`statics/flags/${language.svg}.svg`">
+                <img v-if="language.value === 'en-us'" src="~assets/flags/012-uk.svg">
+                <img v-else-if="language.value === 'id'" src="~assets/flags/004-indonesia.svg">
               </q-avatar>
               <span class="vertical-middle">{{language.label}}</span>
             </q-item-label>
@@ -28,30 +30,28 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
+
 export default {
   name: 'ComponentLanguages',
 
   data () {
     return {
-      lang: this.$i18n.locale,
-      activeLangSvg: '012-uk',
+      lang: LocalStorage.getItem('lang') || this.$i18n.locale,
       langOptions: [
-        { value: 'en-us', label: 'English', svg: '012-uk' },
-        { value: 'id', label: 'Indonesia', svg: '004-indonesia' }
+        { value: 'en-us', label: 'English' },
+        { value: 'id', label: 'Indonesia' }
       ]
     }
   },
   mounted () {
-    this.setSvgLanguage(this.$i18n.locale)
+    this.$i18n.locale = LocalStorage.getItem('lang')
   },
   methods: {
     changeLanguage (lang) {
       this.$i18n.locale = lang
-      this.setSvgLanguage(lang)
-    },
-    setSvgLanguage (lang) {
-      let active = this.langOptions.find(l => l.value === lang)
-      this.activeLangSvg = active.svg
+      this.lang = lang
+      LocalStorage.set('lang', lang)
     }
   }
 }

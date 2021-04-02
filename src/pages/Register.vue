@@ -32,7 +32,7 @@
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">
-                <router-link to="/login" class="text-primary">{{$t('auth.signin')}}</router-link>
+                <router-link to="/login" class="text-primary">{{$t('auth.signIn')}}</router-link>
               </div>
               <div class="col-auto text-right">
                 <languages/>
