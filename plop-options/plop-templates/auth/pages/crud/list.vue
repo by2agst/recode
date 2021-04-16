@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { crud } from 'src/components/mixin/crud'
+import { crud } from 'src/mixin/crud'
 
 export default {
   name: '{{ pascalCase name }}',

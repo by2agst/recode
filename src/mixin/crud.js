@@ -21,7 +21,10 @@ export const crud = () => {
           rowsNumber: 10
         },
         visibleColumns: [],
-        dataTable: []
+        dataTable: [],
+        dataModal: {},
+        viewModal: false,
+        hideField: []
       }
     },
     computed: {
@@ -46,16 +49,22 @@ export const crud = () => {
       getLabelValue (data, col) {
         const column = this.columns.find(c => c.name === col)
         if (column) {
-          const { label, format } = column
+          const { label, format, field } = column
+          let value
+          if (typeof field === 'function') {
+            value = field(data)
+          } else {
+            value = data[field]
+          }
           if (format) {
             return {
               label: label || '',
-              value: (format(data[col]) || '')
+              value: (format(value) || '')
             }
           } else {
             return {
               label: label || '',
-              value: data[col] || ''
+              value: value || ''
             }
           }
         } else {
@@ -67,10 +76,10 @@ export const crud = () => {
       },
       convertData (type = 'excel') {
         const visibleColumns = [...this.visibleColumns]
-        remove(visibleColumns, col => col === 'action')
+        remove(visibleColumns, col => col === '#' || col === 'action')
         const body = [...this.dataTable].map(r => {
           return visibleColumns.map(col => {
-            return this.getValue(r, col).value
+            return this.getLabelValue(r, col).value
           })
         })
 
@@ -104,15 +113,33 @@ export const crud = () => {
         doc.save(`${this.fileName}-${moment().format('YYMMDD-hhmmss')}.pdf`)
       },
 
+      view (data) {
+        const columns = [...this.columns]
+        const cols = columns.map(col => col.name).filter(r => !(r === '#' || r === 'action'))
+        const result = {}
+        cols.forEach(f => {
+          const { label, field, format } = columns.find(c => c.name === f)
+          if (!this.hideField.includes(field)) {
+            let value
+            if (typeof field === 'function') {
+              value = field(data)
+            } else {
+              value = data[field]
+            }
+            result[label] = format ? format(value) : value
+          }
+        })
+
+        this.dataModal = result
+        this.viewModal = true
+      },
       edit (id) {
         this.$router.push(`/${this.$auth.role()}/${this.serviceName}/edit/${id}`)
       },
       refresh () {
-        this.onRequest({
-          pagination: this.pagination,
-          filter: this.filter || null
-        })
+        this.$refs.crudTable.requestServerInteraction()
       },
+
       async onRequest (props) {
         const { page, rowsPerPage, sortBy, descending } = props.pagination
         const filter = props.filter
@@ -134,6 +161,7 @@ export const crud = () => {
 
         this.loading = false
       },
+
       getData (params = {}, props) {
         const { page, rowsPerPage } = props.pagination
         const start = (page - 1) * rowsPerPage
@@ -148,6 +176,7 @@ export const crud = () => {
           console.log('%c-e', 'color: yellow;', e)
         })
       },
+
       confirmDelete (id) {
         this.$q.dialog({
           component: dialogIcon,

@@ -12,7 +12,7 @@
           @click="leftDrawer = !leftDrawer"
         /> -->
         <q-toolbar-title>
-          Re:<div class="inline-block flip-horizontal">c</div>ode
+          re:<div class="inline-block flip-horizontal">c</div>ode
         </q-toolbar-title>
         <auth-button v-if="user.role && user.role.type" />
         <router-link v-else to="/login" class="text-primary">Sign In</router-link>

@@ -2,7 +2,7 @@
   <q-dialog ref="dialog" @hide="onDialogHide" persistent>
     <q-card class="q-pa-md" style="width: 370px; max-width: 80vw; border-radius: 7px">
       <q-card-section class="text-center" :class="headerClass || 'text-positive'" >
-        <q-icon :name="icon || 'far fa-check-circle'" class="q-mb-md" style="font-size: 100px;"/>
+        <q-icon :name="icon || 'far fa-check-circle'" class="q-mb-md" style="font-size: 70px;"/>
         <div class="text-h6">{{ title }}</div>
       </q-card-section>
 

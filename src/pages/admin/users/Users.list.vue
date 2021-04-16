@@ -2,17 +2,18 @@
   <div class="row q-col-gutter-md">
     <div class="col-12">
       <q-table
-        title="Users"
-        @request="onRequest"
-        :data="dataTable"
         :columns="columns"
+        :data="dataTable"
         :filter="filter"
         :grid="$q.screen.xs"
         :loading="loading"
         :pagination.sync="pagination"
         :visible-columns="visibleColumns"
-        row-key="id"
+        @request="onRequest"
         binary-state-sort
+        row-key="id"
+        ref="crudTable"
+        title="Users"
         >
 
         <template v-slot:loading>
@@ -77,6 +78,10 @@
           </div>
         </template>
 
+        <template v-slot:body-cell-#="props">
+          <q-td :class="props.col.classes">{{props.rowIndex + 1}}</q-td>
+        </template>
+
         <template v-slot:body-cell-confirmed="props">
           <q-td :props="props">
             <div :class="{ 'text-primary': props.value, 'text-negative': !props.value }">
@@ -106,6 +111,11 @@
                 Edit
               </q-tooltip>
             </q-btn>
+            <q-btn flat round class="square" color="primary" icon="far fa-eye" @click="view(props.row)" >
+              <q-tooltip anchor="top middle" self="center middle">
+                View
+              </q-tooltip>
+            </q-btn>
             <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirmDelete(props.value)">
               <q-tooltip anchor="top middle" self="center middle">
                 Delete
@@ -116,50 +126,63 @@
 
         <!-- mobile -->
         <template v-slot:item="props">
-          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
-            <q-card>
-              <q-card-section>
-                <div v-for="(p, i) in props.colsMap" :key="i">
-                  <div class="row q-my-sm" v-if="p.name !== 'action'">
-                    <div class="col-12 text-primary">{{ p.label }}</div>
-                    <div class="col-12">{{ getValue(props.cols, p.name) }}</div>
-                  </div>
-                </div>
-              </q-card-section>
-              <q-separator />
-              <q-card-section class="flex flex-center">
-                <div class="q-gutter-x-md">
-                  <q-btn flat no-caps color="primary" icon="far fa-edit" label="Edit" @click="edit(props.row._id)" />
-                  <q-btn flat no-caps color="negative" icon="far fa-trash-alt" label="Delete" @click="confirmDelete(props.row._id)" />
-                </div>
-              </q-card-section>
-            </q-card>
-          </div>
+          <Mobile :props="props" :service="serviceName" />
         </template>
         <!-- end of mobile -->
       </q-table>
     </div>
+
+    <q-dialog v-model="viewModal">
+      <q-card style="width: 600px; max-width: 80vw;">
+        <q-card-section class="row items-center q-pb-none">
+          <q-space />
+          <div class="text-h6">{{$t('table.detail')}}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-card-section v-if="dataModal" class="q-gutter-y-sm">
+          <div class="row justify-between" v-for="(value, key) in dataModal" :key="key">
+            <div class="col-auto text-bold">{{getLabelValue(dataModal, key).label}}</div>
+            <div class="col-auto text-right" :name="value">{{getLabelValue(dataModal, key).value}}</div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
-import { crud } from 'src/components/mixin/crud'
+import { crud } from 'src/mixin/crud'
+import Mobile from 'src/components/table/Mobile'
 
 export default {
   name: 'Users',
   mixins: [
     crud()
   ],
+  components: {
+    Mobile
+  },
   data () {
     return {
       serviceName: 'users',
       fileName: 'Users',
-      visibleColumns: ['username', 'email', 'confirmed', 'status']
+      visibleColumns: ['#', 'username', 'email', 'confirmed', 'status']
     }
   },
   computed: {
     columns () {
       return [
+        {
+          name: '#',
+          label: '#',
+          align: 'right',
+          field: '_id',
+          headerClasses: 'bg-blue-grey text-white',
+          classes: 'bg-grey-2 ellipsis text-right',
+          sortable: false,
+          required: true
+        },
         {
           name: 'username',
           required: true,
@@ -167,8 +190,7 @@ export default {
           align: 'left',
           field: row => row.username,
           format: val => `${val}`,
-          headerClasses: 'bg-blue-grey text-white',
-          classes: 'bg-grey-2 ellipsis',
+          headerClasses: 'bg-grey-2',
           sortable: true
         }, {
           name: 'email',

@@ -7,7 +7,7 @@
             <div class="column full-height justify-center">
               <div class="col-auto text-center">
                 <div class="text-h3">
-                  Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+                  re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
                 </div>
                 <div class="text-h6 regular">Quasar v<div class="inline-block text-accent text-bold">{{ $q.version }}</div></div>
               </div>

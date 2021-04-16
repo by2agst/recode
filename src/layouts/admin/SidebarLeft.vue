@@ -11,7 +11,7 @@
     >
     <q-list dark class="text-grey">
       <q-item-label header class="text-white">
-        Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+        re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
         {{ $q.version }}
       </q-item-label>
       <q-item v-if="miniState" clickable @click="miniState = !miniState">

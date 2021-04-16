@@ -41,7 +41,7 @@ export default {
       this.chart1Options = {
         chart: {
           renderTo: 'chart-1',
-          type: 'area'
+          type: 'spline'
         },
         title: {
           text: 'Area chart with negative values'

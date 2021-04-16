@@ -26,7 +26,7 @@ Highcharts.customTheme = {
       ]
     },
     style: {
-      fontFamily: 'poppinsregular',
+      fontFamily: 'poppins',
       color: '#1a1a27'
     }
   },
@@ -42,9 +42,9 @@ Highcharts.customTheme = {
     }
   },
   xAxis: {
-    lineWidth: 1,
+    lineWidth: 0,
     lineColor: '#cccccc',
-    tickWidth: 1,
+    tickWidth: 0,
     tickColor: '#cccccc',
     labels: {
       style: {
@@ -53,7 +53,7 @@ Highcharts.customTheme = {
     }
   },
   yAxis: {
-    gridLineWidth: 1,
+    gridLineWidth: 0,
     gridLineColor: '#d9d9d9',
     labels: {
       style: {
