@@ -1,16 +1,56 @@
 <template>
   <q-page class="bg-blue-grey-1 q-pa-md">
     <div class="full-width">
-      <div class="row q-col-gutter-md" v-resize:debounce="onResize">
-        <div class="col-sm-12 col-md-6">
-          <div class="bg-white high-chart" ref="chart1">
-            <div id="chart-1" />
+      <div class="row q-col-gutter-md">
+        <div class="col-sm-12 col-xl-6">
+          <div class="rounded-borders overflow-hidden">
+            <high-chart name="chart-1" :options="chart1Options" />
           </div>
         </div>
-        <div class="col-sm-12 col-md-6">
-          <div class="bg-white high-chart" ref="chart2">
-            <div id="chart-2" />
+        <div class="col-sm-7">
+          <div class="rounded-borders overflow-hidden">
+            <high-chart name="chart-2" :options="chart2Options" />
           </div>
+        </div>
+        <div class="col-sm-5">
+          <q-card class="rounded-borders overflow-hidden no-shadow">
+            <div class="bg-white">
+              <div class="absolute z-top q-pa-md text-white text-h6">Widget</div>
+              <high-chart name="chart-3" :options="chart3Options" />
+            </div>
+            <q-card-section class="half-color-primary" style="height: 130px">
+              <div class="full-height row items-center justify-around">
+                <div class="col-5">
+                  <div class="bg-info text-white rounded-borders q-pa-md">
+                    <q-icon size="30px" name="fas fa-chart-line" />
+                    <div class="text-subtitle1">Weekly Sales</div>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="bg-warning text-white rounded-borders q-pa-md">
+                    <q-icon size="30px" name="fas fa-users" />
+                    <div class="text-subtitle1">New User</div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+            <q-card-section>
+              <div class="full-height row items-center justify-around">
+                <div class="col-5">
+                  <div class="bg-accent text-white rounded-borders q-pa-md">
+                    <q-icon size="30px" name="far fa-envelope" />
+                    <div class="text-subtitle1">Email</div>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="bg-positive text-white rounded-borders q-pa-md">
+                    <q-icon size="30px" name="far fa-comments" />
+                    <div class="text-subtitle1">Chat</div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </div>
@@ -18,19 +58,18 @@
 </template>
 
 <script>
-import resize from 'vue-resize-directive'
+import HighChart from 'src/components/chart/HighChart'
 
 export default {
   name: 'Chart',
-  directives: {
-    resize
+  components: {
+    HighChart
   },
   data () {
     return {
-      chart1: '',
-      chart1Options: '',
-      chart2: '',
-      chart2Options: ''
+      chart1Options: {},
+      chart2Options: {},
+      chart3Options: {}
     }
   },
   mounted () {
@@ -49,9 +88,6 @@ export default {
         xAxis: {
           categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
         },
-        credits: {
-          enabled: false
-        },
         series: [{
           name: 'John',
           data: [5, 3, 4, 7, 2]
@@ -63,8 +99,6 @@ export default {
           data: [3, 4, 4, -2, 5]
         }]
       }
-
-      this.chart1 = this.$highcharts.chart(this.chart1Options)
 
       this.chart2Options = {
         chart: {
@@ -102,12 +136,55 @@ export default {
         }]
       }
 
-      this.chart2 = this.$highcharts.chart(this.chart2Options)
-    },
-    onResize () {
-      console.log('%c-reflow', 'color: yellow;')
-      // this.chart1.reflow()
-      // this.chart2.reflow()
+      this.chart3Options = {
+        colors: ['rgba(255, 255, 255, 0.3)'],
+        chart: {
+          renderTo: 'chart-3',
+          type: 'spline',
+          backgroundColor: 'rgba(88, 103, 221, 1)',
+          height: '150',
+          marginLeft: 0,
+          marginRight: 0,
+          spacingLeft: 0,
+          spacingRight: 0
+        },
+        exporting: {
+          enabled: false
+        },
+        title: {
+          text: ''
+        },
+        subTitle: {
+          text: ''
+        },
+        xAxis: {
+          title: {
+            text: null
+          },
+          visible: false,
+          minPadding: 0,
+          maxPadding: 0
+        },
+        yAxis: {
+          visible: false,
+          title: {
+            text: null
+          },
+          labels: {
+            enabled: false
+          },
+          minPadding: 0,
+          maxPadding: 0,
+          tickWidth: 0,
+          minRange: 0.001,
+          min: 0
+        },
+        series: [{
+          showInLegend: false,
+          name: 'user',
+          data: [0, 0, 0, 15, 20, 30, 15, 10, 0, 0, 0]
+        }]
+      }
     }
   }
 }

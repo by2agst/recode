@@ -14,17 +14,7 @@ Highcharts.customTheme = {
   colors: ['#5867dd', '#fd397a', '#646c9a', '#34bfa3', '#f4516c', '#36a3f7', '#ffb822', '#1a1a27'],
 
   chart: {
-    backgroundColor: {
-      radialGradient: {
-        cx: 0,
-        cy: 1,
-        r: 1
-      },
-      stops: [
-        [0, '#ffffff'],
-        [1, '#f2f2ff']
-      ]
-    },
+    backgroundColor: '#ffffff',
     style: {
       fontFamily: 'poppins',
       color: '#1a1a27'
