@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-grey-1 text-black">
+  <q-header :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-1 text-black'">
     <q-toolbar>
       <div class="row full-width justify-between">
         <div class="col-auto col-sm-6">
@@ -241,6 +241,7 @@
         </div>
         <div class="col-auto col-sm-6">
           <div class="full-width text-right">
+            <dark />
             <q-btn
               flat
               round
@@ -289,12 +290,14 @@
 <script>
 import moment from 'moment'
 import AuthButton from 'src/components/AuthButton.vue'
+import Dark from 'src/components/Dark.vue'
 import Languages from 'src/components/Languages.vue'
 
 export default {
   name: 'UserToolbarTop',
   components: {
     AuthButton,
+    Dark,
     Languages
   },
   data () {

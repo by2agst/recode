@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-blue-grey-1 q-pa-md">
+  <q-page class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-blue-grey-1'">
     <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-4">
         <q-card>

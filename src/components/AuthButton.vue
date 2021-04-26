@@ -8,7 +8,7 @@
     >
     <q-menu anchor="bottom right" self="top right" :offset="[0, 10]" :content-style="{ minWidth: '370px' }">
       <q-card class="my-card">
-        <q-card-section class="bg-8 text-white q-py-lg">
+        <q-card-section class="q-py-lg" :class="$q.dark.isActive ? 'bg-2 text-white' : 'bg-3'">
           <div class="row q-col-gutter-sm items-center">
             <div class="col-auto">
               <q-avatar rounded color="indigo-4" text-color="white">
@@ -37,6 +37,18 @@
 
         <q-card-section class="q-pa-none">
           <q-list>
+            <q-item clickable v-ripple :to="`/${user.role.type}/dashboard`">
+              <q-item-section avatar>
+                <q-avatar icon="fas fa-home" color="clear" text-color="primary" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Dashboard</q-item-label>
+                <q-item-label caption>Account settings and more</q-item-label>
+              </q-item-section>
+              <q-item-section avatar>
+                <q-icon color="grey" name="chevron_right" />
+              </q-item-section>
+            </q-item>
             <q-item clickable v-ripple :to="`/${user.role.type}/profile`">
               <q-item-section avatar>
                 <q-avatar icon="fas fa-id-badge" color="clear" text-color="positive" />

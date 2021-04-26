@@ -44,9 +44,6 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.$i18n.locale = LocalStorage.getItem('lang')
-  },
   methods: {
     changeLanguage (lang) {
       this.$i18n.locale = lang

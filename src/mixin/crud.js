@@ -59,7 +59,7 @@ export const crud = () => {
           if (format) {
             return {
               label: label || '',
-              value: (format(value) || '')
+              value: (format(value, data) || '')
             }
           } else {
             return {
@@ -126,7 +126,7 @@ export const crud = () => {
             } else {
               value = data[field]
             }
-            result[label] = format ? format(value) : value
+            result[label] = format ? format(value, data) : value
           }
         })
 

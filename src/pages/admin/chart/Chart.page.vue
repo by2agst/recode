@@ -1,20 +1,20 @@
 <template>
-  <q-page class="bg-blue-grey-1 q-pa-md">
+  <q-page class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-blue-grey-1'">
     <div class="full-width">
       <div class="row q-col-gutter-md">
         <div class="col-sm-12 col-xl-6">
-          <div class="rounded-borders overflow-hidden">
+          <q-card class="rounded-borders overflow-hidden no-shadow">
             <high-chart name="chart-1" :options="chart1Options" />
-          </div>
+          </q-card>
         </div>
         <div class="col-sm-7">
-          <div class="rounded-borders overflow-hidden">
+          <q-card class="rounded-borders overflow-hidden no-shadow">
             <high-chart name="chart-2" :options="chart2Options" />
-          </div>
+          </q-card>
         </div>
         <div class="col-sm-5">
           <q-card class="rounded-borders overflow-hidden no-shadow">
-            <div class="bg-white">
+            <div class="">
               <div class="absolute z-top q-pa-md text-white text-h6">Widget</div>
               <high-chart name="chart-3" :options="chart3Options" />
             </div>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { colors, LocalStorage } from 'quasar'
 import HighChart from 'src/components/chart/HighChart'
 
 export default {
@@ -67,23 +68,52 @@ export default {
   },
   data () {
     return {
+      colorsSet: {},
       chart1Options: {},
       chart2Options: {},
       chart3Options: {}
     }
   },
   mounted () {
+    this.colorsSet = this.darkLightColor(LocalStorage.getItem('dark') || false)
     this.renderHighchart()
   },
+  watch: {
+    '$q.dark.isActive': function (value) {
+      this.colorsSet = this.darkLightColor(value)
+      this.renderHighchart()
+    }
+  },
   methods: {
+    darkLightColor (darkMode = false) {
+      const dark = colors.getBrand('dark')
+      if (darkMode) {
+        return {
+          background: dark,
+          color: '#FFFFFF'
+        }
+      } else {
+        return {
+          background: '#FFFFFF',
+          color: dark
+        }
+      }
+    },
     renderHighchart () {
       this.chart1Options = {
         chart: {
           renderTo: 'chart-1',
-          type: 'spline'
+          backgroundColor: this.colorsSet.background,
+          type: 'spline',
+          style: {
+            color: this.colorsSet.color
+          }
         },
         title: {
-          text: 'Area chart with negative values'
+          text: 'Area chart with negative values',
+          style: {
+            color: this.colorsSet.color
+          }
         },
         xAxis: {
           categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
@@ -103,6 +133,10 @@ export default {
       this.chart2Options = {
         chart: {
           renderTo: 'chart-2',
+          backgroundColor: this.colorsSet.background,
+          style: {
+            color: this.colorsSet.color
+          },
           type: 'pie',
           options3d: {
             enabled: true,
@@ -110,7 +144,10 @@ export default {
           }
         },
         title: {
-          text: 'Contents of Highsoft\'s weekly fruit delivery'
+          text: 'Contents of Highsofts weekly fruit delivery',
+          style: {
+            color: this.colorsSet.color
+          }
         },
         subtitle: {
           text: '3D donut in Highcharts'

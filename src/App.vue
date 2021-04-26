@@ -5,7 +5,12 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 export default {
-  name: 'App'
+  name: 'App',
+  mounted () {
+    this.$q.dark.set(LocalStorage.getItem('dark') || false)
+    this.$i18n.locale = LocalStorage.getItem('lang') || this.$i18n.locale
+  }
 }
 </script>

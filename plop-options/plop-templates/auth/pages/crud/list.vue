@@ -137,6 +137,7 @@ export default {
   },
   computed: {
     columns () {
+      const classes = this.$q.dark.isActive ? 'bg-grey-9' : 'bg-blue-grey-1'
       return [
         {
           name: 'action',
@@ -145,7 +146,7 @@ export default {
           align: 'center',
           field: row => row._id,
           format: val => `${val}`,
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }
       ]

@@ -1,107 +1,105 @@
 <template>
-  <q-page class="bg-blue-grey-1 q-pa-md">
-    <div class="bg-white q-py-md">
-      <div class="row justify-center q-col-gutter-md">
-        <div class="col-12 col-sm-8">
-          <div class="full-width">
-            <q-form class="q-gutter-y-md" ref="myForm" @submit="save">
-              <div class="row justify-center">
-                <div class="col-sm-12 col-md-8">
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Email
-                      </div>
-                    </div>
-                    <div class="col-8">
-                      <div class="q-pt-xs q-pb-lg">
-                        {{data.email}}
-                      </div>
+  <div class="q-py-md" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
+    <div class="row justify-center q-col-gutter-md">
+      <div class="col-12 col-sm-8">
+        <div class="full-width">
+          <q-form class="q-gutter-y-md" ref="myForm" @submit="save">
+            <div class="row justify-center">
+              <div class="col-sm-12 col-md-8">
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-4 text-right">
+                    <div class="q-pt-xs q-pb-lg">
+                      Email
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Username
-                      </div>
-                    </div>
-                    <div class="col-8">
-                      <div class="q-pt-xs q-pb-lg">
-                        {{data.username}}
-                      </div>
+                  <div class="col-8">
+                    <div class="q-pt-xs q-pb-lg">
+                      {{data.email}}
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Full Name
-                      </div>
+                </div>
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-4 text-right">
+                    <div class="q-pt-xs q-pb-lg">
+                      Username
                     </div>
-                    <div class="col-8">
-                      <q-input
-                        dense
-                        lazy-rules
-                        outlined
-                        ref="fullName"
-                        v-model="form.fullName"
-                        placeholder="Name"
-                        :rules="[]"
-                        class="q-mb-md"
+                  </div>
+                  <div class="col-8">
+                    <div class="q-pt-xs q-pb-lg">
+                      {{data.username}}
+                    </div>
+                  </div>
+                </div>
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-4 text-right">
+                    <div class="q-pt-xs q-pb-lg">
+                      Full Name
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <q-input
+                      dense
+                      lazy-rules
+                      outlined
+                      ref="fullName"
+                      v-model="form.fullName"
+                      placeholder="Name"
+                      :rules="[]"
+                      class="q-mb-md"
+                    />
+                  </div>
+                </div>
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-4 text-right">
+                    <div class="q-pt-xs q-pb-lg">
+                      Confirmed
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="q-pb-lg">
+                      <q-toggle
+                        v-model="form.confirmed"
+                        checked-icon="check"
+                        color="positive"
+                        :label="form.confirmed ? 'yes' : 'no'"
+                        unchecked-icon="clear"
                       />
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Confirmed
-                      </div>
-                    </div>
-                    <div class="col-8">
-                      <div class="q-pb-lg">
-                        <q-toggle
-                          v-model="form.confirmed"
-                          checked-icon="check"
-                          color="positive"
-                          :label="form.confirmed ? 'yes' : 'no'"
-                          unchecked-icon="clear"
-                        />
-                      </div>
+                </div>
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-4 text-right">
+                    <div class="q-pt-xs q-pb-lg">
+                      Blocked
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-4 text-right">
-                      <div class="q-pt-xs q-pb-lg">
-                        Blocked
-                      </div>
-                    </div>
-                    <div class="col-8">
-                      <div class="q-pb-lg">
-                        <q-toggle
-                          v-model="form.blocked"
-                          checked-icon="check"
-                          color="negative"
-                          :label="form.blocked ? 'yes' : 'no'"
-                          unchecked-icon="clear"
-                        />
-                      </div>
+                  <div class="col-8">
+                    <div class="q-pb-lg">
+                      <q-toggle
+                        v-model="form.blocked"
+                        checked-icon="check"
+                        color="negative"
+                        :label="form.blocked ? 'yes' : 'no'"
+                        unchecked-icon="clear"
+                      />
                     </div>
                   </div>
-                  <div class="row q-col-gutter-sm items-center">
-                    <div class="col-8 offset-4">
-                      <div class="q-gutter-sm">
-                        <q-btn no-caps color="negative" label="Cancel" @click="back" />
-                        <q-btn no-caps color="primary" label="Save" @click="save" />
-                      </div>
+                </div>
+                <div class="row q-col-gutter-sm items-center">
+                  <div class="col-8 offset-4">
+                    <div class="q-gutter-sm">
+                      <q-btn no-caps color="negative" label="Cancel" @click="back" />
+                      <q-btn no-caps color="primary" label="Save" @click="save" />
                     </div>
                   </div>
                 </div>
               </div>
-            </q-form>
-          </div>
+            </div>
+          </q-form>
         </div>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script>

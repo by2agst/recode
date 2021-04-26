@@ -2,7 +2,7 @@
   <q-page>
     <div class="row">
       <div class="col-12 col-sm-5 bg-dark text-white">
-        <div class="column window-height bg-1">
+        <div class="column window-height" :class="$q.dark.isActive ? 'bg-0' : 'bg-1 text-black'">
           <div class="col">
             <div class="column full-height justify-center">
               <div class="col-auto text-center">
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-7">
-        <div class="column window-height bg-3">
+        <div class="column window-height" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-black'">
           <div class="col-auto q-pa-sm">
             <div class="row justify-between items-center">
               <div class="col-auto">

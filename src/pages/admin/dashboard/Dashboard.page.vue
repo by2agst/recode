@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-blue-grey-1 q-pa-md">
+  <q-page class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-blue-grey-1'">
     <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-6 col-md-3" v-for="i in 4" :key="`a${i}`">
         <q-card>
@@ -125,7 +125,7 @@
         </q-table>
       </div>
       <div class="col-12 col-md-4">
-        <div class="bg-white">
+        <q-card>
           <q-scroll-area class="full-width" style="height: 435px;">
             <div class="q-pa-md">
               <q-timeline color="secondary">
@@ -206,7 +206,7 @@
               </q-timeline>
             </div>
           </q-scroll-area>
-        </div>
+        </q-card>
       </div>
     </div>
   </q-page>

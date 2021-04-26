@@ -1,6 +1,6 @@
 <template>
   <div v-resize:debounce="onResize">
-    <div class="bg-white high-chart" :ref="name">
+    <div class="high-chart" :ref="name">
       <div :id="name" />
     </div>
   </div>

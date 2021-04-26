@@ -4,25 +4,35 @@ import highcharts3D from 'highcharts/highcharts-3d'
 import Drilldown from 'highcharts/modules/drilldown'
 import Data from 'highcharts/modules/data'
 import Exporting from 'highcharts/modules/exporting'
+import { colors } from 'quasar'
 
 highcharts3D(Highcharts)
 Drilldown(Highcharts)
 Data(Highcharts)
 Exporting(Highcharts)
 
+const primary = colors.getBrand('primary')
+const secondary = colors.getBrand('secondary')
+const accent = colors.getBrand('accent')
+const positive = colors.getBrand('positive')
+const negative = colors.getBrand('negative')
+const info = colors.getBrand('info')
+const warning = colors.getBrand('warning')
+const dark = colors.getBrand('dark')
+
 Highcharts.customTheme = {
-  colors: ['#5867dd', '#fd397a', '#646c9a', '#34bfa3', '#f4516c', '#36a3f7', '#ffb822', '#1a1a27'],
+  colors: [primary, accent, secondary, positive, negative, info, warning],
 
   chart: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fffff',
     style: {
       fontFamily: 'poppins',
-      color: '#1a1a27'
+      color: dark
     }
   },
   title: {
     style: {
-      color: '#1a1a27',
+      color: '#ffffff',
       fontSize: '21px'
     }
   },

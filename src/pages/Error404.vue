@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="col-12 bg-dark text-white">
-        <div class="column window-height bg-2">
+        <div class="column window-height" :class="$q.dark.isActive ? 'bg-0' : 'bg-1 text-black'">
           <div class="col">
             <div class="column full-height justify-center">
               <div class="col-auto text-center">

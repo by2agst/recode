@@ -1,6 +1,6 @@
 <template>
   <q-drawer
-    content-class="bg-2"
+    :content-class="$q.dark.isActive ? 'bg-4' : 'bg-5'"
     v-model="localLeftDrawerOpen"
     bordered
     show-if-above
@@ -10,8 +10,8 @@
     @hide="hideSideBar"
     >
     <q-list dark class="text-grey">
-      <q-item-label header class="text-white">
-        Re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
+      <q-item-label header :class="$q.dark.isActive ? 'text-white' : 'text-black'">
+        re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
         \{{ $q.version }}
       </q-item-label>
       <q-item v-if="miniState" clickable @click="miniState = !miniState">

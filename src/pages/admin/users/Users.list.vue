@@ -172,14 +172,15 @@ export default {
   },
   computed: {
     columns () {
+      const classes = this.$q.dark.isActive ? 'bg-grey-9' : 'bg-blue-grey-1'
       return [
         {
           name: '#',
           label: '#',
           align: 'right',
           field: '_id',
-          headerClasses: 'bg-blue-grey text-white',
-          classes: 'bg-grey-2 ellipsis text-right',
+          headerClasses: classes,
+          classes: `${classes} ellipsis text-right`,
           sortable: false,
           required: true
         },
@@ -190,7 +191,7 @@ export default {
           align: 'left',
           field: row => row.username,
           format: val => `${val}`,
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }, {
           name: 'email',
@@ -198,14 +199,14 @@ export default {
           align: 'left',
           field: row => row.email,
           format: val => `${val}`,
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }, {
           name: 'confirmed',
           label: 'Confirmed',
           align: 'left',
           field: row => row.confirmed,
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }, {
           name: 'status',
@@ -213,7 +214,7 @@ export default {
           align: 'left',
           field: row => row.blocked,
           format: val => val ? 'blocked' : 'active',
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }, {
           name: 'action',
@@ -222,7 +223,7 @@ export default {
           align: 'center',
           field: row => row._id,
           format: val => `${val}`,
-          headerClasses: 'bg-grey-2',
+          headerClasses: classes,
           sortable: true
         }
       ]

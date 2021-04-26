@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-blue-grey-1 q-pa-md">
+  <q-page class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-blue-grey-1'">
     <div class="row" ref="grid" v-resize:debounce="onResize">
       <div class="grid-sizer col-xs-1 col-md-1" />
       <div class="grid-item q-pa-xs" :class="i % 3 == 0 ? 'col-xs-12 col-md-4' : 'col-xs-6 col-md-2'" v-for="(img, i) in images" :key="i">

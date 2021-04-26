@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-grey-1 text-black">
+  <q-header :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-1 text-black'">
     <q-toolbar>
       <div class="row full-width justify-between">
         <div class="col-auto col-sm-6">
@@ -17,6 +17,7 @@
         </div>
         <div class="col-auto col-sm-6">
           <div class="full-width text-right">
+            <dark />
             <q-btn
               flat
               round
@@ -24,15 +25,17 @@
               color="primary"
               icon="far fa-circle"
               size="sm"
-            />
-            <q-btn
-              flat
-              round
-              aria-label="search"
-              color="primary"
-              icon="far fa-chart-bar"
-              size="sm"
-            />
+              >
+              <q-menu :offset="[0, 10]">
+                <div class="row no-wrap q-pa-none">
+                  <q-input outlined v-model="search" label="search">
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                </div>
+              </q-menu>
+            </q-btn>
             <languages />
             <auth-button />
           </div>
@@ -62,12 +65,14 @@
 
 <script>
 import AuthButton from 'src/components/AuthButton.vue'
+import Dark from 'src/components/Dark.vue'
 import Languages from 'src/components/Languages.vue'
 
 export default {
   name: '{{ pascalCase roleName }}ToolbarTop',
   components: {
     AuthButton,
+    Dark,
     Languages
   },
   data () {

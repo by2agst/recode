@@ -2,7 +2,7 @@
   <q-layout view="hHh Lpr fff"> <!-- Be sure to play with the Layout demo on docs -->
 
     <!-- (Optional) The Header -->
-    <q-header elevated class="bg-grey-1 text-black">
+    <q-header :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-1 text-black'">
       <q-toolbar>
         <!-- <q-btn
           flat
@@ -14,6 +14,8 @@
         <q-toolbar-title>
           re:<div class="inline-block flip-horizontal">c</div>ode
         </q-toolbar-title>
+        <dark />
+        <languages />
         <auth-button v-if="user.role && user.role.type" />
         <router-link v-else to="/login" class="text-primary">Sign In</router-link>
       </q-toolbar>
@@ -67,12 +69,16 @@
 <script>
 import { mapState } from 'vuex'
 import AuthButton from 'src/components/AuthButton.vue'
+import Dark from 'src/components/Dark.vue'
+import Languages from 'src/components/Languages.vue'
 
 export default {
   name: 'BlankLayout',
 
   components: {
-    AuthButton
+    AuthButton,
+    Dark,
+    Languages
   },
   data () {
     return {
