@@ -85,5 +85,37 @@ export default {
         save: 'Save'
       }
     }
+  },
+
+  table: {
+    export: 'Export',
+    filter: 'Filter',
+    refresh: 'Refresh',
+    reset: 'Reset',
+    number: '',
+    action: 'Action',
+    add: 'Add',
+    edit: 'Edit',
+    view: 'View',
+    delete: 'Delete',
+    detail: 'Detail'
+  },
+
+  button: {
+    back: 'Back',
+    save: 'Save',
+    confirm: 'Confirm'
+  },
+
+  users: {
+    username: 'Username',
+    email: 'Email',
+    role: 'Role',
+    confirmed: 'Confirmed',
+    status: 'Status',
+    createdAt: 'Created At',
+    updatedAt: 'Updated At',
+    active: 'Active',
+    blocked: 'Blocked'
   }
 }

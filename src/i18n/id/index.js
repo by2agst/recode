@@ -85,5 +85,37 @@ export default {
         save: 'Simpan'
       }
     }
+  },
+
+  table: {
+    export: 'Ekspor',
+    filter: 'Filter',
+    refresh: 'Refresh',
+    reset: 'Reset',
+    number: '',
+    action: 'Aksi',
+    add: 'Tambah',
+    edit: 'Edit',
+    view: 'Lihat',
+    delete: 'Hapus',
+    detail: 'Detail'
+  },
+
+  button: {
+    back: 'Kembali',
+    save: 'Simpan',
+    confirm: 'Konfirmasi'
+  },
+
+  users: {
+    username: 'Username',
+    email: 'Email',
+    role: 'Wewenang',
+    confirmed: 'Dikonfirmasi',
+    status: 'Status',
+    createdAt: 'Dibuat pada',
+    updatedAt: 'Diperbarui pada',
+    active: 'Aktif',
+    blocked: 'Diblokir'
   }
 }

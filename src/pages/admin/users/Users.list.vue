@@ -106,19 +106,19 @@
 
         <template v-slot:body-cell-action="props">
           <q-td :props="props">
-            <q-btn flat round class="square" color="primary" icon="far fa-edit" @click="edit(props.value)">
+            <q-btn flat round class="square" color="warning" icon="far fa-edit" @click="edit(props.value)">
               <q-tooltip anchor="top middle" self="center middle">
-                Edit
+                {{$t('table.edit')}}
               </q-tooltip>
             </q-btn>
-            <q-btn flat round class="square" color="primary" icon="far fa-eye" @click="view(props.row)" >
+            <q-btn flat round class="square" color="info" icon="far fa-eye" @click="view(props.row)" >
               <q-tooltip anchor="top middle" self="center middle">
-                View
+                {{$t('table.view')}}
               </q-tooltip>
             </q-btn>
             <q-btn flat round class="square" color="negative" icon="far fa-trash-alt" @click="confirmDelete(props.value)">
               <q-tooltip anchor="top middle" self="center middle">
-                Delete
+                {{$t('table.delete')}}
               </q-tooltip>
             </q-btn>
           </q-td>
@@ -152,6 +152,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { crud } from 'src/mixin/crud'
 import Mobile from 'src/components/table/Mobile'
 
@@ -167,7 +168,7 @@ export default {
     return {
       serviceName: 'users',
       fileName: 'Users',
-      visibleColumns: ['#', 'username', 'email', 'confirmed', 'status']
+      visibleColumns: ['#', 'username', 'email', 'role', 'confirmed', 'status']
     }
   },
   computed: {
@@ -187,7 +188,7 @@ export default {
         {
           name: 'username',
           required: true,
-          label: 'Username',
+          label: this.$t('users.username'),
           align: 'left',
           field: row => row.username,
           format: val => `${val}`,
@@ -195,31 +196,59 @@ export default {
           sortable: true
         }, {
           name: 'email',
-          label: 'Email',
+          label: this.$t('users.email'),
           align: 'left',
           field: row => row.email,
           format: val => `${val}`,
           headerClasses: classes,
           sortable: true
         }, {
+          name: 'role',
+          label: this.$t('users.role'),
+          align: 'left',
+          field: row => row.role,
+          format: val => `${val.name}`,
+          headerClasses: classes,
+          sortable: true
+        }, {
           name: 'confirmed',
-          label: 'Confirmed',
+          label: this.$t('users.confirmed'),
           align: 'left',
           field: row => row.confirmed,
           headerClasses: classes,
           sortable: true
         }, {
           name: 'status',
-          label: 'Status',
+          label: this.$t('users.status'),
           align: 'left',
           field: row => row.blocked,
-          format: val => val ? 'blocked' : 'active',
+          format: val => val ? this.$t('users.blocked') : this.$t('users.active'),
+          headerClasses: classes,
+          sortable: true
+        }, {
+          name: 'createdAt',
+          label: this.$t('users.createdAt'),
+          align: 'left',
+          field: row => row.createdAt,
+          format: (val, row) => {
+            return val ? moment(String(val)).format(this.dateFormat) : ''
+          },
+          headerClasses: classes,
+          sortable: true
+        }, {
+          name: 'updatedAt',
+          label: this.$t('users.updatedAt'),
+          align: 'left',
+          field: row => row.createdAt,
+          format: (val, row) => {
+            return val ? moment(String(val)).format(this.dateFormat) : ''
+          },
           headerClasses: classes,
           sortable: true
         }, {
           name: 'action',
           required: true,
-          label: 'Action',
+          label: this.$t('table.action'),
           align: 'center',
           field: row => row._id,
           format: val => `${val}`,

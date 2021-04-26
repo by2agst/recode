@@ -11,6 +11,7 @@ export const crud = () => {
       return {
         serviceName: '',
         fileName: '',
+        dateFormat: 'DD-MMM-YYYY',
         filter: null,
         loading: false,
         pagination: {

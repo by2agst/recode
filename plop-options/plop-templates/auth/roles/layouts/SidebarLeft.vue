@@ -1,6 +1,6 @@
 <template>
   <q-drawer
-    :content-class="$q.dark.isActive ? 'bg-4' : 'bg-5'"
+    :content-class="$q.dark.isActive ? 'bg-2' : 'bg-3'"
     v-model="localLeftDrawerOpen"
     bordered
     show-if-above

@@ -1,6 +1,6 @@
 <template>
   <q-drawer
-    :content-class="$q.dark.isActive ? 'bg-4' : 'bg-5'"
+    :content-class="$q.dark.isActive ? 'bg-2' : 'bg-3'"
     v-model="localLeftDrawerOpen"
     bordered
     show-if-above
@@ -9,7 +9,7 @@
     @click.capture="drawerClick"
     @hide="hideSideBar"
     >
-    <q-list class="text-grey">
+    <q-list :class="$q.dark.isActive ? 'text-white' : 'text-grey-9'">
       <q-item-label header :class="$q.dark.isActive ? 'text-white' : 'text-black'">
         re<div class="inline-block text-accent">:</div><div class="inline-block text-accent flip-horizontal">c</div>ode
         {{ $q.version }}
