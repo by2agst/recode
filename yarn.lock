@@ -1985,11 +1985,6 @@ base64-arraybuffer@0.1.4:
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.4.tgz#9818c79e059b1355f97e0428a017c838e90ba812"
   integrity sha1-mBjHngWbE1X5fgQooBfIOOkLqBI=
 
-base64-arraybuffer@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz#73926771923b5a19747ad666aa5cd4bf9c6e9ce8"
-  integrity sha1-c5JncZI7Whl0etZmqlzUv5xunOg=
-
 base64-arraybuffer@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.2.0.tgz#4b944fac0191aa5907afe2d8c999ccc57ce80f45"
@@ -3056,6 +3051,11 @@ core-js@^3.3.2:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
+core-js@^3.6.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.11.0.tgz#05dac6aa70c0a4ad842261f8957b961d36eb8926"
+  integrity sha512-bd79DPpx+1Ilh9+30aT5O1sgpQd4Ttg8oqkqi51ZzhedMM1omD2e6IOF48Z/DzDCZ2svp49tN/3vneTK6ZBkXw==
+
 core-js@^3.6.5:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.10.1.tgz#e683963978b6806dcc6c0a4a8bd4ab0bdaf3f21a"
@@ -3435,12 +3435,12 @@ debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
   dependencies:
     ms "2.1.2"
 
-debug@~4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
-  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+debug@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
   dependencies:
-    ms "^2.1.1"
+    ms "2.0.0"
 
 decamelize@^1.1.2, decamelize@^1.2.0:
   version "1.2.0"
@@ -7625,11 +7625,6 @@ parse-passwd@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   integrity sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=
-
-parse5@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-1.5.1.tgz#9b7f3b0de32be78dc2401b17573ccaf0f6f59d94"
-  integrity sha1-m387DeMr543CQBsXVzzK8Pb1nZQ=
 
 parseqs@0.0.6:
   version "0.0.6"
