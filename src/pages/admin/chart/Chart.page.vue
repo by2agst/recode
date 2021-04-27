@@ -169,7 +169,11 @@ export default {
             ['Pears', 4],
             ['Clementines', 4],
             ['Reddish (bag)', 1]
-          ]
+          ],
+          dataLabels: {
+            enabled: true,
+            color: this.colorsSet.color
+          }
         }]
       }
 
