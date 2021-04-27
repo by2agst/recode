@@ -29,6 +29,9 @@ import { crud } from 'src/mixin/crud'
 export default {
   name: 'ComponentTableMobile',
   props: {
+    cols: {
+      type: Array
+    },
     props: {
       type: Object
     },
@@ -39,6 +42,11 @@ export default {
   mixins: [
     crud()
   ],
+  computed: {
+    columns () {
+      return this.cols
+    }
+  },
   data () {
     return {
       serviceName: this.service

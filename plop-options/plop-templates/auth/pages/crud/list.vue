@@ -127,14 +127,14 @@
       <q-card style="width: 600px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
           <q-space />
-          <div class="text-h6">{{$t('table.detail')}}</div>
+          <div class="text-h6">\{{$t('table.detail')}}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         <q-card-section v-if="dataModal" class="q-gutter-y-sm">
           <div class="row justify-between" v-for="(value, key) in dataModal" :key="key">
-            <div class="col-auto text-bold">{{getLabelValue(dataModal, key).label}}</div>
-            <div class="col-auto text-right" :name="value">{{getLabelValue(dataModal, key).value}}</div>
+            <div class="col-auto text-bold">\{{getLabelValue(dataModal, key).label}}</div>
+            <div class="col-auto text-right" :name="value">\{{getLabelValue(dataModal, key).value}}</div>
           </div>
         </q-card-section>
       </q-card>

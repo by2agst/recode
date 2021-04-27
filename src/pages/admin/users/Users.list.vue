@@ -126,7 +126,7 @@
 
         <!-- mobile -->
         <template v-slot:item="props">
-          <Mobile :props="props" :service="serviceName" />
+          <Mobile :props="props" :service="serviceName" :cols="columns" />
         </template>
         <!-- end of mobile -->
       </q-table>
