@@ -2,7 +2,7 @@
   <q-header :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-1 text-black'">
     <q-toolbar>
       <div class="row full-width justify-between">
-        <div class="col-auto col-sm-6">
+        <div class="col-sm-6 col-xs-12">
           <div class="full-width">
             <q-btn
               flat
@@ -239,7 +239,7 @@
             </q-btn>
           </div>
         </div>
-        <div class="col-auto col-sm-6">
+        <div class="col-sm-6 col-xs-12">
           <div class="full-width text-right">
             <dark />
             <q-btn

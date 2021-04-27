@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row">
-      <div class="col-12 col-sm-5 bg-dark text-white">
+      <div class="col-12 col-sm-5 bg-dark text-white orientation-landscape">
         <div class="column window-height" :class="$q.dark.isActive ? 'bg-0' : 'bg-1 text-black'">
           <div class="col">
             <div class="column full-height justify-center">
